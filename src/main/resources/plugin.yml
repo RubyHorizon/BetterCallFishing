@@ -1,0 +1,7 @@
+name: BetterCallFishing
+version: '1.0'
+main: xyz.sherhsnyaga.bettercallfishing.BetterCallFishing
+api-version: 1.19
+load: STARTUP
+authors: [ Shershnyaga_ ]
+website: shershnyaga.xyz
