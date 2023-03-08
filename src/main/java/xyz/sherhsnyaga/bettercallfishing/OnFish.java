@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-public class onFish implements Listener {
+public class OnFish implements Listener {
 
     @EventHandler
     private void fishEvent(PlayerFishEvent event) {
