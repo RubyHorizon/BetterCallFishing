@@ -62,6 +62,6 @@ public class OnFish implements Listener {
         Collections.addAll(colors, TropicalFish.Pattern.values());
         Random random = new Random();
         int size = colors.size() - 1;
-        return colors.get(random.nextInt(0, size));
+        return colors.get(random.nextInt(size));
     }
 }
