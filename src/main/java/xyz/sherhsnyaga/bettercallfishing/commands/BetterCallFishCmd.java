@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @AllArgsConstructor
-public class BetterCalFishCmd implements TabExecutor {
+public class BetterCallFishCmd implements TabExecutor {
 
     private BarrelConfig barrelConfig;
 
