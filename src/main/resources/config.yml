@@ -1,0 +1,44 @@
+lang-file: eng.yml
+enable-barrel-catch: true
+barrel-catch-chance: 10 # Hook Item Replacement Chance (Not Fish, only when you catch item!!!)
+barrel-items:
+  BONE_MEAL:
+    chance: 25
+    min-count: 1
+    max-count: 4
+  PAPER:
+    chance: 13
+    min-count: 1
+    max-count: 4
+  BONE:
+    chance: 50
+    min-count: 3
+    max-count: 13
+  RED_MUSHROOM:
+    chance: 2
+    min-count: 15
+    max-count: 16
+  COAL:
+    chance: 41
+    min-count: 4
+    max-count: 12
+  GUNPOWDER:
+    chance: 4
+    min-count: 9
+    max-count: 20
+  STRING:
+    chance: 7
+    min-count: 2
+    max-count: 11
+  BOWL:
+    chance: 1
+    min-count: 1
+    max-count: 2
+  POTATO:
+    chance: 57
+    min-count: 21
+    max-count: 53
+  GLOWSTONE_DUST:
+    chance: 7
+    min-count: 11
+    max-count: 12
