@@ -89,7 +89,7 @@ public class BarrelConfig {
         if (!isEnable)
             return false;
 
-        return random.nextInt(100) < catchChance;
+        return random.nextInt(100) <= catchChance;
     }
 
     private int getRandom(int min, int max) {
