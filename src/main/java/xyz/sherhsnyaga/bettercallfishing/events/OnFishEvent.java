@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Barrel;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -13,6 +14,7 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 import xyz.sherhsnyaga.bettercallfishing.config.BarrelConfig;
 
@@ -39,9 +41,13 @@ public class OnFishEvent implements Listener {
             }
 
             Entity fish = getFish(event.getCaught());
+
             if (fish != null) {
                 fish.setVelocity(change.toVector().multiply(0.15f));
                 Objects.requireNonNull(event.getCaught()).remove();
+                fish.getPersistentDataContainer().set(NamespacedKey.fromString("hook_time"),
+                        PersistentDataType.LONG, System.currentTimeMillis()
+                        );
             }
             else {
                 if (barrelConfig.testBarrelCatch()) {

@@ -3,7 +3,7 @@ enable-barrel-catch: true
 barrel-catch-chance: 10 # Hook Item Replacement Chance (Not Fish, only when you catch item!!!)
 barrel-items:
   BONE_MEAL:
-    chance: 25
+    chance: 25 # 0 - 100
     min-count: 1
     max-count: 4
   PAPER:
