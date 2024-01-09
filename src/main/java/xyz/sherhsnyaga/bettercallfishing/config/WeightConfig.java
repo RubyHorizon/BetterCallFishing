@@ -34,6 +34,7 @@ public class WeightConfig {
         fishSettings = new HashMap<>();
         random = new Random();
         miniMessage = MiniMessage.builder().build();
+        this.langConfig = langConfig;
         setConfiguration(config);
     }
 
@@ -57,7 +58,7 @@ public class WeightConfig {
             double weight = getRandom(settings.minWeight, settings.maxWeight);
             String formattedWeight = String.format("%.3f", weight);
 
-            String nameStr = langConfig.getGetWeightString();
+            String nameStr = langConfig.getWeightString();
             nameStr = nameStr.replace("%weight%", formattedWeight);
             ItemMeta meta = itemStack.getItemMeta();
             meta.lore(List.of(miniMessage.deserialize(nameStr)));

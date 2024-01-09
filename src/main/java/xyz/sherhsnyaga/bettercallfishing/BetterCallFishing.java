@@ -35,16 +35,16 @@ public final class BetterCallFishing extends JavaPlugin {
                 .setExecutor(new BetterCallFishCmd(barrelConfig));
 
         getServer().getPluginManager().registerEvents(new OnFishEvent(barrelConfig), this);
-        getServer().getPluginManager().registerEvents(new OtherEvents(), this);
+        getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
     }
 
     @Override
     public void reloadConfig() {
         super.reloadConfig();
 
-        barrelConfig = new BarrelConfig(getConfig());
-        weightConfig = new WeightConfig(getConfig(), langConfig);
         loadLang();
+        weightConfig = new WeightConfig(getConfig(), langConfig);
+        barrelConfig = new BarrelConfig(getConfig());
     }
 
     private void loadLang() {

@@ -12,7 +12,7 @@ public class LangConfig {
     }
 
     public void load(YamlConfiguration config) {
-
+        weightString = config.getString("weight-string");
     }
 
 }

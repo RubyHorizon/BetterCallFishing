@@ -1,5 +1,6 @@
 package xyz.sherhsnyaga.bettercallfishing.events;
 
+import lombok.AllArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
@@ -9,9 +10,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import xyz.sherhsnyaga.bettercallfishing.config.WeightConfig;
 
+@AllArgsConstructor
 public class OtherEvents implements Listener {
-
+    private WeightConfig weightConfig;
     @EventHandler
     private void onRightClickAtFish(PlayerInteractAtEntityEvent event) {
         Entity fish = event.getRightClicked();
@@ -43,20 +46,24 @@ public class OtherEvents implements Listener {
     }
 
     private ItemStack getFishItem(Entity entity) {
+        ItemStack fish = null;
         if (entity.getType() == EntityType.COD) {
-            return new ItemStack(Material.COD);
+            fish = new ItemStack(Material.COD);
         }
         else if (entity.getType() == EntityType.SALMON) {
-            return new ItemStack(Material.SALMON);
+            fish = new ItemStack(Material.SALMON);
         }
         else if (entity.getType() == EntityType.PUFFERFISH) {
-            return new ItemStack(Material.PUFFERFISH);
+            fish = new ItemStack(Material.PUFFERFISH);
         }
         else if (entity.getType() == EntityType.TROPICAL_FISH) {
-            return new ItemStack(Material.TROPICAL_FISH);
+            fish = new ItemStack(Material.TROPICAL_FISH);
         }
 
-        return null;
+        if (fish != null)
+            fish = weightConfig.genWeight(fish);
+
+        return fish;
     }
 
 }
