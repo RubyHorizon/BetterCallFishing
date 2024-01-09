@@ -5,7 +5,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 @Getter
 public class LangConfig {
-    private String getWeightString;
+    private String weightString;
+
+    public LangConfig(YamlConfiguration config) {
+        load(config);
+    }
+
     public void load(YamlConfiguration config) {
 
     }
