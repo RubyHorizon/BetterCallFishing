@@ -42,7 +42,7 @@ public final class BetterCallFishing extends JavaPlugin {
     public void reloadConfig() {
         super.reloadConfig();
 
-        loadLang();
+        // loadLang();
         weightConfig = new WeightConfig(getConfig(), langConfig);
         barrelConfig = new BarrelConfig(getConfig());
     }
