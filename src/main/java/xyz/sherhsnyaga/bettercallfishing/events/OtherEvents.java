@@ -61,8 +61,8 @@ public class OtherEvents implements Listener {
             fish = new ItemStack(Material.TROPICAL_FISH);
         }
 
-        if (fish != null)
-            fish = weightConfig.genWeight(fish);
+        // if (fish != null)
+        //     fish = weightConfig.genWeight(fish);
 
         return fish;
     }
