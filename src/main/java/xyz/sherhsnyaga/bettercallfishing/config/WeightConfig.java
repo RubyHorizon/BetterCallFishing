@@ -10,12 +10,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 public class WeightConfig {
-    public static final NamespacedKey FISH_WEIGHT_NAMESPACE = NamespacedKey.fromString("fish_weight");
     private static final List<String> FISH_TYPES = List.of(
             "COD",
             "SALMON",
@@ -27,8 +27,8 @@ public class WeightConfig {
 
     @Getter
     private boolean isWeightEnabled;
-    private HashMap<Material, FishSettings> fishSettings;
-    private LangConfig langConfig;
+    private final HashMap<Material, FishSettings> fishSettings;
+    private final LangConfig langConfig;
 
     public WeightConfig(FileConfiguration config, LangConfig langConfig) {
         fishSettings = new HashMap<>();
@@ -62,7 +62,6 @@ public class WeightConfig {
             nameStr = nameStr.replace("%weight%", formattedWeight);
             ItemMeta meta = itemStack.getItemMeta();
             meta.lore(List.of(miniMessage.deserialize(nameStr)));
-            meta.getPersistentDataContainer().set(FISH_WEIGHT_NAMESPACE, PersistentDataType.DOUBLE, weight);
             itemStack.setItemMeta(meta);
         }
 

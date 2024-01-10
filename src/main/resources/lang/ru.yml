@@ -1,1 +1,1 @@
-weight-string: "Вес: %weight% кг"
+weight-string: "<yellow>Вес: <blue>%weight% <yellow>кг"
