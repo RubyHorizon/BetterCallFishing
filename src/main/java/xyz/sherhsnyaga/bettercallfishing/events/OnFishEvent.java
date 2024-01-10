@@ -33,12 +33,12 @@ public class OnFishEvent implements Listener {
 
         if (event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) {
 
-            // if (new Random().nextInt(10000) == 9999) {
-            //     Entity stalin = spawnStalin(hookLoc);
-            //     stalin.setVelocity(caught.getVelocity().multiply(3));
-            //     caught.remove();
-            //     return;
-            // }
+            if (new Random().nextInt(10000) == 9999) {
+                Entity stalin = spawnStalin(hookLoc);
+                stalin.setVelocity(caught.getVelocity().multiply(3));
+                caught.remove();
+                return;
+            }
 
             Entity fish = getFish(event.getCaught());
 
