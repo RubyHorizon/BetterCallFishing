@@ -1,7 +1,9 @@
 package xyz.sherhsnyaga.bettercallfishing.commands;
 
 import lombok.AllArgsConstructor;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -11,7 +13,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import xyz.sherhsnyaga.bettercallfishing.BetterCallFishing;
 import xyz.sherhsnyaga.bettercallfishing.config.BarrelConfig;
+import xyz.sherhsnyaga.bettercallfishing.config.LangConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,8 +23,9 @@ import java.util.List;
 
 @AllArgsConstructor
 public class BetterCallFishCmd implements TabExecutor {
-
     private BarrelConfig barrelConfig;
+    private BetterCallFishing.ReloadManager reloadManager;
+    private LangConfig langConfig;
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s,
@@ -31,10 +36,11 @@ public class BetterCallFishCmd implements TabExecutor {
 
         Player player = (Player) commandSender;
 
-        if (strings[0].equals("reload")) {
-            commandSender.sendMessage("Doesn't work!");
+        if (strings[0].equals("reload") && commandSender.hasPermission("bettercallfishing.reload")) {
+            reloadManager.reload();
+            commandSender.sendMessage(langConfig.getReloadMessage());
         }
-        else if (strings[0].equals("gen_barrel")) {
+        else if (strings[0].equals("gen_barrel") && commandSender.hasPermission("bettercallfishing.barrels")) {
             HashMap<Integer, ItemStack> items = barrelConfig.generateBarrelInventoryMap();
             Inventory inv = Bukkit.createInventory(null, InventoryType.BARREL);
             items.forEach(inv::setItem);

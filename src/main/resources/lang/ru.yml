@@ -1,1 +1,5 @@
-weight-string: "<yellow>Вес: <blue>%weight% <yellow>кг"
+# This translation was created by Shershnyaga_
+#  If you want to translate the plugin into your own language, please let me know about this:
+#  https://www.spigotmc.org/members/shershnyaga_.1502182/
+# Multilingualism is cool!
+reload-message: "<green>[BetterCallFishing] Плагин перезагружен!"
