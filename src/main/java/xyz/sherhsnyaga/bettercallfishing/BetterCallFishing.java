@@ -77,6 +77,7 @@ public final class BetterCallFishing extends JavaPlugin {
 
     public class ReloadManager {
         public void reload() {
+            reloadConfig();
             reloadCommands();
             reloadEvents();
         }
