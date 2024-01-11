@@ -7,7 +7,16 @@ authors: [ Shershnyaga_ ]
 website: shershnyaga.xyz
 commands:
   bettercallfishing:
-    permission: bettercallfishing.*
+    usage: /bettercallfishing <args>
 permissions:
   bettercallfishing.*:
     default: op
+    children:
+      - bettercallfishing.reload
+      - bettercallfishing.barrels
+  bettercallfishing.reload:
+    default: op
+    description: Grant permission to /bettercallfishing reload command
+  bettercallfishing.barrels:
+    default: op
+    description: Grant permission to /bettercallfishing gen_barrel command
