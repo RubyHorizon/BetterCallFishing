@@ -62,8 +62,11 @@ public final class BetterCallFishing extends JavaPlugin {
     private void loadLang() {
         String langFolder = getDataFolder().getAbsolutePath() + File.separator + "lang" + File.separator;
 
-        for (String lang: LANG_LIST)
-            saveResource("lang/" + lang + ".yml", false);
+        for (String lang: LANG_LIST) {
+            if (!new File(getDataFolder().getAbsolutePath() + File.separator + "lang" + File.separator +
+                    lang + ".yml").exists())
+                saveResource("lang/" + lang + ".yml", false);
+        }
 
         File langFile = new File(langFolder + getConfig().getString("lang-file"));
         langConfig = new LangConfig(YamlConfiguration.loadConfiguration(langFile));
