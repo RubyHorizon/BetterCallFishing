@@ -1,3 +1,5 @@
+# Please let me know if you find any errors/bugs in the plugin:
+#   https://www.spigotmc.org/members/shershnyaga_.1502182/
 lang-file: eng.yml
 auto-update: true # Please, don't use on Windows servers!
 enable-barrel-catch: true

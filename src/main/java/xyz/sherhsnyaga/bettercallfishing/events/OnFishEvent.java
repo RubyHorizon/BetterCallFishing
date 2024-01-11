@@ -51,14 +51,15 @@ public class OnFishEvent implements Listener {
             }
             else {
                 if (barrelConfig.testBarrelCatch()) {
-                    spawnBarrel(caught.getLocation(), caught.getVelocity());
-                    caught.remove();
+                    ItemStack barrel = spawnBarrel();
+                    Item caughtItem = (Item) caught;
+                    caughtItem.setItemStack(barrel);
                 }
             }
         }
     }
 
-    private void spawnBarrel(Location loc, Vector velocity) {
+    private ItemStack spawnBarrel() {
         HashMap<Integer, ItemStack> items = barrelConfig.generateBarrelInventoryMap();
 
         ItemStack item = new ItemStack(Material.BARREL);
@@ -69,8 +70,7 @@ public class OnFishEvent implements Listener {
         meta.setBlockState(barrel);
         item.setItemMeta(meta);
 
-        Entity e = loc.getWorld().dropItem(loc, item);
-        e.setVelocity(velocity);
+        return item;
     }
 
     private Entity getFish(Entity entity) {
