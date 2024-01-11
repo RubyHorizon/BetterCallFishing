@@ -55,24 +55,27 @@ jar {
 }
 
 Integer getBuildVersion() {
-    Integer version = 1
+    Integer build = 1
     def buildInfoFile = file("./.gradle/build.properties")
 
     if (!buildInfoFile.exists()) {
         buildInfoFile.createNewFile()
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter('./.gradle/build.properties'))
-        bufferedWriter.write("count=1")
+        bufferedWriter.write("${version.toString()}=1")
         bufferedWriter.close()
     }
     else {
         Properties properties = new Properties()
         FileInputStream stream = new FileInputStream(buildInfoFile)
         properties.load(stream)
-        version = Integer.parseInt(properties['count'] as String) + 1
-        properties['count'] = version.toString()
+
+        if (properties[version.toString()] != null)
+            build = Integer.parseInt(properties[version] as String) + 1
+
+        properties[version] = build.toString()
         properties.store(buildInfoFile.newWriter(), null)
         stream.close()
     }
 
-    return version
+    return build
 }
