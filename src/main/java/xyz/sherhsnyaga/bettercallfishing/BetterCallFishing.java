@@ -1,6 +1,8 @@
 package xyz.sherhsnyaga.bettercallfishing;
 
+import lombok.Getter;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.sherhsnyaga.bettercallfishing.commands.BetterCallFishCmd;
 import xyz.sherhsnyaga.bettercallfishing.config.BarrelConfig;
@@ -21,21 +23,23 @@ public final class BetterCallFishing extends JavaPlugin {
             "eng"
     );
 
+    @Getter
+    private static ReloadManager reloadManager;
     private Metrics metrics;
     private BarrelConfig barrelConfig;
     private LangConfig langConfig;
     private WeightConfig weightConfig;
+
+    private boolean isLoaded = false;
+
     @Override
     public void onEnable() {
         metrics = new Metrics(this, 20687);
         saveDefaultConfig();
         reloadConfig();
 
-        Objects.requireNonNull(getServer().getPluginCommand("bettercallfishing"))
-                .setExecutor(new BetterCallFishCmd(barrelConfig));
-
-        getServer().getPluginManager().registerEvents(new OnFishEvent(barrelConfig), this);
-        getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
+        reloadManager = new ReloadManager();
+        reloadManager.reload();
     }
 
     @Override
@@ -55,5 +59,26 @@ public final class BetterCallFishing extends JavaPlugin {
 
         File langFile = new File(langFolder + getConfig().getString("lang-file"));
         langConfig = new LangConfig(YamlConfiguration.loadConfiguration(langFile));
+    }
+
+    private void reloadCommands() {
+        Objects.requireNonNull(getServer().getPluginCommand("bettercallfishing"))
+                .setExecutor(new BetterCallFishCmd(barrelConfig));
+    }
+
+    private void reloadEvents() {
+        if (isLoaded) {
+            HandlerList.unregisterAll(this);
+        }
+
+        getServer().getPluginManager().registerEvents(new OnFishEvent(barrelConfig), this);
+        getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
+    }
+
+    public class ReloadManager {
+        public void reload() {
+            reloadCommands();
+            reloadEvents();
+        }
     }
 }
