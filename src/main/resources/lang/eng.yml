@@ -3,3 +3,11 @@
 #  https://www.spigotmc.org/members/shershnyaga_.1502182/
 # Multilingualism is cool!
 reload-message: "<green>[BetterCallFishing] Reload complete!"
+update-detect-message:
+  - "<blue>----------------"
+  - "<green>Found BetterCallFishing update!"
+  - "<green> New version: <blue>%new_version%"
+  - "<green> Current version: <blue>%current_version%"
+  - "%version_info%" # Please, specify only %version_info% in this line.
+  - "<blue>---------------- "
+updated-message: "<green>[BetterCallFishing] update has ready! Please restart the server."

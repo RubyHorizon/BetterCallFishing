@@ -58,10 +58,10 @@ public class WeightConfig {
             double weight = getRandom(settings.minWeight, settings.maxWeight);
             String formattedWeight = String.format("%.3f", weight);
 
-            String nameStr = langConfig.getWeightString();
-            nameStr = nameStr.replace("%weight%", formattedWeight);
+            // String nameStr = langConfig.getWeightString();
+            // nameStr = nameStr.replace("%weight%", formattedWeight);
             ItemMeta meta = itemStack.getItemMeta();
-            meta.lore(List.of(miniMessage.deserialize(nameStr)));
+            // meta.lore(List.of(miniMessage.deserialize(nameStr)));
             itemStack.setItemMeta(meta);
         }
 

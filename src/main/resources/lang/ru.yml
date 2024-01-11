@@ -3,3 +3,11 @@
 #  https://www.spigotmc.org/members/shershnyaga_.1502182/
 # Multilingualism is cool!
 reload-message: "<green>[BetterCallFishing] Плагин перезагружен!"
+update-detect-message:
+  - "<blue>----------------"
+  - "<green>Найдено обновление для BetterCallFishing!"
+  - "<green> Новая версия: <blue>%new_version%"
+  - "<green> Текущая версия: <blue>%current_version%"
+  - "%version_info%" # Пожалуйста, указывайте в данной строчке только %version_info%
+  - "<blue>---------------- "
+updated-message: "<green>[BetterCallFishing] обновлен! Для применения обновления перезапустите сервер."

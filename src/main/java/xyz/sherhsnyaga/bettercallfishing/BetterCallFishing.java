@@ -1,6 +1,7 @@
 package xyz.sherhsnyaga.bettercallfishing;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,9 +11,12 @@ import xyz.sherhsnyaga.bettercallfishing.config.LangConfig;
 import xyz.sherhsnyaga.bettercallfishing.config.WeightConfig;
 import xyz.sherhsnyaga.bettercallfishing.events.OnFishEvent;
 import xyz.sherhsnyaga.bettercallfishing.events.OtherEvents;
-import xyz.sherhsnyaga.bettercallfishing.metrics.Metrics;
+import xyz.sherhsnyaga.bettercallfishing.utils.AutoUpdate;
+import xyz.sherhsnyaga.bettercallfishing.utils.Metrics;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -34,12 +38,16 @@ public final class BetterCallFishing extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        metrics = new Metrics(this, 20687);
         saveDefaultConfig();
         reloadConfig();
 
         reloadManager = new ReloadManager();
         reloadManager.reload();
+
+        Path dataFolderPath = Paths.get(this.getDataFolder().getAbsolutePath());
+        Path pluginsFolderPath = dataFolderPath.getParent();
+        new AutoUpdate(langConfig, getDescription().getVersion(), getConfig().getBoolean("auto-update"),
+                pluginsFolderPath.toAbsolutePath().toString(),null).update();
     }
 
     @Override
@@ -75,11 +83,21 @@ public final class BetterCallFishing extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
     }
 
+    private void setupMetrics() {
+        metrics = new Metrics(this, 20687);
+        metrics.addCustomChart(new Metrics.SimplePie("used_language", () ->
+                Objects.requireNonNull(getConfig().getString("lang-file")).replace(".yml", "")));
+        metrics.addCustomChart(new Metrics.SimplePie("used_auto_update", () ->
+                Objects.requireNonNull(getConfig().getString("auto-update"))));
+    }
+
     public class ReloadManager {
         public void reload() {
             reloadConfig();
             reloadCommands();
             reloadEvents();
+            setupMetrics();
+            isLoaded = true;
         }
     }
 }
