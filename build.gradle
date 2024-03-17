@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'xyz.sherhsnyaga'
-version = '2.0.0'
+version = '2.0.1'
 repositories {
     mavenCentral()
     maven {
@@ -55,8 +55,8 @@ jar {
 }
 
 Integer getBuildVersion() {
-    Integer build = 1
-    def buildInfoFile = file("./.gradle/build.properties")
+    Integer build = 0
+    def buildInfoFile = file("./build.properties")
 
     if (!buildInfoFile.exists()) {
         buildInfoFile.createNewFile()

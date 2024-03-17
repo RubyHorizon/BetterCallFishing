@@ -23,7 +23,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public class AutoUpdate {
-    private static final String UPDATE_URL = "https://shershnyaga.xyz/plugins/bettercallfishing.yml";
+    private static final String UPDATE_URL = "https://shershnyaga.me/plugins/bettercallfishing.yml";
     private LangConfig langConfig;
     private String version;
     private boolean enabled;
