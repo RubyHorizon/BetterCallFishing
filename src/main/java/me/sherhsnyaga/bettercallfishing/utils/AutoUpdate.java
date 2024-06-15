@@ -12,6 +12,7 @@ import me.sherhsnyaga.bettercallfishing.config.LangConfig;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,8 +33,9 @@ public class AutoUpdate {
     public boolean checkUpdates() {
         UpdateInfo info = getUpdateInfo();
         bufferedInfo = info;
-        if (info == null)
+        if (info == null) {
             return false;
+        }
 
         return !info.version.equals(version);
     }
@@ -53,32 +55,41 @@ public class AutoUpdate {
             downloadPlugin();
     }
 
-    @SneakyThrows
     private void downloadPlugin() {
-        Files.walk(Paths.get(pluginsFolder))
-                .filter(Files::isRegularFile)
-                .filter(path -> path.getFileName().toString().toLowerCase().contains("bettercallfishing"))
-                .forEach(path -> {
-                    try {
-                        Files.delete(path);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-
-        URL url = new URL(bufferedInfo.updateUrl);
-        String[] splited = bufferedInfo.updateUrl.split("/");
-        String fileName = splited[splited.length - 1];
-
-        try (InputStream in = url.openStream()) {
-            Files.copy(in, Path.of(pluginsFolder + File.separator + fileName),
-                    StandardCopyOption.REPLACE_EXISTING);
-
-            LegacyComponentSerializer serializer = LegacyComponentSerializer.builder().hexColors().build();
-            Bukkit.getLogger().info(serializer.serialize(langConfig.getUpdatedMessage()));
-        }
-        catch (Exception e) {
+        try {
+            Files.walk(Paths.get(pluginsFolder))
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.getFileName().toString().toLowerCase().contains("bettercallfishing"))
+                    .forEach(path -> {
+                        try {
+                            Files.delete(path);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+        } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        try {
+            URL url = new URL(bufferedInfo.updateUrl);
+
+            String[] splited = bufferedInfo.updateUrl.split("/");
+            String fileName = splited[splited.length - 1];
+
+            try (InputStream in = url.openStream()) {
+                Files.copy(in, Path.of(pluginsFolder + File.separator + fileName),
+                        StandardCopyOption.REPLACE_EXISTING);
+
+                LegacyComponentSerializer serializer = LegacyComponentSerializer.builder().hexColors().build();
+                Bukkit.getLogger().info(serializer.serialize(langConfig.getUpdatedMessage()));
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } catch (MalformedURLException ignored) {
+
         }
     }
 
