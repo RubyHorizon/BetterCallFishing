@@ -32,8 +32,6 @@ shadowJar {
     archiveClassifier.set(null)
     configurations = [project.configurations.runtimeClasspath, project.configurations.shadow]
     archiveFileName = "${rootProject.name}-${rootProject.version}-b${getBuildVersion()}.jar"
-
-    relocate('net.kyori.adventure', 'me.shershnyaga.kyori')
 }
 
 def targetJavaVersion = 16
