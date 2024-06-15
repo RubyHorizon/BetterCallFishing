@@ -9,6 +9,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.block.Barrel;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.Inventory;
@@ -24,7 +25,7 @@ import java.util.*;
 public class OnFishEvent implements Listener {
     private BarrelConfig barrelConfig;
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     private void fishEvent(PlayerFishEvent event) {
         Location playerLoc = event.getPlayer().getLocation().add(0, 2, 0);
         Entity caught = event.getCaught();
