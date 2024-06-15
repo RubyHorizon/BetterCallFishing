@@ -23,6 +23,7 @@ dependencies {
 
     shadow "net.kyori:adventure-text-minimessage:4.13.1"
     shadow "net.kyori:adventure-api:4.13.1"
+    shadow "net.kyori:adventure-text-serializer-legacy:4.9.1"
 
     compileOnly "com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT"
 }
