@@ -47,13 +47,15 @@ public class BarrelConfig {
 
         List<Integer> slotList = new ArrayList<>();
 
-        for (int i=0; i<27; i++)
+        for (int i=0; i<27; i++) {
             slotList.add(i);
+        }
 
         List<ItemSettings> itemSettings = new ArrayList<>();
 
-        for (ItemSettings i: itemSettingsList)
+        for (ItemSettings i: itemSettingsList) {
             itemSettings.add(new ItemSettings(i.material, i.chance, i.minCount, i.maxCount, 0));
+        }
 
         while (!slotList.isEmpty()) {
             int index = random.nextInt(slotList.size());
@@ -86,8 +88,9 @@ public class BarrelConfig {
     }
 
     public boolean testBarrelCatch() {
-        if (!isEnable)
+        if (!isEnable) {
             return false;
+        }
 
         return random.nextInt(100) <= catchChance;
     }

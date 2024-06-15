@@ -40,11 +40,13 @@ public class AutoUpdate {
     }
 
     public void update() {
-        if (!checkUpdates())
+        if (!checkUpdates()) {
             return;
+        }
 
-        if (bufferedInfo == null)
+        if (bufferedInfo == null) {
             return;
+        }
 
         sendMessages();
 
@@ -88,8 +90,9 @@ public class AutoUpdate {
 
         for (String message: messages) {
             if (message.contains("%version_info%")) {
-                for (String changes: bufferedInfo.changes)
+                for (String changes: bufferedInfo.changes) {
                     messageAsComponent.add(miniMessage.deserialize(changes));
+                }
                 continue;
             }
 

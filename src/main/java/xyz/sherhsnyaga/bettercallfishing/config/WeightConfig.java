@@ -50,8 +50,9 @@ public class WeightConfig {
 
     public ItemStack genWeight(ItemStack itemStack) {
         if (itemStack.getAmount() == 1) {
-            if (!fishSettings.containsKey(itemStack.getType()))
+            if (!fishSettings.containsKey(itemStack.getType())) {
                 return itemStack;
+            }
 
             FishSettings settings = fishSettings.get(itemStack.getType());
 

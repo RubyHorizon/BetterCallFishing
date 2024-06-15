@@ -30,9 +30,12 @@ public class BetterCallFishCmd implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s,
                              @NotNull String[] strings) {
-        if (!commandSender.isOp())
-            if (commandSender.hasPermission("bettercallfish.*"))
+
+        if (!commandSender.isOp()) {
+            if (commandSender.hasPermission("bettercallfish.*")) {
                 return true;
+            }
+        }
 
         Player player = (Player) commandSender;
 
@@ -55,12 +58,15 @@ public class BetterCallFishCmd implements TabExecutor {
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command,
                                                 @NotNull String s, @NotNull String[] strings) {
 
-        if (!commandSender.isOp())
-            if (commandSender.hasPermission("bettercallfish.*"))
+        if (!commandSender.isOp()) {
+            if (commandSender.hasPermission("bettercallfish.*")) {
                 return new ArrayList<>();
+            }
+        }
 
-        if (strings.length < 2)
+        if (strings.length < 2) {
             return List.of("gen_barrel", "reload");
+        }
 
         return null;
     }
