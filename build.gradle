@@ -3,7 +3,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
-group = 'xyz.sherhsnyaga'
+group = 'me.sherhsnyaga'
 version = '2.0.2'
 repositories {
     mavenCentral()
@@ -21,9 +21,18 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
 
-    shadow "net.kyori:adventure-text-minimessage:4.16.0"
+    shadow "net.kyori:adventure-text-minimessage:4.13.1"
+    shadow "net.kyori:adventure-api:4.13.1"
 
     compileOnly "com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT"
+}
+
+shadowJar {
+    archiveClassifier.set(null)
+    configurations = [project.configurations.runtimeClasspath, project.configurations.shadow]
+    archiveFileName = "${rootProject.name}-${rootProject.version}-b${getBuildVersion()}.jar"
+
+    relocate('net.kyori.adventure', 'me.shershnyaga.kyori')
 }
 
 def targetJavaVersion = 16
@@ -52,13 +61,7 @@ processResources {
 }
 
 jar {
-    archiveFileName = "${rootProject.name}-${version}-b${getBuildVersion()}.jar"
-}
-
-shadowJar {
-    archiveFileName = "${rootProject.name}-${version}-b${getBuildVersion()}.jar"
-    archiveClassifier.set(null)
-    configurations = [project.configurations.runtimeClasspath, project.configurations.shadow]
+    archiveFileName = "${rootProject.name}-${rootProject.version}-b${getBuildVersion()}.jar"
 }
 
 Integer getBuildVersion() {

@@ -1,4 +1,4 @@
-package xyz.sherhsnyaga.bettercallfishing.utils;
+package me.sherhsnyaga.bettercallfishing.utils;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;

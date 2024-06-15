@@ -1,9 +1,7 @@
-package xyz.sherhsnyaga.bettercallfishing.commands;
+package me.sherhsnyaga.bettercallfishing.commands;
 
 import lombok.AllArgsConstructor;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -13,9 +11,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import xyz.sherhsnyaga.bettercallfishing.BetterCallFishing;
-import xyz.sherhsnyaga.bettercallfishing.config.BarrelConfig;
-import xyz.sherhsnyaga.bettercallfishing.config.LangConfig;
+import me.sherhsnyaga.bettercallfishing.BetterCallFishing;
+import me.sherhsnyaga.bettercallfishing.config.BarrelConfig;
+import me.sherhsnyaga.bettercallfishing.config.LangConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package xyz.sherhsnyaga.bettercallfishing.config;
+package me.sherhsnyaga.bettercallfishing.config;
 
 import lombok.Getter;
 import net.kyori.adventure.text.Component;

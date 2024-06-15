@@ -1,4 +1,4 @@
-package xyz.sherhsnyaga.bettercallfishing.events;
+package me.sherhsnyaga.bettercallfishing.events;
 
 import lombok.AllArgsConstructor;
 import net.kyori.adventure.text.Component;
@@ -16,8 +16,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.util.Vector;
-import xyz.sherhsnyaga.bettercallfishing.config.BarrelConfig;
+import me.sherhsnyaga.bettercallfishing.config.BarrelConfig;
 
 import java.util.*;
 

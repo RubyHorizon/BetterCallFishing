@@ -1,15 +1,14 @@
-package xyz.sherhsnyaga.bettercallfishing.utils;
+package me.sherhsnyaga.bettercallfishing.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
-import xyz.sherhsnyaga.bettercallfishing.config.LangConfig;
+import me.sherhsnyaga.bettercallfishing.config.LangConfig;
 
 import java.io.*;
 import java.net.HttpURLConnection;

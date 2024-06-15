@@ -1,17 +1,16 @@
-package xyz.sherhsnyaga.bettercallfishing.events;
+package me.sherhsnyaga.bettercallfishing.events;
 
 import lombok.AllArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-import xyz.sherhsnyaga.bettercallfishing.config.WeightConfig;
+import me.sherhsnyaga.bettercallfishing.config.WeightConfig;
 
 @AllArgsConstructor
 public class OtherEvents implements Listener {

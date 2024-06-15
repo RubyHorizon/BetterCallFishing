@@ -1,18 +1,17 @@
-package xyz.sherhsnyaga.bettercallfishing;
+package me.sherhsnyaga.bettercallfishing;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.sherhsnyaga.bettercallfishing.commands.BetterCallFishCmd;
-import xyz.sherhsnyaga.bettercallfishing.config.BarrelConfig;
-import xyz.sherhsnyaga.bettercallfishing.config.LangConfig;
-import xyz.sherhsnyaga.bettercallfishing.config.WeightConfig;
-import xyz.sherhsnyaga.bettercallfishing.events.OnFishEvent;
-import xyz.sherhsnyaga.bettercallfishing.events.OtherEvents;
-import xyz.sherhsnyaga.bettercallfishing.utils.AutoUpdate;
-import xyz.sherhsnyaga.bettercallfishing.utils.Metrics;
+import me.sherhsnyaga.bettercallfishing.commands.BetterCallFishCmd;
+import me.sherhsnyaga.bettercallfishing.config.BarrelConfig;
+import me.sherhsnyaga.bettercallfishing.config.LangConfig;
+import me.sherhsnyaga.bettercallfishing.config.WeightConfig;
+import me.sherhsnyaga.bettercallfishing.events.OnFishEvent;
+import me.sherhsnyaga.bettercallfishing.events.OtherEvents;
+import me.sherhsnyaga.bettercallfishing.utils.AutoUpdate;
+import me.sherhsnyaga.bettercallfishing.utils.Metrics;
 
 import java.io.File;
 import java.nio.file.Path;
