@@ -1,7 +1,6 @@
 package me.sherhsnyaga.bettercallfishing.utils;
 
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -25,7 +24,7 @@ import java.util.List;
 public class AutoUpdate {
     private static final String UPDATE_URL = "https://shershnyaga.me/plugins/bettercallfishing.yml";
     private LangConfig langConfig;
-    private String version;
+    private String currentVersion;
     private boolean enabled;
     private String pluginsFolder;
     private UpdateInfo bufferedInfo;
@@ -37,7 +36,7 @@ public class AutoUpdate {
             return false;
         }
 
-        return !info.version.equals(version);
+        return !info.version.equals(currentVersion);
     }
 
     public void update() {
@@ -107,7 +106,8 @@ public class AutoUpdate {
             }
 
             message = message.replace("%new_version%", bufferedInfo.version);
-            message = message.replace("%old_version%", version);
+            message = message.replace("%old_version%", currentVersion);
+            message = message.replace("%current_version%", currentVersion);
 
             messageAsComponent.add(miniMessage.deserialize(message));
         }
