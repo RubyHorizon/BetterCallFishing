@@ -8,6 +8,8 @@ website: shershnyaga.xyz
 commands:
   bettercallfishing:
     usage: /bettercallfishing <args>
+    aliases:
+      - 'bcf'
 permissions:
   bettercallfishing.*:
     default: op
