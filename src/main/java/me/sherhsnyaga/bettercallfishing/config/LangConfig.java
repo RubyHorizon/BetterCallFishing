@@ -13,6 +13,7 @@ public class LangConfig {
     private Component reloadMessage;
     private List<String> updateDetectMessage;
     private Component updatedMessage;
+    private Component oldBarrelName;
     public LangConfig(YamlConfiguration config) {
         load(config);
     }
@@ -23,6 +24,7 @@ public class LangConfig {
         reloadMessage = miniMessage.deserialize(Objects.requireNonNull(config.getString("reload-message")));
         updatedMessage = miniMessage.deserialize(Objects.requireNonNull(config.getString("updated-message")));
         updateDetectMessage = config.getStringList("update-detect-message");
+        oldBarrelName = miniMessage.deserialize(Objects.requireNonNull(config.getString("old-barrel-name")));
     }
 
 }
