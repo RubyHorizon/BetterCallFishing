@@ -37,18 +37,19 @@ public class BetterCallFishCmd implements TabExecutor {
             }
         }
 
-        Player player = (Player) commandSender;
-
         if (strings[0].equals("reload") && commandSender.hasPermission("bettercallfishing.reload")) {
             reloadManager.reload();
             commandSender.sendMessage(langConfig.getReloadMessage());
         }
         else if (strings[0].equals("gen_barrel") && commandSender.hasPermission("bettercallfishing.barrels")) {
-            HashMap<Integer, ItemStack> items = barrelConfig.generateBarrelInventoryMap();
-            Inventory inv = Bukkit.createInventory(null, InventoryType.BARREL);
-            items.forEach(inv::setItem);
 
-            player.openInventory(inv);
+            if (commandSender instanceof Player player) {
+                HashMap<Integer, ItemStack> items = barrelConfig.generateBarrelInventoryMap();
+                Inventory inv = Bukkit.createInventory(null, InventoryType.BARREL);
+                items.forEach(inv::setItem);
+
+                player.openInventory(inv);
+            }
         }
 
         return true;
@@ -64,8 +65,16 @@ public class BetterCallFishCmd implements TabExecutor {
             }
         }
 
-        if (strings.length < 2) {
-            return List.of("gen_barrel", "reload");
+        if (strings.length == 1) {
+
+            List<String> args = new ArrayList<>();
+            args.add("reload");
+
+            if (commandSender instanceof Player) {
+                args.add("gen_barrel");
+            }
+
+            return args;
         }
 
         return null;
