@@ -1,0 +1,14 @@
+# This translation was created by Brygy
+# If you want to translate the plugin into your own language, please let Shershnyaga_ know about this:
+# https://www.spigotmc.org/members/shershnyaga_.1502182/
+# Multilingualism is cool!
+reload-message: "<green>[BetterCallFishing] Načtení je dokončeno!"
+update-detect-message:
+  - "<blue>----------------"
+  - "<green>Nalezena aktualizace BetterCallFishing!"
+  - "<green> Nová verze: <blue>%new_version%"
+  - "<green> Současná verze: <blue>%current_version%"
+  - "%version_info%" # Please, specify only %version_info% in this line.
+  - "<blue>---------------- "
+updated-message: "<green>[BetterCallFishing] aktualizace je připravena! Prosím, restartuj server"
+old-barrel-name: "<gold>Starý sud"

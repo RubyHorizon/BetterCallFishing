@@ -25,7 +25,8 @@ public final class BetterCallFishing extends JavaPlugin {
     public static final List<String> LANG_LIST = Arrays.asList(
             "ru",
             "eng",
-            "de"
+            "de",
+            "cz"
     );
 
     @Getter
