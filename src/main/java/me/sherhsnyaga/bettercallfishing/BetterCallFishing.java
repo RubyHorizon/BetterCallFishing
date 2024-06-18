@@ -3,6 +3,7 @@ package me.sherhsnyaga.bettercallfishing;
 import lombok.Getter;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import me.sherhsnyaga.bettercallfishing.commands.BetterCallFishCmd;
 import me.sherhsnyaga.bettercallfishing.config.BarrelConfig;
@@ -23,7 +24,8 @@ import java.util.Objects;
 public final class BetterCallFishing extends JavaPlugin {
     public static final List<String> LANG_LIST = Arrays.asList(
             "ru",
-            "eng"
+            "eng",
+            "de"
     );
 
     @Getter
@@ -81,7 +83,8 @@ public final class BetterCallFishing extends JavaPlugin {
             HandlerList.unregisterAll(this);
         }
 
-        getServer().getPluginManager().registerEvents(new OnFishEvent(barrelConfig), this);
+        getServer().getPluginManager().registerEvents(new OnFishEvent(barrelConfig,
+                new FixedMetadataValue(this, true)), this);
         getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
     }
 

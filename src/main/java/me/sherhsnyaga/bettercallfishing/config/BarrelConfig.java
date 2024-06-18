@@ -11,10 +11,14 @@ import java.util.*;
 
 public class BarrelConfig {
     private final Random random;
+
     @Getter
     private boolean isEnable;
     private int catchChance;
     private final List<ItemSettings> itemSettingsList;
+
+    @Getter
+    private boolean catchAsItem = true;
 
     public BarrelConfig(FileConfiguration configuration) {
         random = new Random();
@@ -26,6 +30,7 @@ public class BarrelConfig {
         itemSettingsList.clear();
         isEnable = config.getBoolean("enable-barrel-catch");
         catchChance = config.getInt("barrel-catch-chance");
+        catchAsItem = config.getBoolean("barrel-catch-as-item");
 
         Set<String> keys = config.getConfigurationSection("barrel-items").getKeys(false);
 

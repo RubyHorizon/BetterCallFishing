@@ -11,10 +11,12 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataType;
 import me.sherhsnyaga.bettercallfishing.config.BarrelConfig;
 
@@ -22,7 +24,9 @@ import java.util.*;
 
 @AllArgsConstructor
 public class OnFishEvent implements Listener {
-    private BarrelConfig barrelConfig;
+
+    private final BarrelConfig barrelConfig;
+    private final FixedMetadataValue metadataValue;
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void fishEvent(PlayerFishEvent event) {
@@ -40,6 +44,13 @@ public class OnFishEvent implements Listener {
             //     return;
             // }
 
+            FallingBlock b = spawnBarrelAsEntity(hookLoc);
+            b.setVelocity(change.toVector().multiply(0.1f));
+
+            if (true) {
+                return;
+            }
+
             Entity fish = getFish(event.getCaught());
 
             if (fish != null) {
@@ -50,16 +61,54 @@ public class OnFishEvent implements Listener {
                         );
             }
             else {
+
                 if (barrelConfig.testBarrelCatch()) {
-                    ItemStack barrel = spawnBarrel();
-                    Item caughtItem = (Item) caught;
-                    caughtItem.setItemStack(barrel);
+                    if (barrelConfig.isCatchAsItem()) {
+                        ItemStack barrel = getBarrelItem();
+                        Item caughtItem = (Item) caught;
+                        caughtItem.setItemStack(barrel);
+                    }
+                    else {
+                        if (caught != null) {
+                            caught.remove();
+                        }
+
+                        FallingBlock barrel = spawnBarrelAsEntity(hookLoc);
+                        barrel.setVelocity(change.toVector().multiply(0.1f));
+                    }
                 }
             }
         }
     }
 
-    private ItemStack spawnBarrel() {
+    @EventHandler
+    private void onEntityChangeBlock(EntityChangeBlockEvent event) {
+        if (event.getEntity() instanceof FallingBlock fallingBlock) {
+            if (!fallingBlock.hasMetadata("bcf_loot")) {
+                return;
+            }
+            HashMap<Integer, ItemStack> items = barrelConfig.generateBarrelInventoryMap();
+
+            Barrel barrel = (Barrel) event.getBlock();
+
+            ItemStack item = new ItemStack(Material.BARREL);
+            BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+            Inventory inv = barrel.getInventory();
+            items.forEach(inv::setItem);
+            meta.setBlockState(barrel);
+            item.setItemMeta(meta);
+        }
+    }
+
+    private FallingBlock spawnBarrelAsEntity(Location loc) {
+        FallingBlock fallingBlock = loc.getWorld().spawnFallingBlock(loc, Material.BARREL.createBlockData());
+        fallingBlock.setDropItem(true);
+        fallingBlock.setHurtEntities(true);
+        fallingBlock.setMetadata("bcf_loot", metadataValue);
+        return fallingBlock;
+    }
+
+    private ItemStack getBarrelItem() {
         HashMap<Integer, ItemStack> items = barrelConfig.generateBarrelInventoryMap();
 
         ItemStack item = new ItemStack(Material.BARREL);

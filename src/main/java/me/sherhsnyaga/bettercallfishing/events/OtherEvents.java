@@ -14,7 +14,9 @@ import me.sherhsnyaga.bettercallfishing.config.WeightConfig;
 
 @AllArgsConstructor
 public class OtherEvents implements Listener {
+
     private WeightConfig weightConfig;
+
     @EventHandler
     private void onRightClickAtFish(PlayerInteractAtEntityEvent event) {
         Entity fish = event.getRightClicked();
