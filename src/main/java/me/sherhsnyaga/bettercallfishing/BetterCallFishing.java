@@ -21,6 +21,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public final class BetterCallFishing extends JavaPlugin {
     public static final List<String> LANG_LIST = Arrays.asList(
@@ -56,6 +57,7 @@ public final class BetterCallFishing extends JavaPlugin {
 
     @Override
     public void reloadConfig() {
+        updateConfig();
         super.reloadConfig();
 
         loadLang();
@@ -80,9 +82,26 @@ public final class BetterCallFishing extends JavaPlugin {
                 "utf8"));
 
         YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(reader);
-        System.out.println(defaultConfig);
 
         langConfig = new LangConfig(langFolder + langFileName, defaultConfig);
+    }
+
+    @SneakyThrows
+    private void updateConfig() {
+        InputStream in = this.getResource("config.yml");
+        Reader reader = new BufferedReader(new InputStreamReader(in,
+                "utf8"));
+
+        YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(reader);
+
+        Set<String> keys = getConfig().getKeys(false);
+        defaultConfig.getKeys(false).forEach(key -> {
+            if (!keys.contains(key) && !key.equals("barrel-items")) {
+                getConfig().set(key, defaultConfig.get(key));
+            }
+        });
+
+        getConfig().save(new File(getDataFolder().getAbsolutePath() + File.separator + "config.yml"));
     }
 
     private void reloadCommands() {
