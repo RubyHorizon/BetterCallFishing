@@ -54,14 +54,10 @@ public class OnFishEvent implements Listener {
                 );
             }
             else {
-
                 if (barrelConfig.testBarrelCatch()) {
-                    if (caught != null) {
-                        caught.remove();
-                    }
-
-                    FallingBlock barrel = spawnBarrelAsEntity(hookLoc);
-                    barrel.setVelocity(change.toVector().multiply(0.1f));
+                    ItemStack barrel = getBarrelItem();
+                    Item caughtItem = (Item) caught;
+                    caughtItem.setItemStack(barrel);
                 }
             }
         }
@@ -80,6 +76,7 @@ public class OnFishEvent implements Listener {
 
         ItemStack item = new ItemStack(Material.BARREL);
         BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+        meta.displayName();
         Barrel barrel = (Barrel) meta.getBlockState();
         Inventory inv = barrel.getInventory();
         items.forEach(inv::setItem);
