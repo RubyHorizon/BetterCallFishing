@@ -8,11 +8,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Barrel;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -26,6 +26,7 @@ import java.util.*;
 @AllArgsConstructor
 public class OnFishEvent implements Listener {
 
+    private final FileConfiguration config;
     private final BarrelConfig barrelConfig;
     private final FixedMetadataValue metadataValue;
     private final LangConfig langConfig;
@@ -45,6 +46,13 @@ public class OnFishEvent implements Listener {
             //     caught.remove();
             //     return;
             // }
+
+            Entity dolphin = tryToCatchDolphin(hookLoc);
+            if (dolphin != null) {
+                dolphin.setVelocity(caught.getVelocity().multiply(3));
+                caught.remove();
+                return;
+            }
 
             Entity fish = getFish(event.getCaught());
 
@@ -86,6 +94,14 @@ public class OnFishEvent implements Listener {
         item.setItemMeta(meta);
 
         return item;
+    }
+
+    public Entity tryToCatchDolphin(Location loc) {
+        if (new Random().nextInt(100) < config.getInt("dolphin-catch-chance")) {
+            return loc.getWorld().spawnEntity(loc, EntityType.DOLPHIN);
+        }
+
+        return null;
     }
 
     private Entity getFish(Entity entity) {

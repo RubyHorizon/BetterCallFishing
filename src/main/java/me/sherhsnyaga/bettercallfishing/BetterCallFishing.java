@@ -121,7 +121,7 @@ public final class BetterCallFishing extends JavaPlugin {
             HandlerList.unregisterAll(this);
         }
 
-        getServer().getPluginManager().registerEvents(new OnFishEvent(barrelConfig,
+        getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfig,
                 new FixedMetadataValue(this, true), langConfig), this);
         getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
     }

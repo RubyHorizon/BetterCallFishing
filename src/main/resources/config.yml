@@ -4,6 +4,7 @@ lang-file: eng.yml
 auto-update: true # Please, don't use on Windows servers!
 enable-barrel-catch: true
 barrel-catch-chance: 10 # Hook Item Replacement Chance (Not Fish, only when you catch item!!!)
+dolphin-catch-chance: 2 # 0 - 100
 barrel-items:
   BONE_MEAL:
     chance: 25 # 0 - 100
