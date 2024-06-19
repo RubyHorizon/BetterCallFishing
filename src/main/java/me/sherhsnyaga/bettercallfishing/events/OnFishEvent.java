@@ -44,13 +44,6 @@ public class OnFishEvent implements Listener {
             //     return;
             // }
 
-            FallingBlock b = spawnBarrelAsEntity(hookLoc);
-            b.setVelocity(change.toVector().multiply(0.1f));
-
-            if (true) {
-                return;
-            }
-
             Entity fish = getFish(event.getCaught());
 
             if (fish != null) {
@@ -58,45 +51,19 @@ public class OnFishEvent implements Listener {
                 Objects.requireNonNull(event.getCaught()).remove();
                 fish.getPersistentDataContainer().set(NamespacedKey.fromString("hook_time"),
                         PersistentDataType.LONG, System.currentTimeMillis()
-                        );
+                );
             }
             else {
 
                 if (barrelConfig.testBarrelCatch()) {
-                    if (barrelConfig.isCatchAsItem()) {
-                        ItemStack barrel = getBarrelItem();
-                        Item caughtItem = (Item) caught;
-                        caughtItem.setItemStack(barrel);
+                    if (caught != null) {
+                        caught.remove();
                     }
-                    else {
-                        if (caught != null) {
-                            caught.remove();
-                        }
 
-                        FallingBlock barrel = spawnBarrelAsEntity(hookLoc);
-                        barrel.setVelocity(change.toVector().multiply(0.1f));
-                    }
+                    FallingBlock barrel = spawnBarrelAsEntity(hookLoc);
+                    barrel.setVelocity(change.toVector().multiply(0.1f));
                 }
             }
-        }
-    }
-
-    @EventHandler
-    private void onEntityChangeBlock(EntityChangeBlockEvent event) {
-        if (event.getEntity() instanceof FallingBlock fallingBlock) {
-            if (!fallingBlock.hasMetadata("bcf_loot")) {
-                return;
-            }
-            HashMap<Integer, ItemStack> items = barrelConfig.generateBarrelInventoryMap();
-
-            Barrel barrel = (Barrel) event.getBlock();
-
-            ItemStack item = new ItemStack(Material.BARREL);
-            BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
-            Inventory inv = barrel.getInventory();
-            items.forEach(inv::setItem);
-            meta.setBlockState(barrel);
-            item.setItemMeta(meta);
         }
     }
 
