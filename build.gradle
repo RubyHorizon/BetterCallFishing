@@ -59,10 +59,6 @@ processResources {
     }
 }
 
-jar {
-    archiveFileName = "${rootProject.name}-${rootProject.version}-b${getBuildVersion()}.jar"
-}
-
 Integer getBuildVersion() {
     Integer build = 0
     def buildInfoFile = file("./build.properties")
