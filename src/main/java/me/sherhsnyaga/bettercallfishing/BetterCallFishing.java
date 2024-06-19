@@ -26,7 +26,8 @@ public final class BetterCallFishing extends JavaPlugin {
             "ru",
             "eng",
             "de",
-            "cz"
+            "cz",
+            "ua"
     );
 
     @Getter

@@ -1,0 +1,16 @@
+# Перекладено завдяки Salatosik
+#
+#  Якщо ви хочете перекласти це на свою мову, то напишіть мені:
+#  https://www.spigotmc.org/members/shershnyaga_.1502182/
+#
+# Мультимовність - це круто!
+reload-message: "<green>[BetterCallFishing] Плагін перезавантажений!"
+update-detect-message:
+  - "<blue>----------------"
+  - "<green>Знайдено оновлення для BetterCallFishing!"
+  - "<green>Нова версія: <blue>%new_version%"
+  - "<green>Поточна версія: <blue>%current_version%"
+  - "%version_info%" # Будь-ласка, записуйте тут тільки %version_info%
+  - "<blue>---------------- "
+updated-message: "<green>[BetterCallFishing] оновлений! Щоб застовувати оновлення перезавантажте сервер."
+old-barrel-name: "<gold>Стара бочка"
