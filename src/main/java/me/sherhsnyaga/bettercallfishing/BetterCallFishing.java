@@ -57,8 +57,11 @@ public final class BetterCallFishing extends JavaPlugin {
 
     @Override
     public void reloadConfig() {
-        updateConfig();
         super.reloadConfig();
+
+        if (updateConfig()) {
+            super.reloadConfig();
+        }
 
         loadLang();
         weightConfig = new WeightConfig(getConfig(), langConfig);
@@ -77,7 +80,7 @@ public final class BetterCallFishing extends JavaPlugin {
 
         String langFileName = getConfig().getString("lang-file");
 
-        InputStream in = this.getResource("lang/" + langFileName);
+        InputStream in = getResource("lang/" + langFileName);
         Reader reader = new BufferedReader(new InputStreamReader(in,
                 "utf8"));
 
@@ -87,21 +90,25 @@ public final class BetterCallFishing extends JavaPlugin {
     }
 
     @SneakyThrows
-    private void updateConfig() {
-        InputStream in = this.getResource("config.yml");
+    private boolean updateConfig() {
+        boolean updated = false;
+
+        InputStream in = getResource("config.yml");
         Reader reader = new BufferedReader(new InputStreamReader(in,
                 "utf8"));
 
         YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(reader);
 
         Set<String> keys = getConfig().getKeys(false);
-        defaultConfig.getKeys(false).forEach(key -> {
+        for (String key: defaultConfig.getKeys(false)) {
             if (!keys.contains(key) && !key.equals("barrel-items")) {
+                updated = true;
                 getConfig().set(key, defaultConfig.get(key));
             }
-        });
+        }
 
         getConfig().save(new File(getDataFolder().getAbsolutePath() + File.separator + "config.yml"));
+        return updated;
     }
 
     private void reloadCommands() {
