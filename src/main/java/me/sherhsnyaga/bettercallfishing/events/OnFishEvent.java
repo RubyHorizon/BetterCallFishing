@@ -1,6 +1,7 @@
 package me.sherhsnyaga.bettercallfishing.events;
 
 import lombok.AllArgsConstructor;
+import me.sherhsnyaga.bettercallfishing.config.LangConfig;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -27,6 +28,7 @@ public class OnFishEvent implements Listener {
 
     private final BarrelConfig barrelConfig;
     private final FixedMetadataValue metadataValue;
+    private final LangConfig langConfig;
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void fishEvent(PlayerFishEvent event) {
@@ -76,7 +78,7 @@ public class OnFishEvent implements Listener {
 
         ItemStack item = new ItemStack(Material.BARREL);
         BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
-        meta.displayName();
+        meta.displayName(langConfig.getOldBarrelName());
         Barrel barrel = (Barrel) meta.getBlockState();
         Inventory inv = barrel.getInventory();
         items.forEach(inv::setItem);

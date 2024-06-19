@@ -45,7 +45,7 @@ public class BetterCallFishCmd implements TabExecutor {
 
             if (commandSender instanceof Player player) {
                 HashMap<Integer, ItemStack> items = barrelConfig.generateBarrelInventoryMap();
-                Inventory inv = Bukkit.createInventory(null, InventoryType.BARREL);
+                Inventory inv = Bukkit.createInventory(null, InventoryType.BARREL, langConfig.getOldBarrelName());
                 items.forEach(inv::setItem);
 
                 player.openInventory(inv);
