@@ -1,6 +1,7 @@
 package me.sherhsnyaga.bettercallfishing;
 
 import lombok.Getter;
+import lombok.SneakyThrows;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -14,7 +15,7 @@ import me.sherhsnyaga.bettercallfishing.events.OtherEvents;
 import me.sherhsnyaga.bettercallfishing.utils.AutoUpdate;
 import me.sherhsnyaga.bettercallfishing.utils.Metrics;
 
-import java.io.File;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -62,6 +63,7 @@ public final class BetterCallFishing extends JavaPlugin {
         barrelConfig = new BarrelConfig(getConfig());
     }
 
+    @SneakyThrows
     private void loadLang() {
         String langFolder = getDataFolder().getAbsolutePath() + File.separator + "lang" + File.separator;
 
@@ -71,8 +73,16 @@ public final class BetterCallFishing extends JavaPlugin {
                 saveResource("lang/" + lang + ".yml", false);
         }
 
-        File langFile = new File(langFolder + getConfig().getString("lang-file"));
-        langConfig = new LangConfig(YamlConfiguration.loadConfiguration(langFile));
+        String langFileName = getConfig().getString("lang-file");
+
+        InputStream in = this.getResource("lang/" + langFileName);
+        Reader reader = new BufferedReader(new InputStreamReader(in,
+                "utf8"));
+
+        YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(reader);
+        System.out.println(defaultConfig);
+
+        langConfig = new LangConfig(langFolder + langFileName, defaultConfig);
     }
 
     private void reloadCommands() {

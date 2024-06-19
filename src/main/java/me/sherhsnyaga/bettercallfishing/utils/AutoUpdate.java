@@ -129,7 +129,7 @@ public class AutoUpdate {
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 Reader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(),
                         "utf8"));
-                YamlConfiguration configuration  = YamlConfiguration.loadConfiguration(reader);
+                YamlConfiguration configuration = YamlConfiguration.loadConfiguration(reader);
                 String version = configuration.getString("version");
                 String updateUrl = configuration.getString("update-url");
                 List<String> changes = configuration.getStringList("changes");
