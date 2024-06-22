@@ -24,6 +24,9 @@ import java.util.Objects;
 import java.util.Set;
 
 public final class BetterCallFishing extends JavaPlugin {
+
+    private static final boolean ENABLE_AUTO_UPDATE = false;
+
     public static final List<String> LANG_LIST = Arrays.asList(
             "ru",
             "eng",
@@ -49,10 +52,12 @@ public final class BetterCallFishing extends JavaPlugin {
         reloadManager = new ReloadManager();
         reloadManager.reload();
 
-        Path dataFolderPath = Paths.get(this.getDataFolder().getAbsolutePath());
-        Path pluginsFolderPath = dataFolderPath.getParent();
-        new AutoUpdate(langConfig, getDescription().getVersion(), getConfig().getBoolean("auto-update"),
-                pluginsFolderPath.toAbsolutePath().toString(),null).update();
+        if (ENABLE_AUTO_UPDATE) {
+            Path dataFolderPath = Paths.get(this.getDataFolder().getAbsolutePath());
+            Path pluginsFolderPath = dataFolderPath.getParent();
+            new AutoUpdate(langConfig, getDescription().getVersion(), getConfig().getBoolean("auto-update"),
+                    pluginsFolderPath.toAbsolutePath().toString(), null).update();
+        }
     }
 
     @Override
