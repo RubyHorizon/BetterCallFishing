@@ -16,6 +16,7 @@ import me.sherhsnyaga.bettercallfishing.utils.AutoUpdate;
 import me.sherhsnyaga.bettercallfishing.utils.Metrics;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -25,7 +26,7 @@ import java.util.Set;
 
 public final class BetterCallFishing extends JavaPlugin {
 
-    private static final boolean ENABLE_AUTO_UPDATE = false;
+    private static final boolean ENABLE_AUTO_UPDATE = true;
 
     public static final List<String> LANG_LIST = Arrays.asList(
             "ru",
@@ -94,8 +95,13 @@ public final class BetterCallFishing extends JavaPlugin {
         }
 
         InputStream in = getResource("lang/" + langFileName);
-        Reader reader = new BufferedReader(new InputStreamReader(in,
-                "utf8"));
+
+        if (in == null) {
+            in = getResource("lang/eng.yml");
+        }
+
+        Reader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(in),
+                StandardCharsets.UTF_8));
 
         YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(reader);
 
@@ -107,8 +113,8 @@ public final class BetterCallFishing extends JavaPlugin {
         boolean updated = false;
 
         InputStream in = getResource("config.yml");
-        Reader reader = new BufferedReader(new InputStreamReader(in,
-                "utf8"));
+        Reader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(in),
+                StandardCharsets.UTF_8));
 
         YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(reader);
 
