@@ -89,6 +89,10 @@ public final class BetterCallFishing extends JavaPlugin {
 
         String langFileName = getConfig().getString("lang-file");
 
+        if (!langFileName.endsWith(".yml")) {
+            langFileName += ".yml";
+        }
+
         InputStream in = getResource("lang/" + langFileName);
         Reader reader = new BufferedReader(new InputStreamReader(in,
                 "utf8"));
