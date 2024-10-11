@@ -31,6 +31,8 @@ public class OnFishEvent implements Listener {
     private final FixedMetadataValue metadataValue;
     private final LangConfig langConfig;
 
+    private final Random random = new Random();
+
     @EventHandler(priority = EventPriority.LOWEST)
     private void fishEvent(PlayerFishEvent event) {
         Location playerLoc = event.getPlayer().getLocation().add(0, 2, 0);
@@ -93,7 +95,7 @@ public class OnFishEvent implements Listener {
     }
 
     public Entity tryToCatchDolphin(Location loc) {
-        if (new Random().nextFloat(100) < config.getDouble("dolphin-catch-chance")) {
+        if (getRandom(0, 100) < config.getDouble("dolphin-catch-chance")) {
             return loc.getWorld().spawnEntity(loc, EntityType.DOLPHIN);
         }
 
@@ -126,6 +128,10 @@ public class OnFishEvent implements Listener {
             return null;
         }
 
+    }
+
+    private float getRandom(float min, float max) {
+        return min + random.nextFloat() * (max - min);
     }
 
     private TropicalFish.Pattern getRandomTropicalFishPattern() {

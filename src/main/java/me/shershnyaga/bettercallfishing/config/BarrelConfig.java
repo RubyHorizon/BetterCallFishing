@@ -90,7 +90,7 @@ public class BarrelConfig {
             return false;
         }
 
-        return random.nextFloat(100) <= catchChance;
+        return getRandom(0, 100) <= catchChance;
     }
 
     private int getRandom(int min, int max) {
@@ -98,7 +98,7 @@ public class BarrelConfig {
     }
 
     private float getRandom(float min, float max) {
-        return random.nextFloat((max - min) + 1) + min;
+        return min + random.nextFloat() * (max - min);
     }
 
     @AllArgsConstructor

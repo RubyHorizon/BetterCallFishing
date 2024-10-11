@@ -7,7 +7,7 @@ barrel-catch-chance: 10.0 # Hook Item Replacement Chance (0.0 - 100.0)
 dolphin-catch-chance: 2.0 # 0.0 - 100.0
 barrel-items:
   BONE_MEAL:
-    chance: 25.0 # 0 - 100
+    chance: 25.0 # 0.0 - 100.0
     min-count: 1
     max-count: 4
   PAPER:
