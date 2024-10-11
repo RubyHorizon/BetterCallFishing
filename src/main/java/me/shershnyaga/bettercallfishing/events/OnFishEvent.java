@@ -3,12 +3,10 @@ package me.shershnyaga.bettercallfishing.events;
 import lombok.AllArgsConstructor;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.utils.Constants;
-import net.kyori.adventure.platform.bukkit.MinecraftComponentSerializer;
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Barrel;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.*;
@@ -42,13 +40,6 @@ public class OnFishEvent implements Listener {
 
         if (event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) {
 
-            // if (new Random().nextInt(10000) == 9999) {
-            //     Entity stalin = spawnStalin(hookLoc);
-            //     stalin.setVelocity(caught.getVelocity().multiply(3));
-            //     caught.remove();
-            //     return;
-            // }
-
             Entity dolphin = tryToCatchDolphin(hookLoc);
             if (dolphin != null) {
                 dolphin.setVelocity(caught.getVelocity().multiply(3));
@@ -58,19 +49,19 @@ public class OnFishEvent implements Listener {
 
             Entity fish = getFish(event.getCaught());
 
+            if (barrelConfig.testBarrelCatch()) {
+                ItemStack barrel = getBarrelItem();
+                Item caughtItem = (Item) caught;
+                caughtItem.setItemStack(barrel);
+                return;
+            }
+
             if (fish != null) {
                 fish.setVelocity(change.toVector().multiply(0.15f));
                 Objects.requireNonNull(event.getCaught()).remove();
                 fish.getPersistentDataContainer().set(Constants.HOOK_TIME_NAMESPACE,
                         PersistentDataType.LONG, System.currentTimeMillis()
                 );
-            }
-            else {
-                if (barrelConfig.testBarrelCatch()) {
-                    ItemStack barrel = getBarrelItem();
-                    Item caughtItem = (Item) caught;
-                    caughtItem.setItemStack(barrel);
-                }
             }
         }
     }
@@ -102,7 +93,7 @@ public class OnFishEvent implements Listener {
     }
 
     public Entity tryToCatchDolphin(Location loc) {
-        if (new Random().nextInt(100) < config.getInt("dolphin-catch-chance")) {
+        if (new Random().nextFloat(100) < config.getDouble("dolphin-catch-chance")) {
             return loc.getWorld().spawnEntity(loc, EntityType.DOLPHIN);
         }
 

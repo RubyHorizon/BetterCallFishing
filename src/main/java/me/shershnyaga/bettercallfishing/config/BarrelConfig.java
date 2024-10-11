@@ -14,7 +14,7 @@ public class BarrelConfig {
 
     @Getter
     private boolean isEnable;
-    private int catchChance;
+    private float catchChance;
     private final List<ItemSettings> itemSettingsList;
 
     public BarrelConfig(FileConfiguration configuration) {
@@ -64,14 +64,14 @@ public class BarrelConfig {
                     continue;
 
                 if (itemData.counter == 0) {
-                    if (getRandom(0, 100) < itemData.chance) {
+                    if (getRandom(0f, 100f) < itemData.chance) {
                         int itemCount = getRandom(itemData.minCount, itemData.maxCount);
                         inventory.put(slot, new ItemStack(itemData.material, itemCount));
                         itemData.counter = itemData.counter + itemCount;
                     }
                 }
                 else {
-                    if (getRandom(0, 100) < itemData.chance) {
+                    if (getRandom(0f, 100f) < itemData.chance) {
                         int itemCount = getRandom(1, itemData.maxCount - itemData.counter);
                         inventory.put(slot, new ItemStack(itemData.material, itemCount));
                         itemData.counter = itemData.counter + itemCount;
@@ -90,18 +90,22 @@ public class BarrelConfig {
             return false;
         }
 
-        return random.nextInt(100) <= catchChance;
+        return random.nextFloat(100) <= catchChance;
     }
 
     private int getRandom(int min, int max) {
         return random.nextInt((max - min) + 1) + min;
     }
 
+    private float getRandom(float min, float max) {
+        return random.nextFloat((max - min) + 1) + min;
+    }
+
     @AllArgsConstructor
     @Getter
-    private class ItemSettings {
+    private static class ItemSettings {
         private Material material;
-        private int chance;
+        private float chance;
         private int minCount;
         private int maxCount;
         @Setter
