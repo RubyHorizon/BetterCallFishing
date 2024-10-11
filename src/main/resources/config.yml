@@ -1,7 +1,7 @@
 # Please let me know if you find any errors/bugs in the plugin:
 #   https://www.spigotmc.org/members/shershnyaga_.1502182/
 lang-file: eng.yml
-auto-update: true # Please, don't use on Windows servers!
+auto-update: true # Doesn't work on Windows!
 enable-barrel-catch: true
 barrel-catch-chance: 10 # Hook Item Replacement Chance (Not Fish, only when you catch item!!!)
 dolphin-catch-chance: 2 # 0 - 100

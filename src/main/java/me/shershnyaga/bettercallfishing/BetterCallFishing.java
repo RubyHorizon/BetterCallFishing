@@ -58,6 +58,17 @@ public final class BetterCallFishing extends JavaPlugin {
         reloadManager.reload();
 
         if (ENABLE_AUTO_UPDATE) {
+
+            String os = System.getProperty("os.name");
+
+            if (os.toLowerCase().contains("windows")) {
+                getLogger().info("Automatic updates are unavailable in Windows. You can manually download the update " +
+                        "using the following links:");
+                getLogger().info("https://www.spigotmc.org/resources/bettercallfishing.108426/");
+                getLogger().info("https://modrinth.com/plugin/bettercallfishing");
+                return;
+            }
+
             Path dataFolderPath = Paths.get(this.getDataFolder().getAbsolutePath());
             Path pluginsFolderPath = dataFolderPath.getParent();
             new AutoUpdate(langConfig, getDescription().getVersion(), getConfig().getBoolean("auto-update"),
