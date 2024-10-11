@@ -2,6 +2,7 @@ package me.shershnyaga.bettercallfishing;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -62,10 +63,10 @@ public final class BetterCallFishing extends JavaPlugin {
             String os = System.getProperty("os.name");
 
             if (os.toLowerCase().contains("windows")) {
-                getLogger().info("Automatic updates are unavailable in Windows. You can manually download the update " +
+                getLogger().info(ChatColor.YELLOW + "Automatic updates are unavailable in Windows. You can manually download the update " +
                         "using the following links:");
-                getLogger().info("https://www.spigotmc.org/resources/bettercallfishing.108426/");
-                getLogger().info("https://modrinth.com/plugin/bettercallfishing");
+                getLogger().info(ChatColor.YELLOW + "https://www.spigotmc.org/resources/bettercallfishing.108426/");
+                getLogger().info(ChatColor.YELLOW + "https://modrinth.com/plugin/bettercallfishing");
                 return;
             }
 
