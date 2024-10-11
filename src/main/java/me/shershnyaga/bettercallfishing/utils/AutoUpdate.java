@@ -1,9 +1,14 @@
 package me.shershnyaga.bettercallfishing.utils;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -20,14 +25,26 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AutoUpdate {
     private static final String UPDATE_URL = "https://shershnyaga.me/plugins/bettercallfishing.yml";
+
+    @NonNull
     private LangConfig langConfig;
+
+    @NonNull
     private String currentVersion;
+
+    @NonNull
     private boolean enabled;
+
+    @NonNull
     private String pluginsFolder;
+
     private UpdateInfo bufferedInfo;
+
+    @Getter
+    private boolean updateFound = false;
 
     public boolean checkUpdates() {
         UpdateInfo info = getUpdateInfo();
@@ -48,10 +65,13 @@ public class AutoUpdate {
             return;
         }
 
+        updateFound = true;
+
         sendMessages();
 
-        if (enabled)
+        if (enabled) {
             downloadPlugin();
+        }
     }
 
     private void downloadPlugin() {
@@ -93,6 +113,12 @@ public class AutoUpdate {
     }
 
     private void sendMessages() {
+        for (String message: getUpdateMessage()) {
+            Bukkit.getLogger().info(message);
+        }
+    }
+
+    public List<String> getUpdateMessage() {
         MiniMessage miniMessage = MiniMessage.miniMessage();
         List<String> messages = langConfig.getUpdateDetectMessage();
         List<Component> messageAsComponent = new ArrayList<>();
@@ -112,9 +138,13 @@ public class AutoUpdate {
             messageAsComponent.add(miniMessage.deserialize(message));
         }
 
-        LegacyComponentSerializer serializer = LegacyComponentSerializer.builder().hexColors().build();
-        for (Component component: messageAsComponent)
-            Bukkit.getLogger().info(serializer.serialize(component));
+        List<String> mess = new ArrayList<>();
+        for (Component component: messageAsComponent) {
+            BaseComponent[] name = BungeeComponentSerializer.get().serialize(component);
+            mess.add(BaseComponent.toLegacyText(name));
+        }
+
+        return mess;
     }
 
     private UpdateInfo getUpdateInfo() {

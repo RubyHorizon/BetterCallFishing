@@ -2,6 +2,7 @@ package me.shershnyaga.bettercallfishing;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
+import me.shershnyaga.bettercallfishing.events.OnJoinEvent;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -53,32 +54,18 @@ public final class BetterCallFishing extends JavaPlugin {
 
     private BukkitAudiences adventure;
 
+    private AutoUpdate autoUpdate;
+
     @Override
     public void onEnable() {
         adventure = BukkitAudiences.create(this);
         saveDefaultConfig();
         reloadConfig();
 
+        update();
+
         reloadManager = new ReloadManager();
         reloadManager.reload();
-
-        if (ENABLE_AUTO_UPDATE) {
-
-            String os = System.getProperty("os.name");
-
-            if (os.toLowerCase().contains("windows")) {
-                getLogger().info(ChatColor.YELLOW + "Automatic updates are unavailable in Windows. You can manually download the update " +
-                        "using the following links:");
-                getLogger().info(ChatColor.YELLOW + "https://www.spigotmc.org/resources/bettercallfishing.108426/");
-                getLogger().info(ChatColor.YELLOW + "https://modrinth.com/plugin/bettercallfishing");
-                return;
-            }
-
-            Path dataFolderPath = Paths.get(this.getDataFolder().getAbsolutePath());
-            Path pluginsFolderPath = dataFolderPath.getParent();
-            new AutoUpdate(langConfig, getDescription().getVersion(), getConfig().getBoolean("auto-update"),
-                    pluginsFolderPath.toAbsolutePath().toString(), null).update();
-        }
     }
 
     @Override
@@ -159,6 +146,7 @@ public final class BetterCallFishing extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfig,
                 new FixedMetadataValue(this, true), langConfig), this);
         getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
+        getServer().getPluginManager().registerEvents(new OnJoinEvent(autoUpdate), this);
     }
 
     private void setupMetrics() {
@@ -177,6 +165,29 @@ public final class BetterCallFishing extends JavaPlugin {
             setupMetrics();
             isLoaded = true;
         }
+    }
+
+    private void update() {
+        if (ENABLE_AUTO_UPDATE) {
+
+            String os = System.getProperty("os.name");
+
+            if (os.toLowerCase().contains("windows")) {
+                getLogger().info(ChatColor.YELLOW + "Automatic updates are unavailable in Windows. You can manually download the update " +
+                        "using the following links:");
+                getLogger().info(ChatColor.YELLOW + "https://www.spigotmc.org/resources/bettercallfishing.108426/");
+                getLogger().info(ChatColor.YELLOW + "https://modrinth.com/plugin/bettercallfishing");
+                return;
+            }
+
+            Path dataFolderPath = Paths.get(this.getDataFolder().getAbsolutePath());
+            Path pluginsFolderPath = dataFolderPath.getParent();
+            autoUpdate = new AutoUpdate(langConfig, getDescription().getVersion(), getConfig().getBoolean("auto-update"),
+                    pluginsFolderPath.toAbsolutePath().toString());
+
+            autoUpdate.update();
+        }
+
     }
 
     @Override
