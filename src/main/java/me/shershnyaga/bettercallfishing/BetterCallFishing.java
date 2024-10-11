@@ -2,6 +2,7 @@ package me.shershnyaga.bettercallfishing;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
@@ -50,8 +51,11 @@ public final class BetterCallFishing extends JavaPlugin {
 
     private boolean isLoaded = false;
 
+    private BukkitAudiences adventure;
+
     @Override
     public void onEnable() {
+        adventure = BukkitAudiences.create(this);
         saveDefaultConfig();
         reloadConfig();
 
@@ -144,7 +148,7 @@ public final class BetterCallFishing extends JavaPlugin {
 
     private void reloadCommands() {
         Objects.requireNonNull(getServer().getPluginCommand("bettercallfishing"))
-                .setExecutor(new BetterCallFishCmd(barrelConfig, reloadManager, langConfig));
+                .setExecutor(new BetterCallFishCmd(barrelConfig, reloadManager, langConfig, adventure));
     }
 
     private void reloadEvents() {
@@ -172,6 +176,14 @@ public final class BetterCallFishing extends JavaPlugin {
             reloadEvents();
             setupMetrics();
             isLoaded = true;
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        if(this.adventure != null) {
+            this.adventure.close();
+            this.adventure = null;
         }
     }
 }

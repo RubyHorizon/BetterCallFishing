@@ -1,6 +1,7 @@
 package me.shershnyaga.bettercallfishing.events;
 
 import lombok.AllArgsConstructor;
+import me.shershnyaga.bettercallfishing.utils.Constants;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
@@ -23,10 +24,10 @@ public class OtherEvents implements Listener {
         if (!isFish(fish))
             return;
 
-        if (!fish.getPersistentDataContainer().has(NamespacedKey.fromString("hook_time"), PersistentDataType.LONG))
+        if (!fish.getPersistentDataContainer().has(Constants.HOOK_TIME_NAMESPACE, PersistentDataType.LONG))
             return;
 
-        long time = fish.getPersistentDataContainer().get(NamespacedKey.fromString("hook_time"),
+        long time = fish.getPersistentDataContainer().get(Constants.HOOK_TIME_NAMESPACE,
                 PersistentDataType.LONG);
 
         if (System.currentTimeMillis() > time + 10000)

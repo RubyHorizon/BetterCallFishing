@@ -2,8 +2,10 @@ package me.shershnyaga.bettercallfishing.events;
 
 import lombok.AllArgsConstructor;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
-import net.kyori.adventure.text.Component;
-import org.bukkit.ChatColor;
+import me.shershnyaga.bettercallfishing.utils.Constants;
+import net.kyori.adventure.platform.bukkit.MinecraftComponentSerializer;
+import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -59,7 +61,7 @@ public class OnFishEvent implements Listener {
             if (fish != null) {
                 fish.setVelocity(change.toVector().multiply(0.15f));
                 Objects.requireNonNull(event.getCaught()).remove();
-                fish.getPersistentDataContainer().set(NamespacedKey.fromString("hook_time"),
+                fish.getPersistentDataContainer().set(Constants.HOOK_TIME_NAMESPACE,
                         PersistentDataType.LONG, System.currentTimeMillis()
                 );
             }
@@ -86,7 +88,10 @@ public class OnFishEvent implements Listener {
 
         ItemStack item = new ItemStack(Material.BARREL);
         BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
-        meta.displayName(langConfig.getOldBarrelName());
+
+        BaseComponent[] barrelName = BungeeComponentSerializer.get().serialize(langConfig.getOldBarrelName());
+
+        meta.setDisplayName(BaseComponent.toPlainText(barrelName));
         Barrel barrel = (Barrel) meta.getBlockState();
         Inventory inv = barrel.getInventory();
         items.forEach(inv::setItem);
@@ -138,13 +143,5 @@ public class OnFishEvent implements Listener {
         Random random = new Random();
         int size = colors.size() - 1;
         return colors.get(random.nextInt(size));
-    }
-
-    private Entity spawnStalin(Location loc) {
-        Giant giant = (Giant) loc.getWorld().spawnEntity(loc, EntityType.GIANT);
-
-        giant.customName(Component.text(ChatColor.RED + "Stalin"));
-        giant.setAI(true);
-        return giant;
     }
 }
