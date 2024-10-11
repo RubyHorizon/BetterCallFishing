@@ -1,4 +1,4 @@
-package me.sherhsnyaga.bettercallfishing.config;
+package me.shershnyaga.bettercallfishing.config;
 
 import lombok.Getter;
 import lombok.SneakyThrows;

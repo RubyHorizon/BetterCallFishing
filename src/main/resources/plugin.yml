@@ -1,6 +1,6 @@
 name: BetterCallFishing
 version: '${version}'
-main: me.sherhsnyaga.bettercallfishing.BetterCallFishing
+main: me.shershnyaga.bettercallfishing.BetterCallFishing
 api-version: '1.16'
 load: STARTUP
 authors: [ Shershnyaga_ ]

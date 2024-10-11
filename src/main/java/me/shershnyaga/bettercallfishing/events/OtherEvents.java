@@ -1,4 +1,4 @@
-package me.sherhsnyaga.bettercallfishing.events;
+package me.shershnyaga.bettercallfishing.events;
 
 import lombok.AllArgsConstructor;
 import org.bukkit.Material;
@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-import me.sherhsnyaga.bettercallfishing.config.WeightConfig;
+import me.shershnyaga.bettercallfishing.config.WeightConfig;
 
 @AllArgsConstructor
 public class OtherEvents implements Listener {

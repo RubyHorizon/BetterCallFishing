@@ -1,7 +1,7 @@
-package me.sherhsnyaga.bettercallfishing.events;
+package me.shershnyaga.bettercallfishing.events;
 
 import lombok.AllArgsConstructor;
-import me.sherhsnyaga.bettercallfishing.config.LangConfig;
+import me.shershnyaga.bettercallfishing.config.LangConfig;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataType;
-import me.sherhsnyaga.bettercallfishing.config.BarrelConfig;
+import me.shershnyaga.bettercallfishing.config.BarrelConfig;
 
 import java.util.*;
 

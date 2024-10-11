@@ -1,4 +1,4 @@
-package me.sherhsnyaga.bettercallfishing.utils;
+package me.shershnyaga.bettercallfishing.utils;
 
 import lombok.AllArgsConstructor;
 import net.kyori.adventure.text.Component;
@@ -7,7 +7,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
-import me.sherhsnyaga.bettercallfishing.config.LangConfig;
+import me.shershnyaga.bettercallfishing.config.LangConfig;
 
 import java.io.*;
 import java.net.HttpURLConnection;

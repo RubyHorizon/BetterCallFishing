@@ -1,4 +1,4 @@
-package me.sherhsnyaga.bettercallfishing;
+package me.shershnyaga.bettercallfishing;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -6,14 +6,14 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
-import me.sherhsnyaga.bettercallfishing.commands.BetterCallFishCmd;
-import me.sherhsnyaga.bettercallfishing.config.BarrelConfig;
-import me.sherhsnyaga.bettercallfishing.config.LangConfig;
-import me.sherhsnyaga.bettercallfishing.config.WeightConfig;
-import me.sherhsnyaga.bettercallfishing.events.OnFishEvent;
-import me.sherhsnyaga.bettercallfishing.events.OtherEvents;
-import me.sherhsnyaga.bettercallfishing.utils.AutoUpdate;
-import me.sherhsnyaga.bettercallfishing.utils.Metrics;
+import me.shershnyaga.bettercallfishing.commands.BetterCallFishCmd;
+import me.shershnyaga.bettercallfishing.config.BarrelConfig;
+import me.shershnyaga.bettercallfishing.config.LangConfig;
+import me.shershnyaga.bettercallfishing.config.WeightConfig;
+import me.shershnyaga.bettercallfishing.events.OnFishEvent;
+import me.shershnyaga.bettercallfishing.events.OtherEvents;
+import me.shershnyaga.bettercallfishing.utils.AutoUpdate;
+import me.shershnyaga.bettercallfishing.utils.Metrics;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

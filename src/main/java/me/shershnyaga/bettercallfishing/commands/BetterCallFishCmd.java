@@ -1,21 +1,19 @@
-package me.sherhsnyaga.bettercallfishing.commands;
+package me.shershnyaga.bettercallfishing.commands;
 
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import me.sherhsnyaga.bettercallfishing.BetterCallFishing;
-import me.sherhsnyaga.bettercallfishing.config.BarrelConfig;
-import me.sherhsnyaga.bettercallfishing.config.LangConfig;
+import me.shershnyaga.bettercallfishing.BetterCallFishing;
+import me.shershnyaga.bettercallfishing.config.BarrelConfig;
+import me.shershnyaga.bettercallfishing.config.LangConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
