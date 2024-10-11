@@ -52,7 +52,7 @@ public class BetterCallFishCmd implements TabExecutor {
                 BaseComponent[] barrelName = BungeeComponentSerializer.get().serialize(langConfig.getOldBarrelName());
 
                 Inventory inv = Bukkit.createInventory(null, InventoryType.BARREL,
-                        BaseComponent.toPlainText(barrelName));
+                        BaseComponent.toLegacyText(barrelName));
                 items.forEach(inv::setItem);
 
                 player.openInventory(inv);

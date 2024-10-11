@@ -84,7 +84,7 @@ public class OnFishEvent implements Listener {
 
         BaseComponent[] barrelName = BungeeComponentSerializer.get().serialize(langConfig.getOldBarrelName());
 
-        meta.setDisplayName(BaseComponent.toPlainText(barrelName));
+        meta.setDisplayName(BaseComponent.toLegacyText(barrelName));
         Barrel barrel = (Barrel) meta.getBlockState();
         Inventory inv = barrel.getInventory();
         items.forEach(inv::setItem);
