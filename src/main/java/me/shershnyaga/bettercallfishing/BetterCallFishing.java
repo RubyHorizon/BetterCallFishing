@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import me.shershnyaga.bettercallfishing.events.OnJoinEvent;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
@@ -62,9 +63,10 @@ public final class BetterCallFishing extends JavaPlugin {
         saveDefaultConfig();
         reloadConfig();
 
-        update();
+        Bukkit.getScheduler().runTaskAsynchronously(this, this::update);
 
         reloadManager = new ReloadManager();
+
         reloadManager.reload();
     }
 
@@ -87,8 +89,9 @@ public final class BetterCallFishing extends JavaPlugin {
 
         for (String lang: LANG_LIST) {
             if (!new File(getDataFolder().getAbsolutePath() + File.separator + "lang" + File.separator +
-                    lang + ".yml").exists())
+                    lang + ".yml").exists()) {
                 saveResource("lang/" + lang + ".yml", false);
+            }
         }
 
         String langFileName = getConfig().getString("lang-file");
