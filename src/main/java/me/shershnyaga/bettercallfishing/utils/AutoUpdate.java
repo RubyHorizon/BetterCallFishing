@@ -152,6 +152,7 @@ public class AutoUpdate {
             URL url = new URL(UPDATE_URL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
+            connection.setConnectTimeout(10000);
             connection.setUseCaches(false);
 
             int responseCode = connection.getResponseCode();
@@ -171,8 +172,8 @@ public class AutoUpdate {
                 return null;
             }
         } catch (Exception e) {
-            Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] Failed to check updates:");
-            e.printStackTrace();
+            Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] Failed to check updates. Please try again " +
+                    "later.");
         }
 
         return null;
