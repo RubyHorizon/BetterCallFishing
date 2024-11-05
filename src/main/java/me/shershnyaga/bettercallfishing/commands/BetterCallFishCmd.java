@@ -2,7 +2,6 @@ package me.shershnyaga.bettercallfishing.commands;
 
 import lombok.AllArgsConstructor;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.kyori.adventure.platform.bukkit.MinecraftComponentSerializer;
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
@@ -16,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import me.shershnyaga.bettercallfishing.BetterCallFishing;
-import me.shershnyaga.bettercallfishing.config.BarrelConfig;
+import me.shershnyaga.bettercallfishing.config.BarrelConfigOld;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public class BetterCallFishCmd implements TabExecutor {
-    private BarrelConfig barrelConfig;
+    private BarrelConfigOld barrelConfigOld;
     private BetterCallFishing.ReloadManager reloadManager;
     private LangConfig langConfig;
     private BukkitAudiences audiences;
@@ -47,7 +46,7 @@ public class BetterCallFishCmd implements TabExecutor {
         else if (strings[0].equals("gen_barrel") && commandSender.hasPermission("bettercallfishing.barrels")) {
 
             if (commandSender instanceof Player player) {
-                HashMap<Integer, ItemStack> items = barrelConfig.generateBarrelInventoryMap();
+                HashMap<Integer, ItemStack> items = barrelConfigOld.generateBarrelInventoryMap();
 
                 BaseComponent[] barrelName = BungeeComponentSerializer.get().serialize(langConfig.getOldBarrelName());
 

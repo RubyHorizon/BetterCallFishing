@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataType;
-import me.shershnyaga.bettercallfishing.config.BarrelConfig;
+import me.shershnyaga.bettercallfishing.config.BarrelConfigOld;
 
 import java.util.*;
 
@@ -27,7 +27,7 @@ import java.util.*;
 public class OnFishEvent implements Listener {
 
     private final FileConfiguration config;
-    private final BarrelConfig barrelConfig;
+    private final BarrelConfigOld barrelConfigOld;
     private final FixedMetadataValue metadataValue;
     private final LangConfig langConfig;
 
@@ -51,7 +51,7 @@ public class OnFishEvent implements Listener {
 
             Entity fish = getFish(event.getCaught());
 
-            if (barrelConfig.testBarrelCatch()) {
+            if (barrelConfigOld.testBarrelCatch()) {
                 ItemStack barrel = getBarrelItem();
                 Item caughtItem = (Item) caught;
                 caughtItem.setItemStack(barrel);
@@ -77,7 +77,7 @@ public class OnFishEvent implements Listener {
     }
 
     private ItemStack getBarrelItem() {
-        HashMap<Integer, ItemStack> items = barrelConfig.generateBarrelInventoryMap();
+        HashMap<Integer, ItemStack> items = barrelConfigOld.generateBarrelInventoryMap();
 
         ItemStack item = new ItemStack(Material.BARREL);
         BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();

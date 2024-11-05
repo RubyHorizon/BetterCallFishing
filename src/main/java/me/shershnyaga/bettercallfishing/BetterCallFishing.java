@@ -11,7 +11,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import me.shershnyaga.bettercallfishing.commands.BetterCallFishCmd;
-import me.shershnyaga.bettercallfishing.config.BarrelConfig;
+import me.shershnyaga.bettercallfishing.config.BarrelConfigOld;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.WeightConfig;
 import me.shershnyaga.bettercallfishing.events.OnFishEvent;
@@ -47,7 +47,7 @@ public final class BetterCallFishing extends JavaPlugin {
     @Getter
     private static ReloadManager reloadManager;
     private Metrics metrics;
-    private BarrelConfig barrelConfig;
+    private BarrelConfigOld barrelConfigOld;
     private LangConfig langConfig;
     private WeightConfig weightConfig;
 
@@ -80,7 +80,7 @@ public final class BetterCallFishing extends JavaPlugin {
 
         loadLang();
         weightConfig = new WeightConfig(getConfig(), langConfig);
-        barrelConfig = new BarrelConfig(getConfig());
+        barrelConfigOld = new BarrelConfigOld(getConfig());
     }
 
     @SneakyThrows
@@ -138,7 +138,7 @@ public final class BetterCallFishing extends JavaPlugin {
 
     private void reloadCommands() {
         Objects.requireNonNull(getServer().getPluginCommand("bettercallfishing"))
-                .setExecutor(new BetterCallFishCmd(barrelConfig, reloadManager, langConfig, adventure));
+                .setExecutor(new BetterCallFishCmd(barrelConfigOld, reloadManager, langConfig, adventure));
     }
 
     private void reloadEvents() {
@@ -146,7 +146,7 @@ public final class BetterCallFishing extends JavaPlugin {
             HandlerList.unregisterAll(this);
         }
 
-        getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfig,
+        getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfigOld,
                 new FixedMetadataValue(this, true), langConfig), this);
         getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
         getServer().getPluginManager().registerEvents(new OnJoinEvent(autoUpdate), this);
