@@ -3,7 +3,6 @@ package me.shershnyaga.bettercallfishing.events;
 import lombok.AllArgsConstructor;
 import me.shershnyaga.bettercallfishing.utils.Constants;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
@@ -11,12 +10,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-import me.shershnyaga.bettercallfishing.config.WeightConfig;
 
 @AllArgsConstructor
 public class OtherEvents implements Listener {
-
-    private WeightConfig weightConfig;
 
     @EventHandler
     private void onRightClickAtFish(PlayerInteractAtEntityEvent event) {

@@ -21,6 +21,7 @@ public class EnchantmentSerializer extends YamlSerializable {
 
     public void append(ItemMeta meta) {
         Enchantment enchantment = Enchantment.getByName(this.enchantment);
+        assert enchantment != null;
         meta.addEnchant(enchantment, lvl, hide);
     }
 }

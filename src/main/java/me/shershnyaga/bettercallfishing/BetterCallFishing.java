@@ -49,7 +49,6 @@ public final class BetterCallFishing extends JavaPlugin {
     private Metrics metrics;
     private BarrelConfigOld barrelConfigOld;
     private LangConfig langConfig;
-    private WeightConfig weightConfig;
 
     private boolean isLoaded = false;
 
@@ -79,7 +78,6 @@ public final class BetterCallFishing extends JavaPlugin {
         }
 
         loadLang();
-        weightConfig = new WeightConfig(getConfig(), langConfig);
         barrelConfigOld = new BarrelConfigOld(getConfig());
     }
 
@@ -148,7 +146,6 @@ public final class BetterCallFishing extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfigOld,
                 new FixedMetadataValue(this, true), langConfig), this);
-        getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
         getServer().getPluginManager().registerEvents(new OnJoinEvent(autoUpdate), this);
     }
 
