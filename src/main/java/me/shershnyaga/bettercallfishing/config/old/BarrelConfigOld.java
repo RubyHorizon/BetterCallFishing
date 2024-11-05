@@ -1,4 +1,4 @@
-package me.shershnyaga.bettercallfishing.config;
+package me.shershnyaga.bettercallfishing.config.old;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

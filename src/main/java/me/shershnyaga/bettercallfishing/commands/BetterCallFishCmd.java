@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import me.shershnyaga.bettercallfishing.BetterCallFishing;
-import me.shershnyaga.bettercallfishing.config.BarrelConfigOld;
+import me.shershnyaga.bettercallfishing.config.old.BarrelConfigOld;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 
 import java.util.ArrayList;

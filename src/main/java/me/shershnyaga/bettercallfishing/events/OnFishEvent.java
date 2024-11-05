@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataType;
-import me.shershnyaga.bettercallfishing.config.BarrelConfigOld;
+import me.shershnyaga.bettercallfishing.config.old.BarrelConfigOld;
 
 import java.util.*;
 

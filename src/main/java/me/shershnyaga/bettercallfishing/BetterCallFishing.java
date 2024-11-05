@@ -11,7 +11,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import me.shershnyaga.bettercallfishing.commands.BetterCallFishCmd;
-import me.shershnyaga.bettercallfishing.config.BarrelConfigOld;
+import me.shershnyaga.bettercallfishing.config.old.BarrelConfigOld;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.WeightConfig;
 import me.shershnyaga.bettercallfishing.events.OnFishEvent;
