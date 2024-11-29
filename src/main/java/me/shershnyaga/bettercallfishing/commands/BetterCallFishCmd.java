@@ -1,8 +1,10 @@
 package me.shershnyaga.bettercallfishing.commands;
 
 import lombok.AllArgsConstructor;
+import me.shershnyaga.bettercallfishing.BetterCallFishing;
+import me.shershnyaga.bettercallfishing.config.BarrelConfig;
+import me.shershnyaga.bettercallfishing.config.LangConfig;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.kyori.adventure.platform.bukkit.MinecraftComponentSerializer;
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
@@ -15,9 +17,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import me.shershnyaga.bettercallfishing.BetterCallFishing;
-import me.shershnyaga.bettercallfishing.config.BarrelConfig;
-import me.shershnyaga.bettercallfishing.config.LangConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;

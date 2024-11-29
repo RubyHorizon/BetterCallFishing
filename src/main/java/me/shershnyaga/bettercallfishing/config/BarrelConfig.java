@@ -1,11 +1,9 @@
 package me.shershnyaga.bettercallfishing.config;
 
-import dev.lone.itemsadder.api.CustomBlock;
 import dev.lone.itemsadder.api.CustomStack;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import me.shershnyaga.bettercallfishing.BetterCallFishing;
 import me.shershnyaga.bettercallfishing.utils.ItemsAdderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
