@@ -1,5 +1,6 @@
 package me.shershnyaga.bettercallfishing.config;
 
+import dev.lone.itemsadder.api.CustomBlock;
 import dev.lone.itemsadder.api.CustomStack;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -49,12 +50,12 @@ public class BarrelConfig {
 
                 if (!isIaEnabled) {
                     Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] \""
-                            + iaKey + "\" is ItemsAdderItem, but This is an ItemsAdder item, but the ItemsAdder plugin " +
+                            + iaKey + "\" this is an ItemsAdder item, but the ItemsAdder plugin " +
                             "is not loaded!!");
                     continue;
                 }
 
-                if (!CustomStack.isInRegistry(iaKey)) {
+                if (CustomStack.isInRegistry(iaKey)) {
                     settings = new ItemSettings(CustomStack.getInstance(iaKey).getItemStack(),
                             chance, minCount, maxCount, 0);
                 } else {

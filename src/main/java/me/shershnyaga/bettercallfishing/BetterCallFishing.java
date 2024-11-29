@@ -30,7 +30,7 @@ import java.util.Set;
 
 public final class BetterCallFishing extends JavaPlugin {
 
-    private static final boolean ENABLE_AUTO_UPDATE = true;
+    private static final boolean ENABLE_AUTO_UPDATE = false;
 
     public static final List<String> LANG_LIST = Arrays.asList(
             "ru",
