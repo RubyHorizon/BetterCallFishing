@@ -14,6 +14,7 @@ import me.shershnyaga.bettercallfishing.utils.Metrics;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -63,6 +64,8 @@ public final class BetterCallFishing extends JavaPlugin {
         saveDefaultConfig();
         reloadConfig();
 
+        saveResource("barrel_config.yml", false);
+
         Bukkit.getScheduler().runTaskAsynchronously(this, this::update);
 
         reloadManager = new ReloadManager();
@@ -79,8 +82,13 @@ public final class BetterCallFishing extends JavaPlugin {
         }
 
         loadLang();
+
+        moveBarrelConfig();
+
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "barrel_config.yml"));
+
         weightConfig = new WeightConfig(getConfig(), langConfig);
-        barrelConfig = new BarrelConfig(getConfig());
+        barrelConfig = new BarrelConfig(cfg);
     }
 
     @SneakyThrows
@@ -191,6 +199,48 @@ public final class BetterCallFishing extends JavaPlugin {
             autoUpdate.update();
         }
 
+    }
+
+    private void moveBarrelConfig() {
+
+        if (getConfig().contains("barrel-items")) {
+            File oldCofnigFile = new File(getDataFolder().getAbsolutePath(), "config.yml");
+            File newConfigFile = new File(getDataFolder().getAbsolutePath(), "barrel_config.yml");
+
+            try (FileWriter writer = new FileWriter(newConfigFile)) {
+                writer.write("");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            FileConfiguration oldConfig = getConfig();
+            FileConfiguration newConfig = YamlConfiguration.loadConfiguration(newConfigFile);
+
+            if (oldConfig.contains("barrel-items")) {
+                if (oldConfig.contains("enable-barrel-catch")) {
+                    newConfig.set("enable-barrel-catch", oldConfig.get("enable-barrel-catch"));
+                    oldConfig.set("enable-barrel-catch", null);
+                }
+
+                if (oldConfig.contains("barrel-catch-chance")) {
+                    newConfig.set("barrel-catch-chance", oldConfig.get("barrel-catch-chance"));
+                    oldConfig.set("barrel-catch-chance", null);
+                }
+
+                if (oldConfig.contains("barrel-items")) {
+                    newConfig.set("barrel-items", oldConfig.getConfigurationSection("barrel-items"));
+                    oldConfig.set("barrel-items", null);
+                }
+
+                try {
+                    newConfig.save(newConfigFile);
+                    oldConfig.save(oldCofnigFile);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override

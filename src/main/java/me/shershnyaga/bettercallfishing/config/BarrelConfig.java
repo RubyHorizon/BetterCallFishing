@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
 import java.util.*;
 
 public class BarrelConfig {
@@ -26,7 +27,7 @@ public class BarrelConfig {
         setConfiguration(configuration);
     }
 
-    public void setConfiguration(FileConfiguration config) {
+    private void setConfiguration(FileConfiguration config) {
         itemSettingsList.clear();
         isEnable = config.getBoolean("enable-barrel-catch");
         catchChance = config.getInt("barrel-catch-chance");
@@ -166,9 +167,10 @@ public class BarrelConfig {
 
         private Optional<ItemStack> getIAItem(String id, int amount) {
             if (ItemsAdderUtil.isEnabled()) {
-                if (CustomStack.isInRegistry(id)) {
+                String iaId = id.replace("IA:", "");
+                if (CustomStack.isInRegistry(iaId)) {
 
-                    ItemStack item = CustomStack.getInstance(id).getItemStack().clone();
+                    ItemStack item = CustomStack.getInstance(iaId).getItemStack().clone();
                     item.setAmount(amount);
 
                     return Optional.of(item);
@@ -177,8 +179,7 @@ public class BarrelConfig {
                 Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] \""
                         + id + "\" is not registered in ItemsAdder!");
 
-            }
-            else {
+            } else {
                 Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] \""
                         + id + "\" this is an ItemsAdder item, but the ItemsAdder plugin " +
                         "is not loaded!!");
