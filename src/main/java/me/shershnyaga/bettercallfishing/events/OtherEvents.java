@@ -34,8 +34,8 @@ public class OtherEvents implements Listener {
 
         Player player = event.getPlayer();
 
-        if (player.getInventory().getItemInMainHand().getType().name().contains("BUKKIT")
-            || player.getInventory().getItemInOffHand().getType().name().contains("BUKKIT")) {
+        if (player.getInventory().getItemInMainHand().getType().name().contains("BUCKET")
+            || player.getInventory().getItemInOffHand().getType().name().contains("BUCKET")) {
             return;
         }
 
