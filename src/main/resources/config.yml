@@ -6,6 +6,11 @@ enable-barrel-catch: true
 barrel-catch-chance: 10.0 # Hook Item Replacement Chance (0.0 - 100.0)
 dolphin-catch-chance: 2.0 # 0.0 - 100.0
 barrel-items:
+  # ItemsAdder example
+# IA:test_item_namespace:
+#   chance: 25
+#   min-count: 1
+#   max-count: 5
   BONE_MEAL:
     chance: 25.0 # 0.0 - 100.0
     min-count: 1

@@ -2,7 +2,15 @@ package me.shershnyaga.bettercallfishing;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
+import me.shershnyaga.bettercallfishing.commands.BetterCallFishCmd;
+import me.shershnyaga.bettercallfishing.config.BarrelConfig;
+import me.shershnyaga.bettercallfishing.config.LangConfig;
+import me.shershnyaga.bettercallfishing.config.WeightConfig;
+import me.shershnyaga.bettercallfishing.events.OnFishEvent;
 import me.shershnyaga.bettercallfishing.events.OnJoinEvent;
+import me.shershnyaga.bettercallfishing.events.OtherEvents;
+import me.shershnyaga.bettercallfishing.utils.AutoUpdate;
+import me.shershnyaga.bettercallfishing.utils.Metrics;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,14 +18,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
-import me.shershnyaga.bettercallfishing.commands.BetterCallFishCmd;
-import me.shershnyaga.bettercallfishing.config.BarrelConfig;
-import me.shershnyaga.bettercallfishing.config.LangConfig;
-import me.shershnyaga.bettercallfishing.config.WeightConfig;
-import me.shershnyaga.bettercallfishing.events.OnFishEvent;
-import me.shershnyaga.bettercallfishing.events.OtherEvents;
-import me.shershnyaga.bettercallfishing.utils.AutoUpdate;
-import me.shershnyaga.bettercallfishing.utils.Metrics;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -30,7 +30,7 @@ import java.util.Set;
 
 public final class BetterCallFishing extends JavaPlugin {
 
-    private static final boolean ENABLE_AUTO_UPDATE = true;
+    private static final boolean ENABLE_AUTO_UPDATE = false;
 
     public static final List<String> LANG_LIST = Arrays.asList(
             "ru",

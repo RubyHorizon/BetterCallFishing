@@ -3,8 +3,10 @@ version: '${version}'
 main: me.shershnyaga.bettercallfishing.BetterCallFishing
 api-version: '1.16'
 load: STARTUP
+softdepend:
+  - ItemsAdder
 authors: [ Shershnyaga_ ]
-website: shershnyaga.xyz
+website: shershnyaga.me
 commands:
   bettercallfishing:
     usage: /bettercallfishing <args>

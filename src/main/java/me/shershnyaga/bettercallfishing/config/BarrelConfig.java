@@ -1,8 +1,12 @@
 package me.shershnyaga.bettercallfishing.config;
 
+import dev.lone.itemsadder.api.CustomStack;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import me.shershnyaga.bettercallfishing.utils.ItemsAdderUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -30,13 +34,40 @@ public class BarrelConfig {
 
         Set<String> keys = config.getConfigurationSection("barrel-items").getKeys(false);
 
+        boolean isIaEnabled = ItemsAdderUtil.isEnabled();
+
         for (String key: keys) {
             int chance = config.getInt("barrel-items." + key + ".chance");
             int minCount = config.getInt("barrel-items." + key + ".min-count");
             int maxCount = config.getInt("barrel-items." + key + ".max-count");
 
-            ItemSettings settings = new ItemSettings(Material.getMaterial(key), chance, minCount, maxCount, 0);
-            itemSettingsList.add(settings);
+            ItemSettings settings = null;
+            if (key.startsWith("IA:")) {
+
+                String iaKey = key.replace("IA:", "");
+
+                if (!isIaEnabled) {
+                    Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] \""
+                            + iaKey + "\" this is an ItemsAdder item, but the ItemsAdder plugin " +
+                            "is not loaded!!");
+                    continue;
+                }
+
+                if (CustomStack.isInRegistry(iaKey)) {
+                    settings = new ItemSettings(CustomStack.getInstance(iaKey).getItemStack(),
+                            chance, minCount, maxCount, 0);
+                } else {
+                    Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] \""
+                            + iaKey + "\" is not registered in ItemsAdder!");
+                }
+            } else {
+                settings = new ItemSettings(new ItemStack(Objects.requireNonNull(Material.getMaterial(key))),
+                        chance, minCount, maxCount, 0);
+            }
+
+            if (settings != null) {
+                itemSettingsList.add(settings);
+            }
         }
     }
 
@@ -52,7 +83,7 @@ public class BarrelConfig {
         List<ItemSettings> itemSettings = new ArrayList<>();
 
         for (ItemSettings i: itemSettingsList) {
-            itemSettings.add(new ItemSettings(i.material, i.chance, i.minCount, i.maxCount, 0));
+            itemSettings.add(new ItemSettings(i.item.clone(), i.chance, i.minCount, i.maxCount, 0));
         }
 
         while (!slotList.isEmpty()) {
@@ -66,14 +97,21 @@ public class BarrelConfig {
                 if (itemData.counter == 0) {
                     if (getRandom(0f, 100f) < itemData.chance) {
                         int itemCount = getRandom(itemData.minCount, itemData.maxCount);
-                        inventory.put(slot, new ItemStack(itemData.material, itemCount));
+
+                        ItemStack stack = itemData.item.clone();
+                        stack.setAmount(itemCount);
+                        inventory.put(slot, stack);
+
                         itemData.counter = itemData.counter + itemCount;
                     }
                 }
                 else {
                     if (getRandom(0f, 100f) < itemData.chance) {
                         int itemCount = getRandom(1, itemData.maxCount - itemData.counter);
-                        inventory.put(slot, new ItemStack(itemData.material, itemCount));
+
+                        ItemStack stack = itemData.item.clone();
+                        stack.setAmount(itemCount);
+                        inventory.put(slot, stack);
                         itemData.counter = itemData.counter + itemCount;
                     }
                 }
@@ -104,7 +142,7 @@ public class BarrelConfig {
     @AllArgsConstructor
     @Getter
     private static class ItemSettings {
-        private Material material;
+        private ItemStack item;
         private float chance;
         private int minCount;
         private int maxCount;
