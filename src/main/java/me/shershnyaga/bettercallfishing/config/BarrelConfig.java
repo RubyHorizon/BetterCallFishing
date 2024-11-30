@@ -1,12 +1,15 @@
 package me.shershnyaga.bettercallfishing.config;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import dev.lone.itemsadder.api.CustomStack;
+import lombok.*;
+import me.shershnyaga.bettercallfishing.utils.ItemsAdderUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
 import java.util.*;
 
 public class BarrelConfig {
@@ -20,22 +23,35 @@ public class BarrelConfig {
     public BarrelConfig(FileConfiguration configuration) {
         random = new Random();
         itemSettingsList = new ArrayList<>();
+
         setConfiguration(configuration);
     }
 
-    public void setConfiguration(FileConfiguration config) {
+    private void setConfiguration(FileConfiguration config) {
         itemSettingsList.clear();
         isEnable = config.getBoolean("enable-barrel-catch");
         catchChance = config.getInt("barrel-catch-chance");
 
         Set<String> keys = config.getConfigurationSection("barrel-items").getKeys(false);
 
+        boolean isIaEnabled = ItemsAdderUtil.isEnabled();
+
         for (String key: keys) {
             int chance = config.getInt("barrel-items." + key + ".chance");
             int minCount = config.getInt("barrel-items." + key + ".min-count");
             int maxCount = config.getInt("barrel-items." + key + ".max-count");
 
-            ItemSettings settings = new ItemSettings(Material.getMaterial(key), chance, minCount, maxCount, 0);
+            if (key.startsWith("IA:")) {
+                if (!isIaEnabled) {
+                    Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] \""
+                            + key + "\" this is an ItemsAdder item, but the ItemsAdder plugin " +
+                            "is not loaded!!");
+                    continue;
+                }
+
+            }
+
+            ItemSettings settings = new ItemSettings(key, chance, minCount, maxCount, 0);
             itemSettingsList.add(settings);
         }
     }
@@ -52,7 +68,10 @@ public class BarrelConfig {
         List<ItemSettings> itemSettings = new ArrayList<>();
 
         for (ItemSettings i: itemSettingsList) {
-            itemSettings.add(new ItemSettings(i.material, i.chance, i.minCount, i.maxCount, 0));
+
+            if (i.getItem().isPresent()) {
+                itemSettings.add(new ItemSettings(i.id, i.chance, i.minCount, i.maxCount, 0));
+            }
         }
 
         while (!slotList.isEmpty()) {
@@ -66,15 +85,27 @@ public class BarrelConfig {
                 if (itemData.counter == 0) {
                     if (getRandom(0f, 100f) < itemData.chance) {
                         int itemCount = getRandom(itemData.minCount, itemData.maxCount);
-                        inventory.put(slot, new ItemStack(itemData.material, itemCount));
-                        itemData.counter = itemData.counter + itemCount;
+
+                        if (itemData.getItem().isPresent()) {
+                            ItemStack stack = itemData.getItem().get();
+                            stack.setAmount(itemCount);
+                            inventory.put(slot, stack);
+
+                            itemData.counter = itemData.counter + itemCount;
+                        }
                     }
                 }
                 else {
                     if (getRandom(0f, 100f) < itemData.chance) {
                         int itemCount = getRandom(1, itemData.maxCount - itemData.counter);
-                        inventory.put(slot, new ItemStack(itemData.material, itemCount));
-                        itemData.counter = itemData.counter + itemCount;
+
+                        if (itemData.getItem().isPresent()) {
+                            ItemStack stack = itemData.getItem().get();
+                            stack.setAmount(itemCount);
+                            inventory.put(slot, stack);
+
+                            itemData.counter = itemData.counter + itemCount;
+                        }
                     }
                 }
             }
@@ -102,13 +133,59 @@ public class BarrelConfig {
     }
 
     @AllArgsConstructor
-    @Getter
     private static class ItemSettings {
-        private Material material;
+
+        @Getter
+        private String id;
+
+        @Getter
         private float chance;
+
+        @Getter
         private int minCount;
+
+        @Getter
         private int maxCount;
+
         @Setter
         private int counter;
+
+        public Optional<ItemStack> getItem() {
+            return getItem(1);
+        }
+
+        public Optional<ItemStack> getItem(int amount) {
+            if (id.startsWith("IA:")) {
+                return getIAItem(id, amount);
+            } else if (Material.matchMaterial(id) != null) {
+                return Optional.of(new ItemStack(Objects.requireNonNull(Material.getMaterial(id)), amount));
+            } else {
+
+                return Optional.empty();
+            }
+        }
+
+        private Optional<ItemStack> getIAItem(String id, int amount) {
+            if (ItemsAdderUtil.isEnabled()) {
+                String iaId = id.replace("IA:", "");
+                if (CustomStack.isInRegistry(iaId)) {
+
+                    ItemStack item = CustomStack.getInstance(iaId).getItemStack().clone();
+                    item.setAmount(amount);
+
+                    return Optional.of(item);
+                }
+
+                Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] \""
+                        + id + "\" is not registered in ItemsAdder!");
+
+            } else {
+                Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] \""
+                        + id + "\" this is an ItemsAdder item, but the ItemsAdder plugin " +
+                        "is not loaded!!");
+            }
+
+            return Optional.empty();
+        }
     }
 }

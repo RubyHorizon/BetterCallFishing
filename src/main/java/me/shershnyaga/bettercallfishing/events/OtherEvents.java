@@ -1,17 +1,17 @@
 package me.shershnyaga.bettercallfishing.events;
 
 import lombok.AllArgsConstructor;
+import me.shershnyaga.bettercallfishing.config.WeightConfig;
 import me.shershnyaga.bettercallfishing.utils.Constants;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-import me.shershnyaga.bettercallfishing.config.WeightConfig;
 
 @AllArgsConstructor
 public class OtherEvents implements Listener {
@@ -21,22 +21,32 @@ public class OtherEvents implements Listener {
     @EventHandler
     private void onRightClickAtFish(PlayerInteractAtEntityEvent event) {
         Entity fish = event.getRightClicked();
-        if (!isFish(fish))
+        if (!isFish(fish)) {
             return;
+        }
 
-        if (!fish.getPersistentDataContainer().has(Constants.HOOK_TIME_NAMESPACE, PersistentDataType.LONG))
+        if (!fish.getPersistentDataContainer().has(Constants.HOOK_TIME_NAMESPACE, PersistentDataType.LONG)) {
             return;
+        }
 
         long time = fish.getPersistentDataContainer().get(Constants.HOOK_TIME_NAMESPACE,
                 PersistentDataType.LONG);
 
-        if (System.currentTimeMillis() > time + 10000)
+        Player player = event.getPlayer();
+
+        if (player.getInventory().getItemInMainHand().getType().name().contains("BUCKET")
+            || player.getInventory().getItemInOffHand().getType().name().contains("BUCKET")) {
             return;
+        }
+
+        if (System.currentTimeMillis() > time + 10000) {
+            return;
+        }
 
         ItemStack fishItem = getFishItem(fish);
 
         if (fishItem != null) {
-            event.getPlayer().getInventory().addItem(fishItem);
+            player.getInventory().addItem(fishItem);
             fish.remove();
         }
     }
