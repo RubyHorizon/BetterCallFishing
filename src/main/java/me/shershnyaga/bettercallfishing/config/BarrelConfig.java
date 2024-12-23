@@ -2,6 +2,7 @@ package me.shershnyaga.bettercallfishing.config;
 
 import dev.lone.itemsadder.api.CustomStack;
 import lombok.*;
+import me.shershnyaga.bettercallfishing.BetterCallFishing;
 import me.shershnyaga.bettercallfishing.utils.integrations.ItemsAdderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -42,7 +43,7 @@ public class BarrelConfig {
 
             if (key.startsWith("IA:")) {
                 if (!isIaEnabled) {
-                    Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] \""
+                   BetterCallFishing.log(ChatColor.RED + "\""
                             + key + "\" this is an ItemsAdder item, but the ItemsAdder plugin " +
                             "is not loaded!!");
                     continue;
@@ -175,11 +176,11 @@ public class BarrelConfig {
                     return Optional.of(item);
                 }
 
-                Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] \""
+                BetterCallFishing.log(ChatColor.RED + "\""
                         + id + "\" is not registered in ItemsAdder!");
 
             } else {
-                Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] \""
+                BetterCallFishing.log(ChatColor.RED + "\""
                         + id + "\" this is an ItemsAdder item, but the ItemsAdder plugin " +
                         "is not loaded!!");
             }

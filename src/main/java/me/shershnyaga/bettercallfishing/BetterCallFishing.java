@@ -269,7 +269,7 @@ public final class BetterCallFishing extends JavaPlugin {
         boolean isNone = true;
 
         StringBuilder builder = new StringBuilder();
-        builder.append(ChatColor.GREEN + "[BetterCall Fishing] Initializing Better Call Fishing Hooks: ");
+        builder.append(ChatColor.GREEN + "Initializing Better Call Fishing Hooks: ");
         if (ItemsAdderUtil.isEnabled()) {
             isNone = false;
             builder.append(ChatColor.GREEN + "ItemsAdder, ");
@@ -290,7 +290,7 @@ public final class BetterCallFishing extends JavaPlugin {
         }
 
         if (!isNone) {
-            Bukkit.getLogger().info(message);
+            BetterCallFishing.log(message);
         }
     }
 
@@ -300,6 +300,10 @@ public final class BetterCallFishing extends JavaPlugin {
             this.adventure.close();
             this.adventure = null;
         }
+    }
+
+    public static void log(String message) {
+        Bukkit.getConsoleSender().sendMessage(message);
     }
 
 }

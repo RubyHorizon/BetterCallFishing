@@ -6,6 +6,7 @@ import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.core.mobs.ActiveMob;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import me.shershnyaga.bettercallfishing.BetterCallFishing;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -36,8 +37,8 @@ public class MythicMobsConfig {
                     return Optional.of(info);
                 }
             } else {
-                Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] Mythic mob "
-                        + info.id + " doesn't exist! Please load it to MythicMobs!");
+                BetterCallFishing.log(ChatColor.RED + "Mythic mob \""
+                        + info.id + "\" doesn't exist! Please load it to MythicMobs!");
             }
         }
 

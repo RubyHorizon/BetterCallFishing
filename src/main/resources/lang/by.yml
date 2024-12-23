@@ -2,7 +2,7 @@
 #  Калі вы хочаце зрабіць пераклад на сваю мову, то даце мне ведаць пра гэта:
 #  https://www.spigotmc.org/members/shershnyaga_.1502182/
 # Мультымоўнасць гэта крута!
-reload-message: "<green>[BetterCallFishing] Плагiн перазагружан!"
+reload-message: "<green>Плагiн перазагружан!"
 update-detect-message:
   - "<blue>----------------"
   - "<green>Знойдзена абнаўленне для BetterCallFishing!"
@@ -10,5 +10,5 @@ update-detect-message:
   - "<green>Бягучая версiя: <blue>%current_version%"
   - "%version_info%" # Пожалуйста, указывайте в данной строчке только %version_info%
   - "<blue>---------------- "
-updated-message: "<green>[BetterCallFishing] абноўлены! Для прымянення абнаўлення перазапусціце сервер."
+updated-message: "<green>абноўлены! Для прымянення абнаўлення перазапусціце сервер."
 old-barrel-name: "<gold>Старая бочка"
