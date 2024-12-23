@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import me.shershnyaga.bettercallfishing.BetterCallFishing;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -101,7 +102,7 @@ public class AutoUpdate {
                         StandardCopyOption.REPLACE_EXISTING);
 
                 LegacyComponentSerializer serializer = LegacyComponentSerializer.builder().hexColors().build();
-                Bukkit.getLogger().info(serializer.serialize(langConfig.getUpdatedMessage()));
+                BetterCallFishing.log(serializer.serialize(langConfig.getUpdatedMessage()));
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -114,7 +115,7 @@ public class AutoUpdate {
 
     private void sendMessages() {
         for (String message: getUpdateMessage()) {
-            Bukkit.getLogger().info(message);
+            BetterCallFishing.log(message);
         }
     }
 
@@ -172,7 +173,7 @@ public class AutoUpdate {
                 return null;
             }
         } catch (Exception e) {
-            Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] Failed to check updates. Please try again " +
+            BetterCallFishing.log(ChatColor.RED + "Failed to check updates. Please try again " +
                     "later.");
         }
 

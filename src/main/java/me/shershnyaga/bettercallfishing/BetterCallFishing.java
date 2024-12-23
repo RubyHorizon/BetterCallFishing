@@ -5,12 +5,15 @@ import lombok.SneakyThrows;
 import me.shershnyaga.bettercallfishing.commands.BetterCallFishCmd;
 import me.shershnyaga.bettercallfishing.config.BarrelConfig;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
+import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
 import me.shershnyaga.bettercallfishing.config.WeightConfig;
 import me.shershnyaga.bettercallfishing.events.OnFishEvent;
 import me.shershnyaga.bettercallfishing.events.OnJoinEvent;
 import me.shershnyaga.bettercallfishing.events.OtherEvents;
 import me.shershnyaga.bettercallfishing.utils.AutoUpdate;
 import me.shershnyaga.bettercallfishing.utils.Metrics;
+import me.shershnyaga.bettercallfishing.utils.integrations.ItemsAdderUtil;
+import me.shershnyaga.bettercallfishing.utils.integrations.MythicMobsUtil;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -52,6 +55,7 @@ public final class BetterCallFishing extends JavaPlugin {
     private BarrelConfig barrelConfig;
     private LangConfig langConfig;
     private WeightConfig weightConfig;
+    private MythicMobsConfig mythicMobsConfig;
 
     private boolean isLoaded = false;
 
@@ -60,12 +64,13 @@ public final class BetterCallFishing extends JavaPlugin {
     private AutoUpdate autoUpdate;
 
     private File barrelConfigFile;
+    private File mythicConfigFile;
 
     @Override
     public void onEnable() {
         adventure = BukkitAudiences.create(this);
         saveDefaultConfig();
-        reloadConfig();
+        // reloadConfig();
 
         Bukkit.getScheduler().runTaskAsynchronously(this, this::update);
 
@@ -82,7 +87,15 @@ public final class BetterCallFishing extends JavaPlugin {
             super.reloadConfig();
         }
 
+        displayAndDumpHooksConfigs();
+
         barrelConfigFile = new File(getDataFolder(), "barrel_config.yml");
+        mythicConfigFile = new File(getDataFolder(), "mythic_mobs.yml");
+
+        if (MythicMobsUtil.isEnabled()) {
+            FileConfiguration mythicConfig = YamlConfiguration.loadConfiguration(mythicConfigFile);
+            mythicMobsConfig = new MythicMobsConfig(mythicConfig);
+        }
 
         loadLang();
 
@@ -152,7 +165,7 @@ public final class BetterCallFishing extends JavaPlugin {
 
     private void reloadCommands() {
         Objects.requireNonNull(getServer().getPluginCommand("bettercallfishing"))
-                .setExecutor(new BetterCallFishCmd(barrelConfig, reloadManager, langConfig, adventure));
+                .setExecutor(new BetterCallFishCmd(barrelConfig, reloadManager, langConfig, mythicMobsConfig, adventure));
     }
 
     private void reloadEvents() {
@@ -160,7 +173,7 @@ public final class BetterCallFishing extends JavaPlugin {
             HandlerList.unregisterAll(this);
         }
 
-        getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfig,
+        getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfig, mythicMobsConfig,
                 new FixedMetadataValue(this, true), langConfig), this);
         getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
         getServer().getPluginManager().registerEvents(new OnJoinEvent(autoUpdate), this);
@@ -252,6 +265,35 @@ public final class BetterCallFishing extends JavaPlugin {
         return false;
     }
 
+    private void displayAndDumpHooksConfigs() {
+        boolean isNone = true;
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(ChatColor.GREEN + "Initializing Better Call Fishing Hooks: ");
+        if (ItemsAdderUtil.isEnabled()) {
+            isNone = false;
+            builder.append(ChatColor.GREEN + "ItemsAdder, ");
+        }
+
+        if (MythicMobsUtil.isEnabled()) {
+            if (Files.notExists(Path.of(getDataFolder().getAbsolutePath() + File.separator + "mythic_mobs.yml"))) {
+                saveResource("mythic_mobs.yml", false);
+            }
+
+            isNone = false;
+            builder.append(ChatColor.GREEN + "MythicMobs, ");
+        }
+
+        String message = builder.toString();
+        if (message.endsWith(", ")) {
+            message = message.substring(0, message.length() - 2);
+        }
+
+        if (!isNone) {
+            BetterCallFishing.log(message);
+        }
+    }
+
     @Override
     public void onDisable() {
         if(this.adventure != null) {
@@ -259,4 +301,13 @@ public final class BetterCallFishing extends JavaPlugin {
             this.adventure = null;
         }
     }
+
+    public static void log(String message) {
+        if (!message.startsWith("[BetterCallFishing]")) {
+            Bukkit.getConsoleSender().sendMessage("[BetterCallFishing] " + message);
+        } else {
+            Bukkit.getConsoleSender().sendMessage(message);
+        }
+    }
+
 }

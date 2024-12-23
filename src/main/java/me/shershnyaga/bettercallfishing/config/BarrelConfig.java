@@ -2,14 +2,14 @@ package me.shershnyaga.bettercallfishing.config;
 
 import dev.lone.itemsadder.api.CustomStack;
 import lombok.*;
-import me.shershnyaga.bettercallfishing.utils.ItemsAdderUtil;
+import me.shershnyaga.bettercallfishing.BetterCallFishing;
+import me.shershnyaga.bettercallfishing.utils.integrations.ItemsAdderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.IOException;
 import java.util.*;
 
 public class BarrelConfig {
@@ -18,6 +18,7 @@ public class BarrelConfig {
     @Getter
     private boolean isEnable;
     private float catchChance;
+    @Getter
     private final List<ItemSettings> itemSettingsList;
 
     public BarrelConfig(FileConfiguration configuration) {
@@ -43,7 +44,7 @@ public class BarrelConfig {
 
             if (key.startsWith("IA:")) {
                 if (!isIaEnabled) {
-                    Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] \""
+                   BetterCallFishing.log(ChatColor.RED + "\""
                             + key + "\" this is an ItemsAdder item, but the ItemsAdder plugin " +
                             "is not loaded!!");
                     continue;
@@ -133,7 +134,7 @@ public class BarrelConfig {
     }
 
     @AllArgsConstructor
-    private static class ItemSettings {
+    public static class ItemSettings {
 
         @Getter
         private String id;
@@ -165,6 +166,18 @@ public class BarrelConfig {
             }
         }
 
+        public boolean isIAItem() {
+            return id.startsWith("IA:");
+        }
+
+        public boolean isLoadedIAItem() {
+            if (isIAItem()) {
+                return CustomStack.isInRegistry(id.replace("IA:", ""));
+            }
+
+            return false;
+        }
+
         private Optional<ItemStack> getIAItem(String id, int amount) {
             if (ItemsAdderUtil.isEnabled()) {
                 String iaId = id.replace("IA:", "");
@@ -176,11 +189,11 @@ public class BarrelConfig {
                     return Optional.of(item);
                 }
 
-                Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] \""
+                BetterCallFishing.log(ChatColor.RED + "\""
                         + id + "\" is not registered in ItemsAdder!");
 
             } else {
-                Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] \""
+                BetterCallFishing.log(ChatColor.RED + "\""
                         + id + "\" this is an ItemsAdder item, but the ItemsAdder plugin " +
                         "is not loaded!!");
             }

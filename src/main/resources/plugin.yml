@@ -5,6 +5,7 @@ api-version: '1.16'
 load: STARTUP
 softdepend:
   - ItemsAdder
+  - MythicMobs
 authors: [ Shershnyaga_ ]
 website: shershnyaga.me
 commands:
