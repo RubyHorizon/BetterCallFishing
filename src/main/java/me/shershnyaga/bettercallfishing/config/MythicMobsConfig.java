@@ -13,13 +13,12 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 
-import java.util.HashMap;
-import java.util.Optional;
-
-@Getter
+import java.util.*;
 public class MythicMobsConfig {
 
     private HashMap<String, MythicMobInfo> mobs = new HashMap<>();
+
+    private Random random = new Random();
 
     public MythicMobsConfig(FileConfiguration config) {
 
@@ -35,26 +34,35 @@ public class MythicMobsConfig {
 
     }
 
+    public Optional<MythicMobInfo> getRandomMobInfo() {
+        List<MythicMobInfo> infos = new ArrayList<>(mobs.values().stream().toList());
+        Collections.shuffle(infos);
+
+        for (MythicMobInfo info : infos) {
+            if (info.spawnChance >= getRandomFloat() && info.spawnChance > 0f) {
+                return Optional.of(info);
+            }
+        }
+
+        return Optional.empty();
+    }
+
     @AllArgsConstructor
     @Getter
     public static class MythicMobInfo {
         private String id;
         private float spawnChance;
 
-        public Optional<Entity> spawn(Location spawnLocation) {
-
-            if (!MythicMobsUtil.isEnabled()) {
-                return Optional.empty();
-            }
+        public Entity spawn(Location spawnLocation) {
 
             MythicMob mob = MythicBukkit.inst().getMobManager().getMythicMob(id).orElse(null);
 
-            if (mob == null) {
-                return Optional.empty();
-            }
-
             ActiveMob activeMob = mob.spawn(BukkitAdapter.adapt(spawnLocation),1);
-            return Optional.of(activeMob.getEntity().getBukkitEntity());
+            return activeMob.getEntity().getBukkitEntity();
         }
+    }
+
+    private float getRandomFloat() {
+        return random.nextFloat() * 100;
     }
 }

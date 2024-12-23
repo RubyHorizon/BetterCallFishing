@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import me.shershnyaga.bettercallfishing.commands.BetterCallFishCmd;
 import me.shershnyaga.bettercallfishing.config.BarrelConfig;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
+import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
 import me.shershnyaga.bettercallfishing.config.WeightConfig;
 import me.shershnyaga.bettercallfishing.events.OnFishEvent;
 import me.shershnyaga.bettercallfishing.events.OnJoinEvent;
@@ -54,6 +55,7 @@ public final class BetterCallFishing extends JavaPlugin {
     private BarrelConfig barrelConfig;
     private LangConfig langConfig;
     private WeightConfig weightConfig;
+    private MythicMobsConfig mythicMobsConfig;
 
     private boolean isLoaded = false;
 
@@ -62,6 +64,7 @@ public final class BetterCallFishing extends JavaPlugin {
     private AutoUpdate autoUpdate;
 
     private File barrelConfigFile;
+    private File mythicConfigFile;
 
     @Override
     public void onEnable() {
@@ -87,6 +90,9 @@ public final class BetterCallFishing extends JavaPlugin {
         displayAndDumpHooksConfigs();
 
         barrelConfigFile = new File(getDataFolder(), "barrel_config.yml");
+        mythicConfigFile = new File(getDataFolder(), "mythic_config.yml");
+
+        mythicMobsConfig = new MythicMobsConfig(YamlConfiguration.loadConfiguration(mythicConfigFile));
 
         loadLang();
 
@@ -164,7 +170,7 @@ public final class BetterCallFishing extends JavaPlugin {
             HandlerList.unregisterAll(this);
         }
 
-        getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfig,
+        getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfig, mythicMobsConfig,
                 new FixedMetadataValue(this, true), langConfig), this);
         getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
         getServer().getPluginManager().registerEvents(new OnJoinEvent(autoUpdate), this);
