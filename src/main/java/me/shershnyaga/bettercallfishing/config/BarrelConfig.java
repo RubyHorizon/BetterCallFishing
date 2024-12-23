@@ -2,14 +2,13 @@ package me.shershnyaga.bettercallfishing.config;
 
 import dev.lone.itemsadder.api.CustomStack;
 import lombok.*;
-import me.shershnyaga.bettercallfishing.utils.ItemsAdderUtil;
+import me.shershnyaga.bettercallfishing.utils.integrations.ItemsAdderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.IOException;
 import java.util.*;
 
 public class BarrelConfig {

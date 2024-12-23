@@ -1,4 +1,4 @@
-package me.shershnyaga.bettercallfishing.utils;
+package me.shershnyaga.bettercallfishing.utils.integrations;
 
 import org.bukkit.Bukkit;
 
