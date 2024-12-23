@@ -7,6 +7,8 @@ import io.lumine.mythic.core.mobs.ActiveMob;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.shershnyaga.bettercallfishing.utils.integrations.MythicMobsUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
@@ -22,14 +24,16 @@ public class MythicMobsConfig {
     public MythicMobsConfig(FileConfiguration config) {
 
         config.getKeys(false).forEach(key -> {
-
-            float chance = (float) config.getDouble(key + ".catch-chance");
-
-            mobs.put(key, new MythicMobInfo(key, chance));
+            if (MythicBukkit.inst().getMobManager().getMythicMob(key).isPresent()) {
+                float chance = (float) config.getDouble(key + ".catch-chance");
+                mobs.put(key, new MythicMobInfo(key, chance));
+            } else {
+                Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] Mythic mob "
+                        + key + " doesn't exist! Please load it to MythicMobs!");
+            }
         });
 
     }
-
 
     @AllArgsConstructor
     @Getter
@@ -45,7 +49,7 @@ public class MythicMobsConfig {
 
             MythicMob mob = MythicBukkit.inst().getMobManager().getMythicMob(id).orElse(null);
 
-            if(mob == null) {
+            if (mob == null) {
                 return Optional.empty();
             }
 
