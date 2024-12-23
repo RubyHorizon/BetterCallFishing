@@ -2,7 +2,9 @@ package me.shershnyaga.bettercallfishing.events;
 
 import lombok.AllArgsConstructor;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
+import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
 import me.shershnyaga.bettercallfishing.utils.Constants;
+import me.shershnyaga.bettercallfishing.utils.integrations.MythicMobsUtil;
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Location;
@@ -28,6 +30,7 @@ public class OnFishEvent implements Listener {
 
     private final FileConfiguration config;
     private final BarrelConfig barrelConfig;
+    private final MythicMobsConfig mobsConfig;
     private final FixedMetadataValue metadataValue;
     private final LangConfig langConfig;
 
@@ -40,31 +43,42 @@ public class OnFishEvent implements Listener {
         Location hookLoc = event.getHook().getLocation();
         Location change = playerLoc.subtract(hookLoc);
 
-        if (event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) {
+        if (!event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) {
+            return;
+        }
 
-            Entity dolphin = tryToCatchDolphin(hookLoc);
-            if (dolphin != null) {
-                dolphin.setVelocity(caught.getVelocity().multiply(3));
-                caught.remove();
+        Entity dolphin = tryToCatchDolphin(hookLoc);
+        if (dolphin != null) {
+            dolphin.setVelocity(caught.getVelocity().multiply(3));
+            caught.remove();
+            return;
+        }
+
+        Entity fish = getFish(event.getCaught());
+
+        if (barrelConfig.testBarrelCatch()) {
+            ItemStack barrel = getBarrelItem();
+            Item caughtItem = (Item) caught;
+            caughtItem.setItemStack(barrel);
+            return;
+        }
+
+        if (MythicMobsUtil.isEnabled()) {
+            Optional<MythicMobsConfig.MythicMobInfo> info = mobsConfig.getRandomMobInfo();
+            if (info.isPresent()) {
+                Entity mob = info.get().spawn(caught.getLocation());
+                mob.setVelocity(change.toVector().multiply(0.15f));
+                Objects.requireNonNull(caught).remove();
                 return;
             }
+        }
 
-            Entity fish = getFish(event.getCaught());
-
-            if (barrelConfig.testBarrelCatch()) {
-                ItemStack barrel = getBarrelItem();
-                Item caughtItem = (Item) caught;
-                caughtItem.setItemStack(barrel);
-                return;
-            }
-
-            if (fish != null) {
-                fish.setVelocity(change.toVector().multiply(0.15f));
-                Objects.requireNonNull(event.getCaught()).remove();
-                fish.getPersistentDataContainer().set(Constants.HOOK_TIME_NAMESPACE,
-                        PersistentDataType.LONG, System.currentTimeMillis()
-                );
-            }
+        if (fish != null) {
+            fish.setVelocity(change.toVector().multiply(0.15f));
+            Objects.requireNonNull(event.getCaught()).remove();
+            fish.getPersistentDataContainer().set(Constants.HOOK_TIME_NAMESPACE,
+                    PersistentDataType.LONG, System.currentTimeMillis()
+            );
         }
     }
 

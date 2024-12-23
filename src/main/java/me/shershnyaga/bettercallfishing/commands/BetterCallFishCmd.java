@@ -4,10 +4,14 @@ import lombok.AllArgsConstructor;
 import me.shershnyaga.bettercallfishing.BetterCallFishing;
 import me.shershnyaga.bettercallfishing.config.BarrelConfig;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
+import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
+import me.shershnyaga.bettercallfishing.utils.integrations.ItemsAdderUtil;
+import me.shershnyaga.bettercallfishing.utils.integrations.MythicMobsUtil;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -27,6 +31,7 @@ public class BetterCallFishCmd implements TabExecutor {
     private BarrelConfig barrelConfig;
     private BetterCallFishing.ReloadManager reloadManager;
     private LangConfig langConfig;
+    private MythicMobsConfig mythicMobsConfig;
     private BukkitAudiences audiences;
 
     @Override
@@ -57,7 +62,24 @@ public class BetterCallFishCmd implements TabExecutor {
                 player.openInventory(inv);
             }
         }
+        else if (strings[0].equals("check") && strings.length == 2) {
+            List<String> checks = getIntegrations();
+            String action = strings[1];
 
+            if (!checks.contains(action)) {
+                return true;
+            }
+
+            if (action.equals("integration_items_adder_barrel")) {
+                if (ItemsAdderUtil.isEnabled()) {
+                    getAvailableItemsOnItemsAdder().forEach(commandSender::sendMessage);
+                }
+            } else if (action.equals("integration_mythicmobs")) {
+                if (MythicMobsUtil.isEnabled()) {
+                    getAvailableMobsOnMythicMobs().forEach(commandSender::sendMessage);
+                }
+            }
+        }
         return true;
     }
 
@@ -71,6 +93,8 @@ public class BetterCallFishCmd implements TabExecutor {
             }
         }
 
+        List<String> checks = getIntegrations();
+
         if (strings.length == 1) {
 
             List<String> args = new ArrayList<>();
@@ -80,9 +104,110 @@ public class BetterCallFishCmd implements TabExecutor {
                 args.add("gen_barrel");
             }
 
+            if (!checks.isEmpty()) {
+                args.add("check");
+            }
+
             return args;
         }
 
+        if (strings.length == 2 && !checks.isEmpty() && strings[0].equals("check")) {
+            return checks;
+        }
+
         return null;
+    }
+
+    private List<String> getIntegrations() {
+        List<String> checks = new ArrayList<>();
+
+        if (ItemsAdderUtil.isEnabled()) {
+            checks.add("integration_items_adder_barrel");
+        }
+
+        if (MythicMobsUtil.isEnabled()) {
+            checks.add("integration_mythicmobs");
+        }
+
+        return checks;
+    }
+
+    private List<String> getAvailableItemsOnItemsAdder() {
+        List<String> answer = new ArrayList<>();
+        answer.add(ChatColor.GOLD + "------------");
+        answer.add("Loaded ItemsAdder items in BetterCallFishing: ");
+
+        StringBuilder loaded = new StringBuilder();
+        StringBuilder unloaded = new StringBuilder();
+
+        for (BarrelConfig.ItemSettings item: barrelConfig.getItemSettingsList()) {
+
+            if (!item.isIAItem()) {
+                continue;
+            }
+
+            if (item.isLoadedIAItem()) {
+                loaded.append(ChatColor.GREEN).append(item.getId()).append(ChatColor.WHITE).append(", ");
+            }
+            else {
+                unloaded.append(ChatColor.RED).append(item.getId()).append(ChatColor.WHITE).append(", ");
+            }
+        }
+
+        String loadedAsString = loaded.toString();
+        String unloadedAsString = unloaded.toString();
+        if (loadedAsString.endsWith(", ")) {
+            loadedAsString = loadedAsString.substring(0, loadedAsString.length() - 2);
+        }
+
+        if (unloadedAsString.endsWith(", ")) {
+            unloadedAsString = unloadedAsString.substring(0, unloadedAsString.length() - 2);
+        }
+
+        answer.add(loadedAsString);
+        answer.add(" ");
+        answer.add("Unloaded ItemsAdder items in BetterCallFishing: ");
+
+        answer.add(unloadedAsString);
+        answer.add(ChatColor.GOLD + "------------");
+        return answer;
+    }
+
+    private List<String> getAvailableMobsOnMythicMobs() {
+        List<String> answer = new ArrayList<>();
+        answer.add(ChatColor.GOLD + "------------");
+        answer.add("Loaded MythicMobs in BetterCallFishing: ");
+
+        StringBuilder loaded = new StringBuilder();
+        StringBuilder unloaded = new StringBuilder();
+
+        for (MythicMobsConfig.MythicMobInfo mob: mythicMobsConfig.getMobs()) {
+            if (mob.isLoaded()) {
+                loaded.append(ChatColor.GREEN).append(mob.getId()).append(ChatColor.WHITE).append(", ");
+            }
+            else {
+                unloaded.append(ChatColor.RED).append(mob.getId()).append(ChatColor.WHITE).append(", ");
+            }
+        }
+
+        String loadedAsString = loaded.toString();
+        String unloadedAsString = unloaded.toString();
+        if (loadedAsString.endsWith(", ")) {
+            loadedAsString = loadedAsString.substring(0, loadedAsString.length() - 2);
+        }
+
+        if (unloadedAsString.endsWith(", ")) {
+            unloadedAsString = unloadedAsString.substring(0, unloadedAsString.length() - 2);
+        }
+
+        answer.add(loadedAsString);
+
+        answer.add(" ");
+
+        answer.add("Unloaded MythicMobs in BetterCallFishing: ");
+
+        answer.add(unloadedAsString);
+        answer.add(ChatColor.GOLD + "------------");
+        return answer;
     }
 }
