@@ -70,7 +70,7 @@ public final class BetterCallFishing extends JavaPlugin {
     public void onEnable() {
         adventure = BukkitAudiences.create(this);
         saveDefaultConfig();
-        reloadConfig();
+        // reloadConfig();
 
         Bukkit.getScheduler().runTaskAsynchronously(this, this::update);
 
@@ -90,9 +90,12 @@ public final class BetterCallFishing extends JavaPlugin {
         displayAndDumpHooksConfigs();
 
         barrelConfigFile = new File(getDataFolder(), "barrel_config.yml");
-        mythicConfigFile = new File(getDataFolder(), "mythic_config.yml");
+        mythicConfigFile = new File(getDataFolder(), "mythic_mobs.yml");
 
-        mythicMobsConfig = new MythicMobsConfig(YamlConfiguration.loadConfiguration(mythicConfigFile));
+        if (MythicMobsUtil.isEnabled()) {
+            FileConfiguration mythicConfig = YamlConfiguration.loadConfiguration(mythicConfigFile);
+            mythicMobsConfig = new MythicMobsConfig(mythicConfig);
+        }
 
         loadLang();
 
@@ -266,10 +269,10 @@ public final class BetterCallFishing extends JavaPlugin {
         boolean isNone = true;
 
         StringBuilder builder = new StringBuilder();
-        builder.append(ChatColor.GREEN + "[BetterCall Fishing] Initializing Better Call Fishing Hooks:");
+        builder.append(ChatColor.GREEN + "[BetterCall Fishing] Initializing Better Call Fishing Hooks: ");
         if (ItemsAdderUtil.isEnabled()) {
             isNone = false;
-            builder.append(ChatColor.GREEN + "[BetterCall Fishing] - ItemsAdder");
+            builder.append(ChatColor.GREEN + "ItemsAdder, ");
         }
 
         if (MythicMobsUtil.isEnabled()) {
@@ -278,11 +281,16 @@ public final class BetterCallFishing extends JavaPlugin {
             }
 
             isNone = false;
-            builder.append(ChatColor.GREEN + "[BetterCall Fishing] - ItemsAdder");
+            builder.append(ChatColor.GREEN + "MythicMobs, ");
+        }
+
+        String message = builder.toString();
+        if (message.endsWith(", ")) {
+            message = message.substring(0, message.length() - 2);
         }
 
         if (!isNone) {
-            Bukkit.getLogger().info(builder.toString());
+            Bukkit.getLogger().info(message);
         }
     }
 
@@ -293,4 +301,5 @@ public final class BetterCallFishing extends JavaPlugin {
             this.adventure = null;
         }
     }
+
 }

@@ -4,6 +4,6 @@ import org.bukkit.Bukkit;
 
 public final class MythicMobsUtil {
     public static boolean isEnabled() {
-        return Bukkit.getPluginManager().getPlugin("ItemsAdder") != null;
+        return Bukkit.getPluginManager().getPlugin("MythicMobs") != null;
     }
 }

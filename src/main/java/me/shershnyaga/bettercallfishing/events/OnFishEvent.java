@@ -65,11 +65,10 @@ public class OnFishEvent implements Listener {
 
         if (MythicMobsUtil.isEnabled()) {
             Optional<MythicMobsConfig.MythicMobInfo> info = mobsConfig.getRandomMobInfo();
-
             if (info.isPresent()) {
-                Entity mob = info.get().spawn(fish.getLocation());
+                Entity mob = info.get().spawn(caught.getLocation());
                 mob.setVelocity(change.toVector().multiply(0.15f));
-                Objects.requireNonNull(event.getCaught()).remove();
+                Objects.requireNonNull(caught).remove();
                 return;
             }
         }

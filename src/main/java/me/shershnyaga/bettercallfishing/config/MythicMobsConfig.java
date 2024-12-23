@@ -6,7 +6,6 @@ import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.core.mobs.ActiveMob;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import me.shershnyaga.bettercallfishing.utils.integrations.MythicMobsUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -21,26 +20,24 @@ public class MythicMobsConfig {
     private Random random = new Random();
 
     public MythicMobsConfig(FileConfiguration config) {
-
-        config.getKeys(false).forEach(key -> {
-            if (MythicBukkit.inst().getMobManager().getMythicMob(key).isPresent()) {
-                float chance = (float) config.getDouble(key + ".catch-chance");
-                mobs.put(key, new MythicMobInfo(key, chance));
-            } else {
-                Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] Mythic mob "
-                        + key + " doesn't exist! Please load it to MythicMobs!");
-            }
-        });
+        for (String key: config.getKeys(false)) {
+            float chance = (float) config.getDouble(key + ".catch-chance");
+            mobs.put(key, new MythicMobInfo(key, chance));
+        }
 
     }
 
     public Optional<MythicMobInfo> getRandomMobInfo() {
         List<MythicMobInfo> infos = new ArrayList<>(mobs.values().stream().toList());
         Collections.shuffle(infos);
-
         for (MythicMobInfo info : infos) {
-            if (info.spawnChance >= getRandomFloat() && info.spawnChance > 0f) {
-                return Optional.of(info);
+            if (MythicBukkit.inst().getMobManager().getMythicMob(info.id).isPresent()) {
+                if (info.spawnChance >= getRandomFloat() && info.spawnChance > 0f) {
+                    return Optional.of(info);
+                }
+            } else {
+                Bukkit.getLogger().info(ChatColor.RED + "[BetterCallFishing] Mythic mob "
+                        + info.id + " doesn't exist! Please load it to MythicMobs!");
             }
         }
 
