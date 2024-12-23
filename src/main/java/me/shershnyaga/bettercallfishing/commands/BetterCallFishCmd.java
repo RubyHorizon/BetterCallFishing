@@ -70,16 +70,13 @@ public class BetterCallFishCmd implements TabExecutor {
                 return true;
             }
 
-            switch (action) {
-                case "integration_items_adder_barrel": {
-                    if (ItemsAdderUtil.isEnabled()) {
-                        getAvailableItemsOnItemsAdder().forEach(commandSender::sendMessage);
-                    }
+            if (action.equals("integration_items_adder_barrel")) {
+                if (ItemsAdderUtil.isEnabled()) {
+                    getAvailableItemsOnItemsAdder().forEach(commandSender::sendMessage);
                 }
-                case "integration_mythicmobs": {
-                    if (MythicMobsUtil.isEnabled()) {
-                        getAvailableMobsOnMythicMobs().forEach(commandSender::sendMessage);
-                    }
+            } else if (action.equals("integration_mythicmobs")) {
+                if (MythicMobsUtil.isEnabled()) {
+                    getAvailableMobsOnMythicMobs().forEach(commandSender::sendMessage);
                 }
             }
         }
