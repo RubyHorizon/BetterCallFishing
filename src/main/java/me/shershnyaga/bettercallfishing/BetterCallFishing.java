@@ -11,6 +11,8 @@ import me.shershnyaga.bettercallfishing.events.OnJoinEvent;
 import me.shershnyaga.bettercallfishing.events.OtherEvents;
 import me.shershnyaga.bettercallfishing.utils.AutoUpdate;
 import me.shershnyaga.bettercallfishing.utils.Metrics;
+import me.shershnyaga.bettercallfishing.utils.integrations.ItemsAdderUtil;
+import me.shershnyaga.bettercallfishing.utils.integrations.MythicMobsUtil;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -81,6 +83,8 @@ public final class BetterCallFishing extends JavaPlugin {
         if (updateConfig()) {
             super.reloadConfig();
         }
+
+        displayAndDumpHooksConfigs();
 
         barrelConfigFile = new File(getDataFolder(), "barrel_config.yml");
 
@@ -250,6 +254,30 @@ public final class BetterCallFishing extends JavaPlugin {
         }
 
         return false;
+    }
+
+    private void displayAndDumpHooksConfigs() {
+        boolean isNone = true;
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(ChatColor.GREEN + "[BetterCall Fishing] Initializing Better Call Fishing Hooks:");
+        if (ItemsAdderUtil.isEnabled()) {
+            isNone = false;
+            builder.append(ChatColor.GREEN + "[BetterCall Fishing] - ItemsAdder");
+        }
+
+        if (MythicMobsUtil.isEnabled()) {
+            if (Files.notExists(Path.of(getDataFolder().getAbsolutePath() + File.separator + "mythic_mobs.yml"))) {
+                saveResource("mythic_mobs.yml", false);
+            }
+
+            isNone = false;
+            builder.append(ChatColor.GREEN + "[BetterCall Fishing] - ItemsAdder");
+        }
+
+        if (!isNone) {
+            Bukkit.getLogger().info(builder.toString());
+        }
     }
 
     @Override

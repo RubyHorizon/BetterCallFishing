@@ -1,0 +1,11 @@
+# Example of use with standard MythicMobs mobs
+AngrySludge:
+  catch-chance: 5.0
+SkeletonKing:
+  catch-chance: 1.0
+SkeletalMinion:
+  catch-chance: 1.0
+
+# Example
+# MythicMobId:
+#   catch-chance: <0.0-100.0>

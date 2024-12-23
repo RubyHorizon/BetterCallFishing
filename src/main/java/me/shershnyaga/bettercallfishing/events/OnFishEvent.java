@@ -102,6 +102,10 @@ public class OnFishEvent implements Listener {
         return null;
     }
 
+    public Entity tryToCatchMythicMob(Location loc) {
+
+    }
+
     private Entity getFish(Entity entity) {
         Item item = (Item) entity;
 

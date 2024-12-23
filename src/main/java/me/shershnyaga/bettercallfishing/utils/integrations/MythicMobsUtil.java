@@ -1,4 +1,9 @@
 package me.shershnyaga.bettercallfishing.utils.integrations;
 
-public class MythicMobsUtil {
+import org.bukkit.Bukkit;
+
+public final class MythicMobsUtil {
+    public static boolean isEnabled() {
+        return Bukkit.getPluginManager().getPlugin("ItemsAdder") != null;
+    }
 }
