@@ -2,7 +2,7 @@
 #  If you want to translate the plugin into your own language, please let me know about this:
 #  https://www.spigotmc.org/members/shershnyaga_.1502182/
 # Multilingualism is cool!
-reload-message: "<green>Reload complete!"
+reload-message: "<green>[BetterCallFishing] Reload complete!"
 update-detect-message:
   - "<blue>----------------"
   - "<green>Found BetterCallFishing update!"
@@ -10,5 +10,5 @@ update-detect-message:
   - "<green>Current version: <blue>%current_version%"
   - "%version_info%" # Please, specify only %version_info% in this line.
   - "<blue>----------------"
-updated-message: "<green>update has ready! Please restart the server."
+updated-message: "<green>[BetterCallFishing] update has ready! Please restart the server."
 old-barrel-name: "<gold>Old barrel"

@@ -165,7 +165,7 @@ public final class BetterCallFishing extends JavaPlugin {
 
     private void reloadCommands() {
         Objects.requireNonNull(getServer().getPluginCommand("bettercallfishing"))
-                .setExecutor(new BetterCallFishCmd(barrelConfig, reloadManager, langConfig, adventure));
+                .setExecutor(new BetterCallFishCmd(barrelConfig, reloadManager, langConfig, mythicMobsConfig, adventure));
     }
 
     private void reloadEvents() {
@@ -303,7 +303,11 @@ public final class BetterCallFishing extends JavaPlugin {
     }
 
     public static void log(String message) {
-        Bukkit.getConsoleSender().sendMessage(message);
+        if (!message.startsWith("[BetterCallFishing]")) {
+            Bukkit.getConsoleSender().sendMessage("[BetterCallFishing] " + message);
+        } else {
+            Bukkit.getConsoleSender().sendMessage(message);
+        }
     }
 
 }

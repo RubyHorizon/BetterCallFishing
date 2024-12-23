@@ -4,7 +4,7 @@
 #  https://www.spigotmc.org/members/shershnyaga_.1502182/
 #
 # Мультимовність - це круто!
-reload-message: "<green>Плагін перезавантажений!"
+reload-message: "<green>[BetterCallFishing] Плагін перезавантажений!"
 update-detect-message:
   - "<blue>----------------"
   - "<green>Знайдено оновлення для BetterCallFishing!"
@@ -12,5 +12,5 @@ update-detect-message:
   - "<green>Поточна версія: <blue>%current_version%"
   - "%version_info%" # Будь-ласка, записуйте тут тільки %version_info%
   - "<blue>---------------- "
-updated-message: "<green>оновлений! Щоб застовувати оновлення перезавантажте сервер."
+updated-message: "<green>[BetterCallFishing] оновлений! Щоб застовувати оновлення перезавантажте сервер."
 old-barrel-name: "<gold>Стара бочка"

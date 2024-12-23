@@ -2,7 +2,7 @@
 #  If you want to translate the plugin into your own language, please let me know about this:
 #  https://www.spigotmc.org/members/shershnyaga_.1502182/
 # Multilingualism is cool!
-reload-message: '<green>重新加载已完成!'
+reload-message: '<green>[BetterCallFishing] 重新加载已完成!'
 update-detect-message:
   - '<blue>----------------'
   - '<green>BetterCallFishing 已发现更新!'
@@ -10,5 +10,5 @@ update-detect-message:
   - '<green>当前版本: <blue>%current_version%'
   - '%version_info%'
   - '<blue>----------------'
-updated-message: '<green>更新已准备完毕! 请重新启动服务器.'
+updated-message: '<green>[BetterCallFishing] 更新已准备完毕! 请重新启动服务器.'
 old-barrel-name: '<gold>破旧的木桶'

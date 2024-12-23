@@ -32,7 +32,7 @@ public class MythicMobsConfig {
         List<MythicMobInfo> infos = new ArrayList<>(mobs.values().stream().toList());
         Collections.shuffle(infos);
         for (MythicMobInfo info : infos) {
-            if (MythicBukkit.inst().getMobManager().getMythicMob(info.id).isPresent()) {
+            if (info.isLoaded()) {
                 if (info.spawnChance >= getRandomFloat() && info.spawnChance > 0f) {
                     return Optional.of(info);
                 }
@@ -43,6 +43,10 @@ public class MythicMobsConfig {
         }
 
         return Optional.empty();
+    }
+
+    public List<MythicMobInfo> getMobs() {
+        return new ArrayList<>(mobs.values());
     }
 
     @AllArgsConstructor
@@ -57,6 +61,10 @@ public class MythicMobsConfig {
 
             ActiveMob activeMob = mob.spawn(BukkitAdapter.adapt(spawnLocation),1);
             return activeMob.getEntity().getBukkitEntity();
+        }
+
+        public boolean isLoaded() {
+            return MythicBukkit.inst().getMobManager().getMythicMob(id).isPresent();
         }
     }
 

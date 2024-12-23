@@ -18,6 +18,7 @@ public class BarrelConfig {
     @Getter
     private boolean isEnable;
     private float catchChance;
+    @Getter
     private final List<ItemSettings> itemSettingsList;
 
     public BarrelConfig(FileConfiguration configuration) {
@@ -133,7 +134,7 @@ public class BarrelConfig {
     }
 
     @AllArgsConstructor
-    private static class ItemSettings {
+    public static class ItemSettings {
 
         @Getter
         private String id;
@@ -163,6 +164,18 @@ public class BarrelConfig {
 
                 return Optional.empty();
             }
+        }
+
+        public boolean isIAItem() {
+            return id.startsWith("IA:");
+        }
+
+        public boolean isLoadedIAItem() {
+            if (isIAItem()) {
+                return CustomStack.isInRegistry(id.replace("IA:", ""));
+            }
+
+            return false;
         }
 
         private Optional<ItemStack> getIAItem(String id, int amount) {
