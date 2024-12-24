@@ -1,0 +1,30 @@
+caught-items:
+  - material: "IA:ruby_sword"
+    chance: 0.1
+
+  - material: bone
+    name: "<aqua>Old bone"
+    lore:
+      - "<green> An old bone!"
+    chance: 2.0
+
+  - material: iron_sword
+    name: "<gold>Knight Sword"
+    lore:
+      - "<green>Old knight's sword, battered"
+    custom-model-data: 1001
+    enchants:
+      - knockback:
+          level: 1-3
+          chance: 10
+      - loot_bonus_mobs:
+          level: 1
+          chance: 50
+
+  - material: enchantment_book
+    enchants:
+      - mending:
+          chance: 10
+      - oxygen:
+          level: 1-5
+          chance: 1-10
