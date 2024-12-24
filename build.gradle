@@ -39,7 +39,7 @@ dependencies {
     compileOnly 'com.github.LoneDev6:API-ItemsAdder:3.6.1'
     compileOnly 'io.lumine:MythicLib-dist:1.6.2-SNAPSHOT'
     compileOnly 'io.lumine:Mythic-Dist:5.6.1'
-    // compileOnly 'net.Indyuce:MMOItems-API:6.9.5-SNAPSHOT'
+    compileOnly 'net.Indyuce:MMOItems-API:6.9.5-SNAPSHOT'
 }
 
 shadowJar {
