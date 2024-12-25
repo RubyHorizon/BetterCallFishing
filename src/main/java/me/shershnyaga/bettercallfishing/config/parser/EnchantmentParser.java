@@ -2,6 +2,7 @@ package me.shershnyaga.bettercallfishing.config.parser;
 
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -59,9 +60,10 @@ public class EnchantmentParser {
     }
 
     @Builder(access = AccessLevel.PRIVATE)
+    @Getter
     public static class ParsedEnchantment {
 
-        private Random random = new Random();
+        private static final Random random = new Random();
 
         Enchantment enchantment;
 

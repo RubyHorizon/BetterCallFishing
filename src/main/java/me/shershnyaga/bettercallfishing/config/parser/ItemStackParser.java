@@ -1,6 +1,7 @@
 package me.shershnyaga.bettercallfishing.config.parser;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.Setter;
 import me.shershnyaga.bettercallfishing.BetterCallFishing;
 import me.shershnyaga.bettercallfishing.utils.MiniMessageUtils;
@@ -95,7 +96,8 @@ public class ItemStackParser {
         }
 
         if (info.containsKey(CHANCE_SECTION) && enableChanceParse) {
-            parsedItem.chance((float) info.get(CHANCE_SECTION));
+            double chance = (double) info.get(CHANCE_SECTION);
+            parsedItem.chance((float) chance);
         } else {
             parsedItem.chance(100f);
         }
@@ -104,6 +106,7 @@ public class ItemStackParser {
     }
 
     @lombok.Builder(access = AccessLevel.PRIVATE)
+    @Getter
     public static class ParsedItem {
         private static final Random random = new Random();
 
