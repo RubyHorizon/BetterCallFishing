@@ -8,10 +8,7 @@ import me.shershnyaga.bettercallfishing.BetterCallFishing;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -141,8 +138,7 @@ public class AutoUpdate {
 
         List<String> mess = new ArrayList<>();
         for (Component component: messageAsComponent) {
-            BaseComponent[] name = BungeeComponentSerializer.get().serialize(component);
-            mess.add(BaseComponent.toLegacyText(name));
+            mess.add(MiniMessageUtils.convertComponentToString(component));
         }
 
         return mess;

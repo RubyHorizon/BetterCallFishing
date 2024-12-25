@@ -5,11 +5,10 @@ import me.shershnyaga.bettercallfishing.BetterCallFishing;
 import me.shershnyaga.bettercallfishing.config.BarrelConfig;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
+import me.shershnyaga.bettercallfishing.utils.MiniMessageUtils;
 import me.shershnyaga.bettercallfishing.utils.integrations.ItemsAdderUtil;
 import me.shershnyaga.bettercallfishing.utils.integrations.MythicMobsUtil;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
-import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -53,10 +52,8 @@ public class BetterCallFishCmd implements TabExecutor {
             if (commandSender instanceof Player player) {
                 HashMap<Integer, ItemStack> items = barrelConfig.generateBarrelInventoryMap();
 
-                BaseComponent[] barrelName = BungeeComponentSerializer.get().serialize(langConfig.getOldBarrelName());
-
                 Inventory inv = Bukkit.createInventory(null, InventoryType.BARREL,
-                        BaseComponent.toLegacyText(barrelName));
+                        MiniMessageUtils.convertComponentToString(langConfig.getOldBarrelName()));
                 items.forEach(inv::setItem);
 
                 player.openInventory(inv);
