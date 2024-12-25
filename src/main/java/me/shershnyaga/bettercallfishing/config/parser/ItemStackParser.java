@@ -56,6 +56,8 @@ public class ItemStackParser {
     public ParsedItem parse(Map<String, Object> info) {
         ParsedItem.ParsedItemBuilder parsedItem = ParsedItem.builder();
 
+        parsedItem.material((String) info.get(MATERIAL_SECTION));
+
         if (info.containsKey(DISPLAY_NAME_SECTION)) {
             parsedItem.displayName(MINI_MESSAGE.deserialize((String) info.get(DISPLAY_NAME_SECTION)));
         }
