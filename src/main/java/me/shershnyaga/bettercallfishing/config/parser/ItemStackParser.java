@@ -166,7 +166,7 @@ public class ItemStackParser {
                 meta.setCustomModelData(cmd);
             }
 
-            enchantments.forEach(enchantment -> enchantment.tryToAddItem(item));
+            enchantments.forEach(enchantment -> enchantment.tryToAddEnchant(item));
 
             return Optional.of(item);
         }

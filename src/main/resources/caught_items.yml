@@ -1,3 +1,4 @@
+disable-default-catch-items: false
 caught-items:
   - material: "IA:ruby_sword"
     chance: 0.1
@@ -27,4 +28,4 @@ caught-items:
           chance: 10
       - oxygen:
           level: 1-5
-          chance: 1-10
+          chance: 10
