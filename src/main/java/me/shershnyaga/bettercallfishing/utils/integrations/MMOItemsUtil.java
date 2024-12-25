@@ -15,7 +15,7 @@ public final class MMOItemsUtil {
         return Bukkit.getPluginManager().getPlugin("MMOItems") != null;
     }
 
-    public Optional<ItemStack> getItem(String type, String id) {
+    public static Optional<ItemStack> getItem(String type, String id) {
 
         if (!isEnabled()) {
             BetterCallFishing.log(ChatColor.RED + "\""
