@@ -70,10 +70,6 @@ public class EnchantmentParser {
 
         private float chance;
 
-        private ParsedEnchantment() {
-
-        }
-
         public ItemStack addEnchantment(ItemStack item) {
             int level;
             if (minLvl == maxLvl) {
