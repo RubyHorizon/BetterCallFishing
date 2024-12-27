@@ -106,7 +106,7 @@ public class EnchantmentParser {
 
             Map<String, Object> info = new HashMap<>();
 
-            if (enableChanceParse && chance < 100f) {
+            if (enableChanceParse && chance != 100f) {
                 info.put(CHANCE_SECTION, chance);
             }
 
