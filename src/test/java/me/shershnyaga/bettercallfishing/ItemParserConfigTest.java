@@ -60,7 +60,7 @@ public class ItemParserConfigTest {
                 List<EnchantmentParser.ParsedEnchantment> enchantments = item.getEnchantments();
 
                 enchantments.forEach(enchantment -> {
-                    System.out.println("id: " + enchantment.getEnchantment());
+                    System.out.println("id: " + enchantment.getEnchantmentName());
                     System.out.println("chance: " + enchantment.getChance());
                     System.out.println("minLvl: " + enchantment.getMinLvl());
                     System.out.println("maxLvl: " + enchantment.getMaxLvl());

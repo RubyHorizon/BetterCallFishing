@@ -120,6 +120,10 @@ public class ItemStackParser {
             dump.put(CMD_SECTION, parsedItem.cmd);
         }
 
+        if (parsedItem.chance != 100f) {
+            dump.put(CHANCE_SECTION, parsedItem.chance);
+        }
+
         if (parsedItem.enchantments != null && !parsedItem.enchantments.isEmpty()) {
             List<Map<String, Object>> enchants = new ArrayList<>();
 
