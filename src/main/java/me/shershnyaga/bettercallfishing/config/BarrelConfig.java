@@ -60,13 +60,10 @@ public class BarrelConfig {
         HashMap<ItemStackParser.ParsedItem, Integer> items = new HashMap<>();
 
         for (ItemStackParser.ParsedItem parsedItem : shuffledItems) {
+            Optional<ItemStack> item = parsedItem.toItemStack();
 
-            if (parsedItem.tryToGet()) {
-                Optional<ItemStack> item = parsedItem.toItemStack();
-
-                if (item.isPresent()) {
-                    items.put(parsedItem, parsedItem.getRandomCountOrDefault());
-                }
+            if (item.isPresent()) {
+                items.put(parsedItem, parsedItem.getRandomCountOrDefault());
             }
         }
 
@@ -77,6 +74,10 @@ public class BarrelConfig {
                 int count = items.get(parsedItem);
 
                 if (count <= 0) {
+                    continue;
+                }
+
+                if (!parsedItem.tryToGet()) {
                     continue;
                 }
 
