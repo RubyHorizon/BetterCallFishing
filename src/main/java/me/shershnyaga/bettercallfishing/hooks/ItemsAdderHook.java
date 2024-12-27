@@ -1,4 +1,4 @@
-package me.shershnyaga.bettercallfishing.hooks.list;
+package me.shershnyaga.bettercallfishing.hooks;
 
 import dev.lone.itemsadder.api.CustomStack;
 import lombok.AccessLevel;
@@ -42,5 +42,17 @@ public class ItemsAdderHook implements PluginHook {
                 + id + "\" is not registered in ItemsAdder!");
 
         return Optional.empty();
+    }
+
+    public Optional<ItemStack> getItem(String id, int count) {
+        Optional<ItemStack> item = getItem(id);
+
+        if (item.isPresent()) {
+            ItemStack stack = item.get();
+            stack.setAmount(count);
+            return Optional.of(stack);
+        }
+
+        return item;
     }
 }

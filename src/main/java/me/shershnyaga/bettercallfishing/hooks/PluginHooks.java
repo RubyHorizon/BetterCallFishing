@@ -3,10 +3,6 @@ package me.shershnyaga.bettercallfishing.hooks;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import me.shershnyaga.bettercallfishing.hooks.list.ItemsAdderHook;
-import me.shershnyaga.bettercallfishing.hooks.list.MMOItemsHook;
-import me.shershnyaga.bettercallfishing.hooks.list.MythicMobsHook;
-import me.shershnyaga.bettercallfishing.hooks.list.PluginHook;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
