@@ -107,8 +107,38 @@ public class ItemStackParser {
         return parsedItem.build();
     }
 
+    public Map<String, Object> dump(ParsedItem parsedItem) {
+        Map<String, Object> dump = new HashMap<>();
+
+        dump.put(MATERIAL_SECTION, parsedItem.material);
+        dump.put(DISPLAY_NAME_SECTION, parsedItem.displayName);
+        dump.put(LORE_SECTION, parsedItem.lore);
+
+        if (parsedItem.cmd != null) {
+            dump.put(CMD_SECTION, parsedItem.cmd);
+        }
+
+        if (parsedItem.enchantments != null && !parsedItem.enchantments.isEmpty()) {
+            List<Map<String, Object>> enchants = new ArrayList<>();
+
+            for (EnchantmentParser.ParsedEnchantment enchantment : parsedItem.enchantments) {
+                enchants.add(enchantmentParser.dump(enchantment));
+            }
+
+            dump.put(ENCHANTMENTS_SECTION, enchants);
+        }
+
+        if (enableCountRangeParse && parsedItem.minCount != parsedItem.maxCount) {
+            dump.put(COUNT_SECTION, parsedItem.minCount + "-" + parsedItem.maxCount);
+        } else {
+            dump.put(COUNT_SECTION, parsedItem.minCount);
+        }
+
+        return dump;
+    }
+
     @lombok.Builder(access = AccessLevel.PRIVATE)
-    public class ParsedItem {
+    public static class ParsedItem {
 
         @Getter
         private String material;
@@ -177,36 +207,6 @@ public class ItemStackParser {
             }
 
             return toItemStack(count);
-        }
-
-        public Map<String, Object> dump() {
-            Map<String, Object> dump = new HashMap<>();
-
-            dump.put(MATERIAL_SECTION, material);
-            dump.put(DISPLAY_NAME_SECTION, displayName);
-            dump.put(LORE_SECTION, lore);
-
-            if (cmd != null) {
-                dump.put(CMD_SECTION, cmd);
-            }
-
-            if (enchantments != null && !enchantments.isEmpty()) {
-                List<Map<String, Object>> enchants = new ArrayList<>();
-
-                for (EnchantmentParser.ParsedEnchantment enchantment : enchantments) {
-                    enchants.add(enchantment.dump());
-                }
-
-                dump.put(ENCHANTMENTS_SECTION, enchants);
-            }
-
-            if (enableCountRangeParse && minCount != maxCount) {
-                dump.put(COUNT_SECTION, minCount + "-" + maxCount);
-            } else {
-                dump.put(COUNT_SECTION, minCount);
-            }
-
-            return dump;
         }
 
         public List<String> getLore() {

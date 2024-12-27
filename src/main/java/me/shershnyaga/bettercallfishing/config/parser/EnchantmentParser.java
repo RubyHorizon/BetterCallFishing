@@ -62,7 +62,7 @@ public class EnchantmentParser {
 
     @Builder(access = AccessLevel.PRIVATE)
     @Getter
-    public class ParsedEnchantment {
+    public static class ParsedEnchantment {
 
         private static final Random random = new Random();
 
@@ -101,26 +101,6 @@ public class EnchantmentParser {
             return item;
         }
 
-        public Map<String, Object> dump() {
-            Map<String, Object> dump = new HashMap<>();
-
-            Map<String, Object> info = new HashMap<>();
-
-            if (enableChanceParse && chance != 100f) {
-                info.put(CHANCE_SECTION, chance);
-            }
-
-            if (enableLevelRangeParse && minLvl != maxLvl) {
-                info.put(LEVEL_SECTION, minLvl + "-" + maxLvl);
-            } else {
-                info.put(LEVEL_SECTION, minLvl);
-            }
-
-            dump.put(enchantment.getName().toLowerCase(), info);
-
-            return dump();
-        }
-
         private float getRandom(float min, float max) {
             return min + random.nextFloat() * (max - min);
         }
@@ -128,6 +108,26 @@ public class EnchantmentParser {
         private int getRandom(int min, int max) {
             return random.nextInt((max - min) + 1) + min;
         }
+    }
+
+    public Map<String, Object> dump(ParsedEnchantment enchantment) {
+        Map<String, Object> dump = new HashMap<>();
+
+        Map<String, Object> info = new HashMap<>();
+
+        if (enableChanceParse && enchantment.chance != 100f) {
+            info.put(CHANCE_SECTION, enchantment.chance);
+        }
+
+        if (enableLevelRangeParse && enchantment.minLvl != enchantment.maxLvl) {
+            info.put(LEVEL_SECTION, enchantment.minLvl + "-" + enchantment.maxLvl);
+        } else {
+            info.put(LEVEL_SECTION, enchantment.minLvl);
+        }
+
+        dump.put(enchantment.enchantment.getName().toLowerCase(), info);
+
+        return dump;
     }
 
 }
