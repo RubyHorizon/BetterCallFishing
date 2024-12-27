@@ -4,9 +4,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import me.shershnyaga.bettercallfishing.BetterCallFishing;
-import me.shershnyaga.bettercallfishing.hooks.PluginHooks;
-import me.shershnyaga.bettercallfishing.hooks.ItemsAdderHook;
-import me.shershnyaga.bettercallfishing.hooks.MMOItemsHook;
 import me.shershnyaga.bettercallfishing.utils.MiniMessageUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -18,6 +15,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 
 public class ItemStackParser {
+
+    private static final Random RANDOM = new Random();
+    private static final PluginsItemsParser PLUGINS_ITEMS_PARSER = new PluginsItemsParser();
 
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
@@ -110,7 +110,6 @@ public class ItemStackParser {
     @lombok.Builder(access = AccessLevel.PRIVATE)
     @Getter
     public static class ParsedItem {
-        private static final Random random = new Random();
 
         private String material;
 
@@ -129,34 +128,13 @@ public class ItemStackParser {
         }
 
         public Optional<ItemStack> toItemStack(int count) {
-            ItemStack item;
-            if (material.contains(":")) {
-                String[] parts = material.split(":");
+            Optional<ItemStack> itemStack = PLUGINS_ITEMS_PARSER.parseFromString(material);
 
-                if (parts[0].equals("IA")) {
-                    Optional<ItemStack> ia = getIAItem(parts[1]);
-
-                    if (ia.isPresent()) {
-                        item = ia.get();
-                    } else {
-                        return Optional.empty();
-                    }
-                } else if (parts[0].equals("MMO")) {
-                    Optional<ItemStack> mmo = getMMOItem(parts[1], parts[2]);
-
-                    if (mmo.isPresent()) {
-                        item = mmo.get();
-                    } else {
-                        return Optional.empty();
-                    }
-                } else {
-                    BetterCallFishing.log(ChatColor.RED + "Unable to parse material: \"" + material + "\" because " + parts[0] +
-                            " is not a valid extension!");
-                    return Optional.empty();
-                }
-            } else {
-                item = new ItemStack(Material.valueOf(material), count);
+            if (itemStack.isEmpty()) {
+                return Optional.empty();
             }
+
+            ItemStack item = itemStack.get();
 
             item.setAmount(count);
 
@@ -194,21 +172,11 @@ public class ItemStackParser {
         }
 
         private float getRandom(float min, float max) {
-            return min + random.nextFloat() * (max - min);
+            return min + RANDOM.nextFloat() * (max - min);
         }
 
         private int getRandom(int min, int max) {
-            return random.nextInt((max - min) + 1) + min;
-        }
-
-        private Optional<ItemStack> getIAItem(String id) {
-            ItemsAdderHook itemsAdderHook = (ItemsAdderHook) PluginHooks.ITEMS_ADDER.getHook();
-            return itemsAdderHook.getItem(id);
-        }
-
-        private Optional<ItemStack> getMMOItem(String type, String id) {
-            MMOItemsHook mmoItemsHook = (MMOItemsHook) PluginHooks.MMO_ITEMS.getHook();
-            return mmoItemsHook.getItem(type, id);
+            return RANDOM.nextInt((max - min) + 1) + min;
         }
     }
 
