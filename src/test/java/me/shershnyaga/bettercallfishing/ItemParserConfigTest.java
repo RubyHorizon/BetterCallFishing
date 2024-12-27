@@ -10,6 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,19 +36,19 @@ public class ItemParserConfigTest {
 
         List<ItemStackParser.ParsedItem> items = itemParser.parseItems((List<Map<String, Object>>) config.get("test-items"));
 
-        System.out.println(items.size());;
+        System.out.println(items.size());
 
         items.forEach(item -> {
             System.out.println("--------------------");
             System.out.println("Material: " + item.getMaterial());
 
             if (item.getDisplayName() != null) {
-                System.out.println("DisplayName: " + MiniMessageUtils.convertComponentToString(item.getDisplayName()));
+                System.out.println("DisplayName: " + item.getDisplayName());
             }
 
             if (item.getLore() != null && !item.getLore().isEmpty()) {
                 System.out.println("Lore: ");
-                item.getLore().forEach(lore -> System.out.println(MiniMessageUtils.convertComponentToString(lore)));
+                item.getLore().forEach(System.out::println);
             }
             System.out.println("Cmd: " + item.getCmd());
             System.out.println("minCount: " + item.getMinCount());
@@ -67,6 +69,34 @@ public class ItemParserConfigTest {
             }
 
         });
+    }
+
+    @Test
+    void testDump() {
+        ItemStackParser.Builder builder = ItemStackParser.Builder.builder();
+
+        builder.setEnableChanceParse(true);
+        builder.setEnableCountRangeParse(true);
+        builder.setEnableEnchantmentsChanceParse(true);
+        builder.setEnableEnchantmentsRangeParse(true);
+
+        ItemStackParser itemParser = builder.build();
+
+        File file = new File("src/test/resources/test_item.yml");
+
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+
+        List<ItemStackParser.ParsedItem> items = itemParser.parseItems((List<Map<String, Object>>) config.get("test-items"));
+
+        File output = new File("src/test/resources/test.yml");
+        YamlConfiguration outputConfig = YamlConfiguration.loadConfiguration(output);
+
+        outputConfig.set("test", items.stream().map(itemParser::dump).toList());
+        try {
+            outputConfig.save(output);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
