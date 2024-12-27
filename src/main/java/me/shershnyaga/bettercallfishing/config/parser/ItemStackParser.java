@@ -62,12 +62,12 @@ public class ItemStackParser {
         parsedItem.material((String) info.get(MATERIAL_SECTION));
 
         if (info.containsKey(DISPLAY_NAME_SECTION)) {
-            parsedItem.displayName(MINI_MESSAGE.deserialize((String) info.get(DISPLAY_NAME_SECTION)));
+            parsedItem.displayName((String) info.get(DISPLAY_NAME_SECTION));
         }
 
         if (info.containsKey(LORE_SECTION)) {
             List<String> lore = (List<String>) info.get(LORE_SECTION);
-            parsedItem.lore(lore.stream().map(MINI_MESSAGE::deserialize).toList());
+            parsedItem.lore(lore);
         }
 
         if (info.containsKey(CMD_SECTION)) {
@@ -108,14 +108,18 @@ public class ItemStackParser {
     }
 
     @lombok.Builder(access = AccessLevel.PRIVATE)
-    @Getter
-    public static class ParsedItem {
+    public class ParsedItem {
 
+        @Getter
         private String material;
 
-        private Component displayName;
-        private List<Component> lore;
+        private String displayName;
+        private List<String> lore;
+
+        @Getter
         private Integer cmd;
+
+        @Getter
         private List<EnchantmentParser.ParsedEnchantment> enchantments;
 
         private int minCount;
@@ -169,6 +173,22 @@ public class ItemStackParser {
             }
 
             return toItemStack(count);
+        }
+
+        public Map<String, Object> dump() {
+            Map<String, Object> dump = new HashMap<>();
+
+            dump.put(MATERIAL_SECTION, material);
+            dump.put(DISPLAY_NAME_SECTION, displayName);
+        }
+
+        public List<String> getLore() {
+            return lore.stream().map(l -> MiniMessageUtils.convertComponentToString(MINI_MESSAGE.deserialize(l)))
+                    .toList();
+        }
+
+        public String getDisplayName() {
+            return MiniMessageUtils.convertComponentToString(MINI_MESSAGE.deserialize(displayName));
         }
 
         private float getRandom(float min, float max) {
