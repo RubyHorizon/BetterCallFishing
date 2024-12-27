@@ -72,16 +72,19 @@ public class EnchantmentParser {
     }
 
     @Builder(access = AccessLevel.PRIVATE)
-    @Getter
     public static class ParsedEnchantment {
 
         private static final Random random = new Random();
 
-        private Enchantment enchantment;
+        private String enchantment;
 
+        @Getter
         private int minLvl;
+
+        @Getter
         private int maxLvl;
 
+        @Getter
         private float chance;
 
         public ItemStack addEnchantment(ItemStack item) {
@@ -94,10 +97,25 @@ public class EnchantmentParser {
 
             ItemMeta meta = item.getItemMeta();
 
-            Objects.requireNonNull(meta).addEnchant(enchantment, level, true);
-            item.setItemMeta(meta);
+            Enchantment enchant = getEnchantment();
+
+            if (enchant != null) {
+                Objects.requireNonNull(meta).addEnchant(enchant, level, true);
+                item.setItemMeta(meta);
+            }
 
             return item;
+        }
+
+        public Enchantment getEnchantment() {
+            Enchantment e = Enchantment.getByName(enchantment);
+
+            if (e != null) {
+                return e;
+            } else {
+                BetterCallFishing.log(ChatColor.RED + "Cannot find enchantment \"" + enchantment + "\"");
+                return null;
+            }
         }
 
         public ItemStack tryToAddEnchant(ItemStack item) {
@@ -136,7 +154,7 @@ public class EnchantmentParser {
             info.put(LEVEL_SECTION, enchantment.minLvl);
         }
 
-        dump.put(enchantment.enchantment.getName().toLowerCase(), info);
+        dump.put(enchantment.enchantment.toLowerCase(), info);
 
         return dump;
     }
