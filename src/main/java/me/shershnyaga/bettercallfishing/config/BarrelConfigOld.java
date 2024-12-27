@@ -22,18 +22,15 @@ public class BarrelConfigOld {
     @Getter
     private final List<ItemSettings> itemSettingsList;
 
-    public BarrelConfigOld(FileConfiguration configuration) {
+    public BarrelConfigOld() {
         random = new Random();
         itemSettingsList = new ArrayList<>();
 
-        setConfiguration(configuration);
+        // setConfiguration(configuration);
     }
 
-    private void setConfiguration(FileConfiguration config) {
-        itemSettingsList.clear();
-        isEnable = config.getBoolean("enable-barrel-catch");
-        catchChance = config.getInt("barrel-catch-chance");
-
+    public List<ItemSettings> parseOldConfig(FileConfiguration config) {
+        List<ItemSettings> itemSettingsList = new ArrayList<>();
         Set<String> keys = config.getConfigurationSection("barrel-items").getKeys(false);
 
         boolean isIaEnabled = PluginHooks.ITEMS_ADDER.isEnabled();
@@ -56,6 +53,8 @@ public class BarrelConfigOld {
             ItemSettings settings = new ItemSettings(key, chance, minCount, maxCount, 0);
             itemSettingsList.add(settings);
         }
+
+        return itemSettingsList;
     }
 
     public HashMap<Integer, ItemStack> generateBarrelInventoryMap() {

@@ -30,7 +30,7 @@ public class ItemStackParser {
 
     private EnchantmentParser enchantmentParser;
 
-    private ItemStackParser(boolean enableChanceParse, boolean enableCountRangeParse,
+    public ItemStackParser(boolean enableChanceParse, boolean enableCountRangeParse,
                             boolean enableEnchantmentsRangeParse, boolean enableEnchantmentsChanceParse) {
         this.enableChanceParse = enableChanceParse;
         this.enableCountRangeParse = enableCountRangeParse;
@@ -139,7 +139,17 @@ public class ItemStackParser {
         return dump;
     }
 
-    @lombok.Builder(access = AccessLevel.PRIVATE)
+    public List<Map<String, Object>> dump(List<ParsedItem> parsedItems) {
+        List<Map<String, Object>> dump = new ArrayList<>();
+
+        for (ParsedItem parsedItem : parsedItems) {
+            dump.add(dump(parsedItem));
+        }
+
+        return dump;
+    }
+
+    @lombok.Builder(access = AccessLevel.PUBLIC)
     public static class ParsedItem {
 
         @Getter
@@ -246,7 +256,7 @@ public class ItemStackParser {
         private boolean enableEnchantmentsRangeParse;
         private boolean enableEnchantmentsChanceParse;
 
-        private Builder() {
+        public Builder() {
 
         }
 

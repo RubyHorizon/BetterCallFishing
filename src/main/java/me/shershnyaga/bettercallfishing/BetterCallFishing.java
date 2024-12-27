@@ -3,10 +3,7 @@ package me.shershnyaga.bettercallfishing;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import me.shershnyaga.bettercallfishing.commands.BetterCallFishCmd;
-import me.shershnyaga.bettercallfishing.config.BarrelConfigOld;
-import me.shershnyaga.bettercallfishing.config.LangConfig;
-import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
-import me.shershnyaga.bettercallfishing.config.WeightConfig;
+import me.shershnyaga.bettercallfishing.config.*;
 import me.shershnyaga.bettercallfishing.config.parser.ItemStackParser;
 import me.shershnyaga.bettercallfishing.events.OnFishEvent;
 import me.shershnyaga.bettercallfishing.events.OnJoinEvent;
@@ -50,9 +47,12 @@ public final class BetterCallFishing extends JavaPlugin {
     @Getter
     private static ReloadManager reloadManager;
     private Metrics metrics;
-    private BarrelConfigOld barrelConfig;
+
+    private BarrelConfig barrelConfig;
+    private BarrelConfigOld barrelConfigOld;
     private LangConfig langConfig;
-    private WeightConfig weightConfig;
+    private WeightConfig weightConfig
+            ;
     private MythicMobsConfig mythicMobsConfig;
 
     private boolean isLoaded = false;
@@ -107,7 +107,9 @@ public final class BetterCallFishing extends JavaPlugin {
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(barrelConfigFile);
 
         weightConfig = new WeightConfig(getConfig(), langConfig);
-        barrelConfig = new BarrelConfigOld(cfg);
+
+        barrelConfig = new BarrelConfig(barrelConfigFile);
+        barrelConfigOld = new BarrelConfigOld();
     }
 
     @SneakyThrows
@@ -163,9 +165,10 @@ public final class BetterCallFishing extends JavaPlugin {
         return updated;
     }
 
+    // TODO Remove old config
     private void reloadCommands() {
         Objects.requireNonNull(getServer().getPluginCommand("bettercallfishing"))
-                .setExecutor(new BetterCallFishCmd(barrelConfig, reloadManager, langConfig, mythicMobsConfig, adventure));
+                .setExecutor(new BetterCallFishCmd(barrelConfigOld, reloadManager, langConfig, mythicMobsConfig, adventure));
     }
 
     private void reloadEvents() {
@@ -173,7 +176,8 @@ public final class BetterCallFishing extends JavaPlugin {
             HandlerList.unregisterAll(this);
         }
 
-        getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfig, mythicMobsConfig,
+        // TODO Remove old config
+        getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfigOld, mythicMobsConfig,
                 new FixedMetadataValue(this, true), langConfig), this);
         getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
         getServer().getPluginManager().registerEvents(new OnJoinEvent(autoUpdate), this);
