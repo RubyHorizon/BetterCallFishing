@@ -3,9 +3,9 @@ package me.shershnyaga.bettercallfishing.events;
 import lombok.AllArgsConstructor;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
+import me.shershnyaga.bettercallfishing.hooks.PluginHooks;
 import me.shershnyaga.bettercallfishing.utils.Constants;
 import me.shershnyaga.bettercallfishing.utils.MiniMessageUtils;
-import me.shershnyaga.bettercallfishing.utils.integrations.MythicMobsUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Barrel;
@@ -62,7 +62,7 @@ public class OnFishEvent implements Listener {
             return;
         }
 
-        if (MythicMobsUtil.isEnabled()) {
+        if (PluginHooks.MYTHIC_MOBS.isEnabled()) {
             Optional<MythicMobsConfig.MythicMobInfo> info = mobsConfig.getRandomMobInfo();
             if (info.isPresent()) {
                 Entity mob = info.get().spawn(caught.getLocation());

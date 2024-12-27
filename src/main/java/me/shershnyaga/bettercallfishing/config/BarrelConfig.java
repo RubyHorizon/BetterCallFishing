@@ -3,8 +3,8 @@ package me.shershnyaga.bettercallfishing.config;
 import dev.lone.itemsadder.api.CustomStack;
 import lombok.*;
 import me.shershnyaga.bettercallfishing.BetterCallFishing;
-import me.shershnyaga.bettercallfishing.utils.integrations.ItemsAdderUtil;
-import org.bukkit.Bukkit;
+import me.shershnyaga.bettercallfishing.hooks.PluginHooks;
+import me.shershnyaga.bettercallfishing.hooks.ItemsAdderHook;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -35,7 +35,7 @@ public class BarrelConfig {
 
         Set<String> keys = config.getConfigurationSection("barrel-items").getKeys(false);
 
-        boolean isIaEnabled = ItemsAdderUtil.isEnabled();
+        boolean isIaEnabled = PluginHooks.ITEMS_ADDER.isEnabled();
 
         for (String key: keys) {
             int chance = config.getInt("barrel-items." + key + ".chance");
@@ -157,7 +157,8 @@ public class BarrelConfig {
 
         public Optional<ItemStack> getItem(int amount) {
             if (id.startsWith("IA:")) {
-                return getIAItem(id, amount);
+                ItemsAdderHook itemsAdderHook = (ItemsAdderHook) PluginHooks.ITEMS_ADDER.getHook();
+                return itemsAdderHook.getItem(id, amount);
             } else if (Material.matchMaterial(id) != null) {
                 return Optional.of(new ItemStack(Objects.requireNonNull(Material.getMaterial(id)), amount));
             } else {
@@ -176,29 +177,6 @@ public class BarrelConfig {
             }
 
             return false;
-        }
-
-        private Optional<ItemStack> getIAItem(String id, int amount) {
-            if (ItemsAdderUtil.isEnabled()) {
-                String iaId = id.replace("IA:", "");
-                if (CustomStack.isInRegistry(iaId)) {
-
-                    ItemStack item = CustomStack.getInstance(iaId).getItemStack().clone();
-                    item.setAmount(amount);
-
-                    return Optional.of(item);
-                }
-
-                BetterCallFishing.log(ChatColor.RED + "\""
-                        + id + "\" is not registered in ItemsAdder!");
-
-            } else {
-                BetterCallFishing.log(ChatColor.RED + "\""
-                        + id + "\" this is an ItemsAdder item, but the ItemsAdder plugin " +
-                        "is not loaded!!");
-            }
-
-            return Optional.empty();
         }
     }
 }

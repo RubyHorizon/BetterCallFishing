@@ -10,7 +10,7 @@ import me.shershnyaga.bettercallfishing.config.WeightConfig;
 import me.shershnyaga.bettercallfishing.events.OnFishEvent;
 import me.shershnyaga.bettercallfishing.events.OnJoinEvent;
 import me.shershnyaga.bettercallfishing.events.OtherEvents;
-import me.shershnyaga.bettercallfishing.hooks.list.PluginHook;
+import me.shershnyaga.bettercallfishing.hooks.PluginHook;
 import me.shershnyaga.bettercallfishing.hooks.PluginHooks;
 import me.shershnyaga.bettercallfishing.utils.AutoUpdate;
 import me.shershnyaga.bettercallfishing.utils.Metrics;

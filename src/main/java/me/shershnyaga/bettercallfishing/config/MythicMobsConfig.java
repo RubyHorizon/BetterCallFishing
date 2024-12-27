@@ -7,7 +7,6 @@ import io.lumine.mythic.core.mobs.ActiveMob;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.shershnyaga.bettercallfishing.BetterCallFishing;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
