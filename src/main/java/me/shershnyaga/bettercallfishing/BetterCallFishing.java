@@ -162,7 +162,6 @@ public final class BetterCallFishing extends JavaPlugin {
         return updated;
     }
 
-    // TODO Remove old config
     private void reloadCommands() {
         Objects.requireNonNull(getServer().getPluginCommand("bettercallfishing"))
                 .setExecutor(new BetterCallFishCmd(barrelConfig, reloadManager, langConfig, mythicMobsConfig, adventure));
@@ -173,7 +172,6 @@ public final class BetterCallFishing extends JavaPlugin {
             HandlerList.unregisterAll(this);
         }
 
-        // TODO Remove old config
         getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfig, mythicMobsConfig,
                 new FixedMetadataValue(this, true), langConfig), this);
         getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
