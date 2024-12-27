@@ -7,6 +7,7 @@ import me.shershnyaga.bettercallfishing.config.BarrelConfig;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
 import me.shershnyaga.bettercallfishing.config.WeightConfig;
+import me.shershnyaga.bettercallfishing.config.parser.ItemStackParser;
 import me.shershnyaga.bettercallfishing.events.OnFishEvent;
 import me.shershnyaga.bettercallfishing.events.OnJoinEvent;
 import me.shershnyaga.bettercallfishing.events.OtherEvents;
@@ -28,10 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public final class BetterCallFishing extends JavaPlugin {
 
@@ -70,13 +68,14 @@ public final class BetterCallFishing extends JavaPlugin {
     public void onEnable() {
         adventure = BukkitAudiences.create(this);
         saveDefaultConfig();
-        // reloadConfig();
 
         Bukkit.getScheduler().runTaskAsynchronously(this, this::update);
 
         reloadManager = new ReloadManager();
 
         reloadManager.reload();
+
+        // testDump();
     }
 
     @Override
@@ -281,7 +280,13 @@ public final class BetterCallFishing extends JavaPlugin {
         }
 
         if (enabled) {
-            log(hooks.toString());
+
+            String hooksStr = hooks.toString();
+            if (hooksStr.endsWith(", ")) {
+                hooksStr = hooksStr.substring(0, hooksStr.length() - 2);
+            }
+
+            log(hooksStr);
         }
     }
 
@@ -306,6 +311,33 @@ public final class BetterCallFishing extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage("[BetterCallFishing] " + message);
         } else {
             Bukkit.getConsoleSender().sendMessage(message);
+        }
+    }
+
+    void testDump() {
+        ItemStackParser.Builder builder = ItemStackParser.Builder.builder();
+
+        builder.setEnableChanceParse(true);
+        builder.setEnableCountRangeParse(true);
+        builder.setEnableEnchantmentsChanceParse(true);
+        builder.setEnableEnchantmentsRangeParse(true);
+
+        ItemStackParser itemParser = builder.build();
+
+        File file = new File(getDataFolder().getAbsolutePath() + File.separator + "test.yml");
+
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+
+        List<ItemStackParser.ParsedItem> items = itemParser.parseItems((List<Map<String, Object>>) config.get("test-items"));
+
+        File output = new File(getDataFolder().getAbsolutePath() + File.separator + "test1.yml");
+        YamlConfiguration outputConfig = YamlConfiguration.loadConfiguration(output);
+
+        outputConfig.set("test", items.stream().map(itemParser::dump).toList());
+        try {
+            outputConfig.save(output);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
