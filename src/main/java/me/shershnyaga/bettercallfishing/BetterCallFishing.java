@@ -10,10 +10,10 @@ import me.shershnyaga.bettercallfishing.config.WeightConfig;
 import me.shershnyaga.bettercallfishing.events.OnFishEvent;
 import me.shershnyaga.bettercallfishing.events.OnJoinEvent;
 import me.shershnyaga.bettercallfishing.events.OtherEvents;
+import me.shershnyaga.bettercallfishing.hooks.list.PluginHook;
+import me.shershnyaga.bettercallfishing.hooks.PluginHooks;
 import me.shershnyaga.bettercallfishing.utils.AutoUpdate;
 import me.shershnyaga.bettercallfishing.utils.Metrics;
-import me.shershnyaga.bettercallfishing.utils.integrations.ItemsAdderUtil;
-import me.shershnyaga.bettercallfishing.utils.integrations.MythicMobsUtil;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -87,12 +87,13 @@ public final class BetterCallFishing extends JavaPlugin {
             super.reloadConfig();
         }
 
-        displayAndDumpHooksConfigs();
+        displayHooks();
+        dumpHooksConfigs();
 
         barrelConfigFile = new File(getDataFolder(), "barrel_config.yml");
         mythicConfigFile = new File(getDataFolder(), "mythic_mobs.yml");
 
-        if (MythicMobsUtil.isEnabled()) {
+        if (PluginHooks.MYTHIC_MOBS.isEnabled()) {
             FileConfiguration mythicConfig = YamlConfiguration.loadConfiguration(mythicConfigFile);
             mythicMobsConfig = new MythicMobsConfig(mythicConfig);
         }
@@ -265,32 +266,30 @@ public final class BetterCallFishing extends JavaPlugin {
         return false;
     }
 
-    private void displayAndDumpHooksConfigs() {
-        boolean isNone = true;
+    private void displayHooks() {
+        StringBuilder hooks = new StringBuilder();
 
-        StringBuilder builder = new StringBuilder();
-        builder.append(ChatColor.GREEN + "Initializing Better Call Fishing Hooks: ");
-        if (ItemsAdderUtil.isEnabled()) {
-            isNone = false;
-            builder.append(ChatColor.GREEN + "ItemsAdder, ");
+        hooks.append(ChatColor.WHITE + "Initializing Better Call Fishing Hooks: ");
+
+        boolean enabled = false;
+        for (PluginHook hook: Arrays.stream(PluginHooks.values()).map(PluginHooks::getHook).toList()) {
+
+            if (hook.isEnabled()) {
+                enabled = true;
+                hooks.append(ChatColor.GREEN + hook.getHookName()).append(ChatColor.WHITE + ", ");
+            }
         }
 
-        if (MythicMobsUtil.isEnabled()) {
+        if (enabled) {
+            log(hooks.toString());
+        }
+    }
+
+    private void dumpHooksConfigs() {
+        if (PluginHooks.MYTHIC_MOBS.isEnabled()) {
             if (Files.notExists(Path.of(getDataFolder().getAbsolutePath() + File.separator + "mythic_mobs.yml"))) {
                 saveResource("mythic_mobs.yml", false);
             }
-
-            isNone = false;
-            builder.append(ChatColor.GREEN + "MythicMobs, ");
-        }
-
-        String message = builder.toString();
-        if (message.endsWith(", ")) {
-            message = message.substring(0, message.length() - 2);
-        }
-
-        if (!isNone) {
-            BetterCallFishing.log(message);
         }
     }
 
