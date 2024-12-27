@@ -6,6 +6,7 @@ load: STARTUP
 softdepend:
   - ItemsAdder
   - MythicMobs
+  - MMOItems
 authors: [ Shershnyaga_ ]
 website: shershnyaga.me
 commands:
