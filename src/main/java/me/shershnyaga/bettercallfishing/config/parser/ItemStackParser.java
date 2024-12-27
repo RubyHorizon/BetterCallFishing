@@ -4,9 +4,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import me.shershnyaga.bettercallfishing.BetterCallFishing;
+import me.shershnyaga.bettercallfishing.hooks.PluginHooks;
+import me.shershnyaga.bettercallfishing.hooks.list.ItemsAdderHook;
+import me.shershnyaga.bettercallfishing.hooks.list.MMOItemsHook;
 import me.shershnyaga.bettercallfishing.utils.MiniMessageUtils;
-import me.shershnyaga.bettercallfishing.utils.integrations.ItemsAdderUtil;
-import me.shershnyaga.bettercallfishing.utils.integrations.MMOItemsUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.ChatColor;
@@ -17,6 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 
 public class ItemStackParser {
+
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
     private static final String MATERIAL_SECTION = "material";
@@ -132,7 +134,7 @@ public class ItemStackParser {
                 String[] parts = material.split(":");
 
                 if (parts[0].equals("IA")) {
-                    Optional<ItemStack> ia = ItemsAdderUtil.getIAItem(parts[1]);
+                    Optional<ItemStack> ia = getIAItem(parts[1]);
 
                     if (ia.isPresent()) {
                         item = ia.get();
@@ -140,7 +142,7 @@ public class ItemStackParser {
                         return Optional.empty();
                     }
                 } else if (parts[0].equals("MMO")) {
-                    Optional<ItemStack> mmo = MMOItemsUtil.getItem(parts[1], parts[2]);
+                    Optional<ItemStack> mmo = getMMOItem(parts[1], parts[2]);
 
                     if (mmo.isPresent()) {
                         item = mmo.get();
@@ -197,6 +199,16 @@ public class ItemStackParser {
 
         private int getRandom(int min, int max) {
             return random.nextInt((max - min) + 1) + min;
+        }
+
+        private Optional<ItemStack> getIAItem(String id) {
+            ItemsAdderHook itemsAdderHook = (ItemsAdderHook) PluginHooks.ITEMS_ADDER.getHook();
+            return itemsAdderHook.getItem(id);
+        }
+
+        private Optional<ItemStack> getMMOItem(String type, String id) {
+            MMOItemsHook mmoItemsHook = (MMOItemsHook) PluginHooks.MMO_ITEMS.getHook();
+            return mmoItemsHook.getItem(type, id);
         }
     }
 

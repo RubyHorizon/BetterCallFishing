@@ -1,21 +1,31 @@
-package me.shershnyaga.bettercallfishing.utils.integrations;
+package me.shershnyaga.bettercallfishing.hooks.list;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import me.shershnyaga.bettercallfishing.BetterCallFishing;
 import net.Indyuce.mmoitems.MMOItems;
-import net.Indyuce.mmoitems.api.item.mmoitem.MMOItem;
 import net.Indyuce.mmoitems.api.Type;
+import net.Indyuce.mmoitems.api.item.mmoitem.MMOItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Optional;
 
-public final class MMOItemsUtil {
-    public static boolean isEnabled() {
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+public class MMOItemsHook implements PluginHook {
+
+    @Override
+    public String getHookName() {
+        return "MMOItems";
+    }
+
+    @Override
+    public boolean isEnabled() {
         return Bukkit.getPluginManager().getPlugin("MMOItems") != null;
     }
 
-    public static Optional<ItemStack> getItem(String type, String id) {
+    public Optional<ItemStack> getItem(String type, String id) {
 
         if (!isEnabled()) {
             BetterCallFishing.log(ChatColor.RED + "\""
