@@ -6,8 +6,6 @@ import me.shershnyaga.bettercallfishing.config.BarrelConfig;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
 import me.shershnyaga.bettercallfishing.utils.MiniMessageUtils;
-import me.shershnyaga.bettercallfishing.utils.integrations.ItemsAdderUtil;
-import me.shershnyaga.bettercallfishing.utils.integrations.MythicMobsUtil;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -59,24 +57,6 @@ public class BetterCallFishCmd implements TabExecutor {
                 player.openInventory(inv);
             }
         }
-        else if (strings[0].equals("check") && strings.length == 2) {
-            List<String> checks = getIntegrations();
-            String action = strings[1];
-
-            if (!checks.contains(action)) {
-                return true;
-            }
-
-            if (action.equals("integration_items_adder_barrel")) {
-                if (ItemsAdderUtil.isEnabled()) {
-                    getAvailableItemsOnItemsAdder().forEach(commandSender::sendMessage);
-                }
-            } else if (action.equals("integration_mythicmobs")) {
-                if (MythicMobsUtil.isEnabled()) {
-                    getAvailableMobsOnMythicMobs().forEach(commandSender::sendMessage);
-                }
-            }
-        }
         return true;
     }
 
@@ -90,8 +70,6 @@ public class BetterCallFishCmd implements TabExecutor {
             }
         }
 
-        List<String> checks = getIntegrations();
-
         if (strings.length == 1) {
 
             List<String> args = new ArrayList<>();
@@ -101,32 +79,10 @@ public class BetterCallFishCmd implements TabExecutor {
                 args.add("gen_barrel");
             }
 
-            if (!checks.isEmpty()) {
-                args.add("check");
-            }
-
             return args;
         }
 
-        if (strings.length == 2 && !checks.isEmpty() && strings[0].equals("check")) {
-            return checks;
-        }
-
         return null;
-    }
-
-    private List<String> getIntegrations() {
-        List<String> checks = new ArrayList<>();
-
-        if (ItemsAdderUtil.isEnabled()) {
-            checks.add("integration_items_adder_barrel");
-        }
-
-        if (MythicMobsUtil.isEnabled()) {
-            checks.add("integration_mythicmobs");
-        }
-
-        return checks;
     }
 
     private List<String> getAvailableItemsOnItemsAdder() {
