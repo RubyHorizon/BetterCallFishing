@@ -49,7 +49,6 @@ public final class BetterCallFishing extends JavaPlugin {
     private Metrics metrics;
 
     private BarrelConfig barrelConfig;
-    private BarrelConfigOld barrelConfigOld;
     private LangConfig langConfig;
     private WeightConfig weightConfig
             ;
@@ -109,7 +108,6 @@ public final class BetterCallFishing extends JavaPlugin {
         weightConfig = new WeightConfig(getConfig(), langConfig);
 
         barrelConfig = new BarrelConfig(barrelConfigFile);
-        barrelConfigOld = new BarrelConfigOld();
     }
 
     @SneakyThrows
@@ -168,7 +166,7 @@ public final class BetterCallFishing extends JavaPlugin {
     // TODO Remove old config
     private void reloadCommands() {
         Objects.requireNonNull(getServer().getPluginCommand("bettercallfishing"))
-                .setExecutor(new BetterCallFishCmd(barrelConfigOld, reloadManager, langConfig, mythicMobsConfig, adventure));
+                .setExecutor(new BetterCallFishCmd(barrelConfig, reloadManager, langConfig, mythicMobsConfig, adventure));
     }
 
     private void reloadEvents() {
@@ -177,7 +175,7 @@ public final class BetterCallFishing extends JavaPlugin {
         }
 
         // TODO Remove old config
-        getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfigOld, mythicMobsConfig,
+        getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfig, mythicMobsConfig,
                 new FixedMetadataValue(this, true), langConfig), this);
         getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
         getServer().getPluginManager().registerEvents(new OnJoinEvent(autoUpdate), this);

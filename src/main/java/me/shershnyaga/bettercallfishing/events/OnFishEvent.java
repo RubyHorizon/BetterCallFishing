@@ -1,6 +1,7 @@
 package me.shershnyaga.bettercallfishing.events;
 
 import lombok.AllArgsConstructor;
+import me.shershnyaga.bettercallfishing.config.BarrelConfig;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
 import me.shershnyaga.bettercallfishing.hooks.PluginHooks;
@@ -20,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataType;
-import me.shershnyaga.bettercallfishing.config.BarrelConfigOld;
 
 import java.util.*;
 
@@ -28,7 +28,7 @@ import java.util.*;
 public class OnFishEvent implements Listener {
 
     private final FileConfiguration config;
-    private final BarrelConfigOld barrelConfig;
+    private final BarrelConfig barrelConfig;
     private final MythicMobsConfig mobsConfig;
     private final FixedMetadataValue metadataValue;
     private final LangConfig langConfig;

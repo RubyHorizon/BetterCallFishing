@@ -2,9 +2,11 @@ package me.shershnyaga.bettercallfishing.commands;
 
 import lombok.AllArgsConstructor;
 import me.shershnyaga.bettercallfishing.BetterCallFishing;
+import me.shershnyaga.bettercallfishing.config.BarrelConfig;
 import me.shershnyaga.bettercallfishing.config.BarrelConfigOld;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
+import me.shershnyaga.bettercallfishing.config.parser.ItemStackParser;
 import me.shershnyaga.bettercallfishing.utils.MiniMessageUtils;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
@@ -25,7 +27,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public class BetterCallFishCmd implements TabExecutor {
-    private BarrelConfigOld barrelConfig;
+    private BarrelConfig barrelConfig;
     private BetterCallFishing.ReloadManager reloadManager;
     private LangConfig langConfig;
     private MythicMobsConfig mythicMobsConfig;
@@ -93,18 +95,19 @@ public class BetterCallFishCmd implements TabExecutor {
         StringBuilder loaded = new StringBuilder();
         StringBuilder unloaded = new StringBuilder();
 
-        for (BarrelConfigOld.ItemSettings item: barrelConfig.getItemSettingsList()) {
+        for (ItemStackParser.ParsedItem item: barrelConfig.getParsedItems()) {
 
-            if (!item.isIAItem()) {
+            if (!item.getMaterial().startsWith("IA:")) {
                 continue;
             }
 
-            if (item.isLoadedIAItem()) {
-                loaded.append(ChatColor.GREEN).append(item.getId()).append(ChatColor.WHITE).append(", ");
-            }
-            else {
-                unloaded.append(ChatColor.RED).append(item.getId()).append(ChatColor.WHITE).append(", ");
-            }
+            // TODO New IA Check
+            // if (item.isLoadedIAItem()) {
+            //     loaded.append(ChatColor.GREEN).append(item.getId()).append(ChatColor.WHITE).append(", ");
+            // }
+            // else {
+            //     unloaded.append(ChatColor.RED).append(item.getId()).append(ChatColor.WHITE).append(", ");
+            // }
         }
 
         String loadedAsString = loaded.toString();

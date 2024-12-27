@@ -210,11 +210,11 @@ public class ItemStackParser {
             return Optional.of(item);
         }
 
-        public Optional<ItemStack> getWithChances() {
-            if (getRandom(0f, 100f) > chance && chance != 100f) {
-                return Optional.empty();
-            }
+        public boolean tryToGet() {
+            return !(getRandom(0f, 100f) > chance) || chance == 100f;
+        }
 
+        public int getRandomCountOrDefault() {
             int count;
             if (minCount == maxCount) {
                 count = minCount;
@@ -222,7 +222,7 @@ public class ItemStackParser {
                 count = getRandom(minCount, maxCount);
             }
 
-            return toItemStack(count);
+            return count;
         }
 
         public List<String> getLore() {
