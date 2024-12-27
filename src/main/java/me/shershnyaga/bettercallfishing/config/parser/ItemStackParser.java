@@ -180,6 +180,29 @@ public class ItemStackParser {
 
             dump.put(MATERIAL_SECTION, material);
             dump.put(DISPLAY_NAME_SECTION, displayName);
+            dump.put(LORE_SECTION, lore);
+
+            if (cmd != null) {
+                dump.put(CMD_SECTION, cmd);
+            }
+
+            if (enchantments != null && !enchantments.isEmpty()) {
+                List<Map<String, Object>> enchants = new ArrayList<>();
+
+                for (EnchantmentParser.ParsedEnchantment enchantment : enchantments) {
+                    enchants.add(enchantment.dump());
+                }
+
+                dump.put(ENCHANTMENTS_SECTION, enchants);
+            }
+
+            if (enableCountRangeParse && minCount != maxCount) {
+                dump.put(COUNT_SECTION, minCount + "-" + maxCount);
+            } else {
+                dump.put(COUNT_SECTION, minCount);
+            }
+
+            return dump;
         }
 
         public List<String> getLore() {
