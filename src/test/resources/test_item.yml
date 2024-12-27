@@ -8,6 +8,8 @@ test-items:
       - "<green> An old bone!"
     chance: 2.0
 
+  - material: "MMO:sword:EXCALIBUR"
+
   - material: iron_sword
     name: "<gold>Knight Sword"
     lore:

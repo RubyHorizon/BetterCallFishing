@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataType;
-import me.shershnyaga.bettercallfishing.config.BarrelConfig;
+import me.shershnyaga.bettercallfishing.config.BarrelConfigOld;
 
 import java.util.*;
 
@@ -28,7 +28,7 @@ import java.util.*;
 public class OnFishEvent implements Listener {
 
     private final FileConfiguration config;
-    private final BarrelConfig barrelConfig;
+    private final BarrelConfigOld barrelConfig;
     private final MythicMobsConfig mobsConfig;
     private final FixedMetadataValue metadataValue;
     private final LangConfig langConfig;

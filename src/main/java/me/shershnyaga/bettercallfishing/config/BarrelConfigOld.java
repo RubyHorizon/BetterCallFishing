@@ -12,7 +12,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-public class BarrelConfig {
+@Deprecated
+public class BarrelConfigOld {
     private final Random random;
 
     @Getter
@@ -21,7 +22,7 @@ public class BarrelConfig {
     @Getter
     private final List<ItemSettings> itemSettingsList;
 
-    public BarrelConfig(FileConfiguration configuration) {
+    public BarrelConfigOld(FileConfiguration configuration) {
         random = new Random();
         itemSettingsList = new ArrayList<>();
 

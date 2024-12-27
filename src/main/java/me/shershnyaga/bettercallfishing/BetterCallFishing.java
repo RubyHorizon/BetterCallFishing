@@ -3,7 +3,7 @@ package me.shershnyaga.bettercallfishing;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import me.shershnyaga.bettercallfishing.commands.BetterCallFishCmd;
-import me.shershnyaga.bettercallfishing.config.BarrelConfig;
+import me.shershnyaga.bettercallfishing.config.BarrelConfigOld;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
 import me.shershnyaga.bettercallfishing.config.WeightConfig;
@@ -50,7 +50,7 @@ public final class BetterCallFishing extends JavaPlugin {
     @Getter
     private static ReloadManager reloadManager;
     private Metrics metrics;
-    private BarrelConfig barrelConfig;
+    private BarrelConfigOld barrelConfig;
     private LangConfig langConfig;
     private WeightConfig weightConfig;
     private MythicMobsConfig mythicMobsConfig;
@@ -107,7 +107,7 @@ public final class BetterCallFishing extends JavaPlugin {
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(barrelConfigFile);
 
         weightConfig = new WeightConfig(getConfig(), langConfig);
-        barrelConfig = new BarrelConfig(cfg);
+        barrelConfig = new BarrelConfigOld(cfg);
     }
 
     @SneakyThrows

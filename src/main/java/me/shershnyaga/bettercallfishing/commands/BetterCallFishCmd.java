@@ -2,7 +2,7 @@ package me.shershnyaga.bettercallfishing.commands;
 
 import lombok.AllArgsConstructor;
 import me.shershnyaga.bettercallfishing.BetterCallFishing;
-import me.shershnyaga.bettercallfishing.config.BarrelConfig;
+import me.shershnyaga.bettercallfishing.config.BarrelConfigOld;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
 import me.shershnyaga.bettercallfishing.utils.MiniMessageUtils;
@@ -25,7 +25,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public class BetterCallFishCmd implements TabExecutor {
-    private BarrelConfig barrelConfig;
+    private BarrelConfigOld barrelConfig;
     private BetterCallFishing.ReloadManager reloadManager;
     private LangConfig langConfig;
     private MythicMobsConfig mythicMobsConfig;
@@ -93,7 +93,7 @@ public class BetterCallFishCmd implements TabExecutor {
         StringBuilder loaded = new StringBuilder();
         StringBuilder unloaded = new StringBuilder();
 
-        for (BarrelConfig.ItemSettings item: barrelConfig.getItemSettingsList()) {
+        for (BarrelConfigOld.ItemSettings item: barrelConfig.getItemSettingsList()) {
 
             if (!item.isIAItem()) {
                 continue;
