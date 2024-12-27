@@ -110,6 +110,10 @@ public class EnchantmentParser {
             }
         }
 
+        public String getEnchantmentName() {
+            return enchantment;
+        }
+
         public ItemStack tryToAddEnchant(ItemStack item) {
             if (chance == 100f) {
                 return addEnchantment(item);
@@ -146,7 +150,7 @@ public class EnchantmentParser {
             info.put(LEVEL_SECTION, enchantment.minLvl);
         }
 
-        dump.put(enchantment.enchantment.toLowerCase(), info);
+        dump.put(enchantment.getEnchantmentName().toLowerCase(), info);
 
         return dump;
     }
