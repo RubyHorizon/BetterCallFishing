@@ -3,12 +3,8 @@ package me.shershnyaga.bettercallfishing.config.parser;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import me.shershnyaga.bettercallfishing.BetterCallFishing;
 import me.shershnyaga.bettercallfishing.utils.MiniMessageUtils;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -111,8 +107,14 @@ public class ItemStackParser {
         Map<String, Object> dump = new HashMap<>();
 
         dump.put(MATERIAL_SECTION, parsedItem.material);
-        dump.put(DISPLAY_NAME_SECTION, parsedItem.displayName);
-        dump.put(LORE_SECTION, parsedItem.lore);
+
+        if (parsedItem.displayName != null) {
+            dump.put(DISPLAY_NAME_SECTION, parsedItem.displayName);
+        }
+
+        if (parsedItem.lore != null && !parsedItem.lore.isEmpty()) {
+            dump.put(LORE_SECTION, parsedItem.lore);
+        }
 
         if (parsedItem.cmd != null) {
             dump.put(CMD_SECTION, parsedItem.cmd);
@@ -210,11 +212,21 @@ public class ItemStackParser {
         }
 
         public List<String> getLore() {
+
+            if (lore == null) {
+                return null;
+            }
+
             return lore.stream().map(l -> MiniMessageUtils.convertComponentToString(MINI_MESSAGE.deserialize(l)))
                     .toList();
         }
 
         public String getDisplayName() {
+
+            if (displayName == null) {
+                return null;
+            }
+
             return MiniMessageUtils.convertComponentToString(MINI_MESSAGE.deserialize(displayName));
         }
 

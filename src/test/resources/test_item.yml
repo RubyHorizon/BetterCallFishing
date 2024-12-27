@@ -13,16 +13,16 @@ test-items:
     lore:
       - "<green>Old knight's sword, battered"
     custom-model-data: 1001
-    enchants:
+    enchantments:
       - knockback:
           level: 1-3
-          chance: 10
+          chance: 10.0
       - loot_bonus_mobs:
           level: 1
           chance: 50
 
   - material: enchantment_book
-    enchants:
+    enchantments:
       - mending:
           chance: 10
       - oxygen:

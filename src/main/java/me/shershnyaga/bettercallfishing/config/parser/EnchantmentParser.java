@@ -3,14 +3,13 @@ package me.shershnyaga.bettercallfishing.config.parser;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import me.shershnyaga.bettercallfishing.BetterCallFishing;
+import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class EnchantmentParser {
 
@@ -34,7 +33,7 @@ public class EnchantmentParser {
         Map<String, Object> enchantmentInfo = (Map<String, Object>) enchantment.get(enchant);
 
         if (enchantmentInfo.containsKey(LEVEL_SECTION)) {
-            String level = (String) enchantmentInfo.get(LEVEL_SECTION);
+            String level = String.valueOf(enchantmentInfo.get(LEVEL_SECTION));
             String[] levelSplit = level.split("-");
 
             if (enableLevelRangeParse && levelSplit.length == 2) {
@@ -51,10 +50,22 @@ public class EnchantmentParser {
 
         if (enchantmentInfo.containsKey(CHANCE_SECTION) && enableChanceParse) {
 
-            builder.chance((float) enchantmentInfo.get(CHANCE_SECTION));
+            String chance = String.valueOf(enchantmentInfo.get(CHANCE_SECTION));
+
+            builder.chance(Float.parseFloat(chance));
 
         } else {
             builder.chance(100);
+        }
+
+        Enchantment e = Enchantment.getByName(enchant);
+
+        if (e != null) {
+            builder.enchantment(e);
+        }
+        else {
+            BetterCallFishing.log(ChatColor.RED + "Cannot find enchantment \"" + enchant + "\"");
+            return null;
         }
 
         return builder.build();
@@ -66,7 +77,7 @@ public class EnchantmentParser {
 
         private static final Random random = new Random();
 
-        Enchantment enchantment;
+        private Enchantment enchantment;
 
         private int minLvl;
         private int maxLvl;
