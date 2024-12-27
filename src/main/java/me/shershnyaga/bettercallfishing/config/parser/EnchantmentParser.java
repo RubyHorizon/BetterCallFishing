@@ -7,6 +7,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -61,7 +62,7 @@ public class EnchantmentParser {
 
     @Builder(access = AccessLevel.PRIVATE)
     @Getter
-    public static class ParsedEnchantment {
+    public class ParsedEnchantment {
 
         private static final Random random = new Random();
 
@@ -98,6 +99,26 @@ public class EnchantmentParser {
             }
 
             return item;
+        }
+
+        public Map<String, Object> dump() {
+            Map<String, Object> dump = new HashMap<>();
+
+            Map<String, Object> info = new HashMap<>();
+
+            if (enableChanceParse && chance < 100f) {
+                info.put(CHANCE_SECTION, chance);
+            }
+
+            if (enableLevelRangeParse && minLvl != maxLvl) {
+                info.put(LEVEL_SECTION, minLvl + "-" + maxLvl);
+            } else {
+                info.put(LEVEL_SECTION, minLvl);
+            }
+
+            dump.put(enchantment.getName().toLowerCase(), info);
+
+            return dump();
         }
 
         private float getRandom(float min, float max) {
