@@ -50,8 +50,7 @@ public final class BetterCallFishing extends JavaPlugin {
 
     private BarrelConfig barrelConfig;
     private LangConfig langConfig;
-    private WeightConfig weightConfig
-            ;
+    private WeightConfig weightConfig;
     private MythicMobsConfig mythicMobsConfig;
 
     private boolean isLoaded = false;

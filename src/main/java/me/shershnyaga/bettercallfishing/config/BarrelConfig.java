@@ -38,7 +38,6 @@ public class BarrelConfig {
             loadItems();
         }
 
-        parsedItems.clear();
         isEnable = config.getBoolean("enable-barrel-catch");
         catchChance = config.getInt("barrel-catch-chance");
     }

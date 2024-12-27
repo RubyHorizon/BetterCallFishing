@@ -187,7 +187,6 @@ public class ItemStackParser {
             if (itemStack.isEmpty()) {
                 return Optional.empty();
             }
-
             ItemStack item = itemStack.get();
 
             item.setAmount(count);
@@ -205,13 +204,14 @@ public class ItemStackParser {
                 meta.setCustomModelData(cmd);
             }
 
-            enchantments.forEach(enchantment -> enchantment.tryToAddEnchant(item));
-
+            if (enchantments != null) {
+                enchantments.forEach(enchantment -> enchantment.tryToAddEnchant(item));
+            }
             return Optional.of(item);
         }
 
         public boolean tryToGet() {
-            return !(getRandom(0f, 100f) > chance) || chance == 100f;
+            return getRandom(0f, 100f) <= chance || chance == 100f;
         }
 
         public int getRandomCountOrDefault() {

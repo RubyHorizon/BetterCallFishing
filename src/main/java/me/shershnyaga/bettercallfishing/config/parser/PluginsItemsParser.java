@@ -14,7 +14,7 @@ public class PluginsItemsParser {
 
     public Optional<ItemStack> parseFromString(String string) {
         if (!string.contains(":")) {
-            Material material = Material.getMaterial(string);
+            Material material = Material.matchMaterial(string.toUpperCase());
 
             if (material == null) {
                 return Optional.empty();
