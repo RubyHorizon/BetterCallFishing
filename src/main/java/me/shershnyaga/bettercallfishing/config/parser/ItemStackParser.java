@@ -122,9 +122,13 @@ public class ItemStackParser {
         @Getter
         private List<EnchantmentParser.ParsedEnchantment> enchantments;
 
+        @Getter
         private int minCount;
+
+        @Getter
         private int maxCount;
 
+        @Getter
         private float chance;
 
         public Optional<ItemStack> toItemStack() {
@@ -144,11 +148,11 @@ public class ItemStackParser {
 
             ItemMeta meta = item.getItemMeta();
             if (displayName != null) {
-                meta.setDisplayName(MiniMessageUtils.convertComponentToString(displayName));
+                meta.setDisplayName(displayName);
             }
 
             if (lore != null) {
-                meta.setLore(lore.stream().map(MiniMessageUtils::convertComponentToString).toList());
+                meta.setLore(lore);
             }
 
             if (cmd != null) {
