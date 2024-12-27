@@ -58,15 +58,7 @@ public class EnchantmentParser {
             builder.chance(100);
         }
 
-        Enchantment e = Enchantment.getByName(enchant);
-
-        if (e != null) {
-            builder.enchantment(e);
-        }
-        else {
-            BetterCallFishing.log(ChatColor.RED + "Cannot find enchantment \"" + enchant + "\"");
-            return null;
-        }
+        builder.enchantment(enchant);
 
         return builder.build();
     }
