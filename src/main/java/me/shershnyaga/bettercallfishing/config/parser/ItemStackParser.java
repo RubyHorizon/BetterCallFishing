@@ -196,11 +196,11 @@ public class ItemStackParser {
 
             ItemMeta meta = item.getItemMeta();
             if (displayName != null) {
-                meta.setDisplayName(displayName);
+                meta.setDisplayName(getDisplayName());
             }
 
             if (lore != null) {
-                meta.setLore(lore);
+                meta.setLore(getLore());
             }
 
             if (cmd != null) {
@@ -210,6 +210,8 @@ public class ItemStackParser {
             if (enchantments != null) {
                 enchantments.forEach(enchantment -> enchantment.tryToAddEnchant(item));
             }
+
+            item.setItemMeta(meta);
             return Optional.of(item);
         }
 
@@ -234,8 +236,7 @@ public class ItemStackParser {
                 return null;
             }
 
-            return lore.stream().map(l -> MiniMessageUtils.convertComponentToString(MINI_MESSAGE.deserialize(l)))
-                    .toList();
+            return lore.stream().map(MiniMessageUtils::convertStringtoString).toList();
         }
 
         public String getDisplayName() {
@@ -244,7 +245,7 @@ public class ItemStackParser {
                 return null;
             }
 
-            return MiniMessageUtils.convertComponentToString(MINI_MESSAGE.deserialize(displayName));
+            return MiniMessageUtils.convertStringtoString(displayName);
         }
 
         private float getRandom(float min, float max) {
