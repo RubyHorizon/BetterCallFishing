@@ -85,6 +85,7 @@ public class BarrelConfig {
                 items.put(parsedItem, count - rand);
 
                 inventory.put(slot, parsedItem.toItemStack(rand).get());
+                break;
             }
         }
 
