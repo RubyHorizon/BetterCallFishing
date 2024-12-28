@@ -55,10 +55,13 @@ public class ItemStackParser {
     public ParsedItem parse(Map<String, Object> info) {
         ParsedItem.ParsedItemBuilder parsedItem = ParsedItem.builder();
 
-        parsedItem.material((String) info.get(MATERIAL_SECTION));
+        String material = String.valueOf(info.get(MATERIAL_SECTION));
+
+        parsedItem.material(material);
 
         if (info.containsKey(DISPLAY_NAME_SECTION)) {
-            parsedItem.displayName((String) info.get(DISPLAY_NAME_SECTION));
+            String displayName = String.valueOf(info.get(DISPLAY_NAME_SECTION));
+            parsedItem.displayName(displayName);
         }
 
         if (info.containsKey(LORE_SECTION)) {
@@ -77,7 +80,7 @@ public class ItemStackParser {
         }
 
         if (info.containsKey(COUNT_SECTION)) {
-            String count = (String) info.get(COUNT_SECTION);
+            String count = String.valueOf(info.get(COUNT_SECTION));
 
             if (enableCountRangeParse && count.contains("-")) {
                 String[] parts = count.split("-");
@@ -94,8 +97,8 @@ public class ItemStackParser {
         }
 
         if (info.containsKey(CHANCE_SECTION) && enableChanceParse) {
-            double chance = (double) info.get(CHANCE_SECTION);
-            parsedItem.chance((float) chance);
+            String chance = String.valueOf(info.get(CHANCE_SECTION));
+            parsedItem.chance(Float.parseFloat(chance));
         } else {
             parsedItem.chance(100f);
         }
