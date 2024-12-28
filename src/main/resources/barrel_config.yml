@@ -1,48 +1,33 @@
 enable-barrel-catch: true
 barrel-catch-chance: 10.0 # Hook Item Replacement Chance (0.0 - 100.0)
-barrel-items:
-  # ItemsAdder example
-  # IA:namespace:item_id:
-  #   chance: 25
-  #   min-count: 1
-  #   max-count: 5
-  BONE_MEAL:
-    chance: 25.0 # 0.0 - 100.0
-    min-count: 1
-    max-count: 4
-  PAPER:
-    chance: 13.0
-    min-count: 1
-    max-count: 4
-  BONE:
-    chance: 50.0
-    min-count: 3
-    max-count: 13
-  RED_MUSHROOM:
-    chance: 2.0
-    min-count: 15
-    max-count: 16
-  COAL:
-    chance: 41.0
-    min-count: 4
-    max-count: 12
-  GUNPOWDER:
-    chance: 4.0
-    min-count: 9
-    max-count: 20
-  STRING:
-    chance: 7.0
-    min-count: 2
-    max-count: 11
-  BOWL:
-    chance: 1.0
-    min-count: 1
-    max-count: 2
-  POTATO:
-    chance: 57.0
-    min-count: 21
-    max-count: 53
-  GLOWSTONE_DUST:
-    chance: 7.0
-    min-count: 11
-    max-count: 12
+items:
+  - chance: 25.0
+    material: bone_meal
+    count: 1-4
+  - chance: 13.0
+    material: paper
+    count: 1-4
+  - chance: 50.0
+    material: bone
+    count: 3-13
+  - chance: 2.0
+    material: red_mushroom
+    count: 15-16
+  - chance: 41.0
+    material: coal
+    count: 4-12
+  - chance: 4.0
+    material: gunpowder
+    count: 9-20
+  - chance: 7.0
+    material: string
+    count: 2-11
+  - chance: 1.0
+    material: bowl
+    count: 1-2
+  - chance: 57.0
+    material: potato
+    count: 21-53
+  - chance: 7.0
+    material: glowstone_dust
+    count: 11-12
