@@ -1,20 +1,16 @@
-package me.shershnyaga.bettercallfishing.config.parser;
+package me.shershnyaga.bettercallfishing.config.parser.items;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import me.shershnyaga.bettercallfishing.BetterCallFishing;
 import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
 
 public class PotionDataParser {

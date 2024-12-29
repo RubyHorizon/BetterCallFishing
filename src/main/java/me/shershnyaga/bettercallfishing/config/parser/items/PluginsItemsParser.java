@@ -1,4 +1,4 @@
-package me.shershnyaga.bettercallfishing.config.parser;
+package me.shershnyaga.bettercallfishing.config.parser.items;
 
 import lombok.NoArgsConstructor;
 import me.shershnyaga.bettercallfishing.hooks.ItemsAdderHook;

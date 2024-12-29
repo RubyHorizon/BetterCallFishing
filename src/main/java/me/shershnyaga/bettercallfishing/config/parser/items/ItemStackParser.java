@@ -1,10 +1,9 @@
-package me.shershnyaga.bettercallfishing.config.parser;
+package me.shershnyaga.bettercallfishing.config.parser.items;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import me.shershnyaga.bettercallfishing.utils.MiniMessageUtils;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 

@@ -1,17 +1,14 @@
 package me.shershnyaga.bettercallfishing;
 
-import me.shershnyaga.bettercallfishing.config.parser.EnchantmentParser;
-import me.shershnyaga.bettercallfishing.config.parser.ItemStackParser;
-import me.shershnyaga.bettercallfishing.utils.MiniMessageUtils;
+import me.shershnyaga.bettercallfishing.config.parser.items.EnchantmentParser;
+import me.shershnyaga.bettercallfishing.config.parser.items.ItemStackParser;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.enchantments.Enchantment;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

@@ -2,7 +2,7 @@ package me.shershnyaga.bettercallfishing.config;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import me.shershnyaga.bettercallfishing.config.parser.ItemStackParser;
+import me.shershnyaga.bettercallfishing.config.parser.items.ItemStackParser;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
