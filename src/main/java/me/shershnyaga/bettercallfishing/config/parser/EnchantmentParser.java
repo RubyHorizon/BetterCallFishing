@@ -5,8 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 import me.shershnyaga.bettercallfishing.BetterCallFishing;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
@@ -99,7 +102,17 @@ public class EnchantmentParser {
 
             Enchantment enchant = getEnchantment();
 
-            if (enchant != null) {
+            if (enchant == null) {
+                return item;
+            }
+
+            if (item.getType() == Material.ENCHANTED_BOOK) {
+                if (meta instanceof EnchantmentStorageMeta bookMeta) {
+                    bookMeta.addStoredEnchant(enchant, level, true);
+                    item.setItemMeta(bookMeta);
+                }
+
+            } else {
                 Objects.requireNonNull(meta).addEnchant(enchant, level, true);
                 item.setItemMeta(meta);
             }
