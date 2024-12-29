@@ -32,6 +32,14 @@ public class EnchantmentParser {
 
         Map<String, Object> enchantmentInfo = (Map<String, Object>) enchantment.get(enchant);
 
+        if (enchantmentInfo == null) {
+            builder.minLvl(1);
+            builder.maxLvl(1);
+            builder.chance(100);
+            builder.enchantment(enchant);
+            return builder.build();
+        }
+
         if (enchantmentInfo.containsKey(LEVEL_SECTION)) {
             String level = String.valueOf(enchantmentInfo.get(LEVEL_SECTION));
             String[] levelSplit = level.split("-");
@@ -86,7 +94,6 @@ public class EnchantmentParser {
             } else {
                 level = getRandom(minLvl, maxLvl);
             }
-
             ItemMeta meta = item.getItemMeta();
 
             Enchantment enchant = getEnchantment();
