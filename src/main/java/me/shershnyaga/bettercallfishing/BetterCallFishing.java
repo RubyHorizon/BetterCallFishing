@@ -50,7 +50,6 @@ public final class BetterCallFishing extends JavaPlugin {
 
     private BarrelConfig barrelConfig;
     private LangConfig langConfig;
-    private WeightConfig weightConfig;
     private MythicMobsConfig mythicMobsConfig;
 
     private boolean isLoaded = false;
@@ -103,8 +102,6 @@ public final class BetterCallFishing extends JavaPlugin {
         }
 
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(barrelConfigFile);
-
-        weightConfig = new WeightConfig(getConfig(), langConfig);
 
         barrelConfig = new BarrelConfig(barrelConfigFile);
     }
@@ -174,7 +171,6 @@ public final class BetterCallFishing extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfig, mythicMobsConfig,
                 new FixedMetadataValue(this, true), langConfig), this);
-        getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
         getServer().getPluginManager().registerEvents(new OnJoinEvent(autoUpdate), this);
     }
 
