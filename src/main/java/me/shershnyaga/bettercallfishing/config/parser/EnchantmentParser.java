@@ -33,6 +33,7 @@ public class EnchantmentParser {
         Map<String, Object> enchantmentInfo = (Map<String, Object>) enchantment.get(enchant);
 
         if (enchantmentInfo == null) {
+            System.out.println(enchant + " ass");
             builder.minLvl(1);
             builder.maxLvl(1);
             builder.chance(100);
@@ -126,7 +127,7 @@ public class EnchantmentParser {
                 return addEnchantment(item);
             }
 
-            if (chance >= getRandom(0, 100)) {
+            if (chance >= getRandom(0f, 100f)) {
                 addEnchantment(item);
             }
 

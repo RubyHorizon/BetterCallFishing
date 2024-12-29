@@ -207,11 +207,11 @@ public class ItemStackParser {
                 meta.setCustomModelData(cmd);
             }
 
+            item.setItemMeta(meta);
             if (enchantments != null) {
                 enchantments.forEach(enchantment -> enchantment.tryToAddEnchant(item));
             }
 
-            item.setItemMeta(meta);
             return Optional.of(item);
         }
 
