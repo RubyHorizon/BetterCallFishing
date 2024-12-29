@@ -8,7 +8,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -36,7 +35,6 @@ public class EnchantmentParser {
         Map<String, Object> enchantmentInfo = (Map<String, Object>) enchantment.get(enchant);
 
         if (enchantmentInfo == null) {
-            System.out.println(enchant + " ass");
             builder.minLvl(1);
             builder.maxLvl(1);
             builder.chance(100);

@@ -15,27 +15,32 @@ public class ItemStackParser {
     private static final Random RANDOM = new Random();
     private static final PluginsItemsParser PLUGINS_ITEMS_PARSER = new PluginsItemsParser();
 
-    private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
-
     private static final String MATERIAL_SECTION = "material";
     private static final String DISPLAY_NAME_SECTION = "name";
     private static final String COUNT_SECTION = "count";
     private static final String LORE_SECTION = "lore";
     private static final String CMD_SECTION = "cmd";
     private static final String ENCHANTMENTS_SECTION = "enchantments";
+    private static final String POTION_DATA_SECTION = "potion_data";
     private static final String CHANCE_SECTION = "chance";
 
     private boolean enableChanceParse;
     private boolean enableCountRangeParse;
 
     private EnchantmentParser enchantmentParser;
+    private PotionDataParser potionDataParser;
 
     public ItemStackParser(boolean enableChanceParse, boolean enableCountRangeParse,
-                            boolean enableEnchantmentsRangeParse, boolean enableEnchantmentsChanceParse) {
+                            boolean enableEnchantmentsRangeParse, boolean enableEnchantmentsChanceParse,
+                           boolean enablePotionLevelRangeParse, boolean enablePotionChanceParse,
+                           boolean enablePotionDurationSizeParse
+                           ) {
         this.enableChanceParse = enableChanceParse;
         this.enableCountRangeParse = enableCountRangeParse;
 
         enchantmentParser = new EnchantmentParser(enableEnchantmentsRangeParse, enableEnchantmentsChanceParse);
+        potionDataParser = new PotionDataParser(enablePotionLevelRangeParse, enablePotionChanceParse,
+                enablePotionDurationSizeParse);
     }
 
     public List<ParsedItem> parseItems(List<Map<String, Object>> info) {
@@ -77,6 +82,12 @@ public class ItemStackParser {
             List<Map<String, Object>> enchants = (List<Map<String, Object>>) info.get(ENCHANTMENTS_SECTION);
 
             parsedItem.enchantments(enchants.stream().map(enchantmentParser::parse).toList());
+        }
+
+        if (info.containsKey(POTION_DATA_SECTION)) {
+            List<Map<String, Object>> potionsData = (List<Map<String, Object>>) info.get(POTION_DATA_SECTION);
+
+            parsedItem.parsedPotionData(potionsData.stream().map(potionDataParser::parse).toList());
         }
 
         if (info.containsKey(COUNT_SECTION)) {
@@ -180,6 +191,9 @@ public class ItemStackParser {
         @Getter
         private float chance;
 
+        @Getter
+        private List<PotionDataParser.ParsedPotionData> parsedPotionData;
+
         public Optional<ItemStack> toItemStack() {
             return toItemStack(1);
         }
@@ -210,6 +224,10 @@ public class ItemStackParser {
             item.setItemMeta(meta);
             if (enchantments != null) {
                 enchantments.forEach(enchantment -> enchantment.tryToAddEnchant(item));
+            }
+
+            if (parsedPotionData != null) {
+                parsedPotionData.forEach(data -> data.tryToAddEffect(item));
             }
 
             return Optional.of(item);
@@ -263,6 +281,9 @@ public class ItemStackParser {
         private boolean enableCountRangeParse = false;
         private boolean enableEnchantmentsRangeParse;
         private boolean enableEnchantmentsChanceParse;
+        private boolean enablePotionLevelRangeParse;
+        private boolean enablePotionChanceParse;
+        private boolean enablePotionDurationSizeParse;
 
         public Builder() {
 
@@ -276,7 +297,10 @@ public class ItemStackParser {
             return new ItemStackParser(enableChanceParse,
                     enableCountRangeParse,
                     enableEnchantmentsRangeParse,
-                    enableEnchantmentsChanceParse);
+                    enableEnchantmentsChanceParse,
+                    enablePotionLevelRangeParse,
+                    enablePotionChanceParse,
+                    enablePotionDurationSizeParse);
         }
     }
 
