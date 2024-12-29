@@ -21,7 +21,7 @@ public class ItemStackParser {
     private static final String LORE_SECTION = "lore";
     private static final String CMD_SECTION = "cmd";
     private static final String ENCHANTMENTS_SECTION = "enchantments";
-    private static final String POTION_DATA_SECTION = "potion_data";
+    private static final String POTION_DATA_SECTION = "potion-data";
     private static final String CHANCE_SECTION = "chance";
 
     private boolean enableChanceParse;
@@ -84,11 +84,13 @@ public class ItemStackParser {
             parsedItem.enchantments(enchants.stream().map(enchantmentParser::parse).toList());
         }
 
+        /*
         if (info.containsKey(POTION_DATA_SECTION)) {
             List<Map<String, Object>> potionsData = (List<Map<String, Object>>) info.get(POTION_DATA_SECTION);
 
             parsedItem.parsedPotionData(potionsData.stream().map(potionDataParser::parse).toList());
         }
+         */
 
         if (info.containsKey(COUNT_SECTION)) {
             String count = String.valueOf(info.get(COUNT_SECTION));

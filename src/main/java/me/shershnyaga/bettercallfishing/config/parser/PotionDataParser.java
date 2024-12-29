@@ -3,13 +3,18 @@ package me.shershnyaga.bettercallfishing.config.parser;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import me.shershnyaga.bettercallfishing.BetterCallFishing;
+import org.bukkit.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 public class PotionDataParser {
@@ -40,8 +45,8 @@ public class PotionDataParser {
         if (potionInfo == null) {
             builder.minLvl(1);
             builder.maxLvl(1);
-            builder.minDuration(1);
-            builder.maxDuration(1);
+            builder.minDuration(20);
+            builder.maxDuration(20);
             builder.chance(100);
             return builder.build();
         }
@@ -125,10 +130,17 @@ public class PotionDataParser {
                 if (minDuration == maxDuration) {
                     duration = minDuration;
                 } else {
-                    duration = getRandom(minDuration, maxDuration);
+                    duration = getRandom(minDuration, maxDuration) * 20;
                 }
 
-                potionMeta.addCustomEffect(new PotionEffect(getEffect(), duration * 20, level), true);
+
+                PotionEffectType effectType = PotionEffectType.getByName(effect);
+
+                if (effectType != null) {
+                    potionMeta.addCustomEffect(new PotionEffect(getEffect(), duration, level), true);
+                }
+
+                itemStack.setItemMeta(potionMeta);
             }
 
             return itemStack;
@@ -147,7 +159,14 @@ public class PotionDataParser {
         }
 
         public PotionEffectType getEffect() {
-            return PotionEffectType.getByName(effect);
+            PotionEffectType e = PotionEffectType.getByName(effect);
+
+            if (e != null) {
+                return e;
+            } else {
+                BetterCallFishing.log(ChatColor.RED + "Cannot find Potion effect \"" + e.getName() + "\"");
+                return null;
+            }
         }
 
         private float getRandom(float min, float max) {
