@@ -1,0 +1,11 @@
+# Polskie Tłumaczenie - Minkek
+reload-message: <green>[BetterCallFishing] Reload skończony!
+update-detect-message:
+- <blue>----------------
+- <green>Znaleziono akutalizacje BetterCallFishing!
+- '<green>Nowa Wersja: <blue>%new_version%'
+- '<green>Aktualna Wersja: <blue>%current_version%'
+- '%version_info%'
+- <blue>----------------
+updated-message: <green>[BetterCallFishing] aktualizacja jest gotowa! Prosze zrestartuj serwer.
+old-barrel-name: <gold>Stara Beczka
