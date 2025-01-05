@@ -33,7 +33,7 @@ public class CaughtItemsConfig {
 
     private void loadItems(FileConfiguration config) {
         parsedItems = itemStackParser.parseItems((List<Map<String, Object>>) config.get("items"));
-        parsedItems.sort(Comparator.comparing(ItemStackParser.ParsedItem::getChance));
+        Collections.shuffle(parsedItems);
     }
 
     public Optional<ItemStack> tryToGetRandomItem() {

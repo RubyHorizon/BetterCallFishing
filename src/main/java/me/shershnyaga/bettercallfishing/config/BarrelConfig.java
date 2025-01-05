@@ -3,6 +3,7 @@ package me.shershnyaga.bettercallfishing.config;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import me.shershnyaga.bettercallfishing.config.parser.items.ItemStackParser;
+import me.shershnyaga.bettercallfishing.utils.chances.ChanceUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -20,6 +21,8 @@ public class BarrelConfig {
 
     @Getter
     private List<ItemStackParser.ParsedItem> parsedItems = new ArrayList<>();
+
+    private static final ChanceUtils<ItemStackParser.ParsedItem> PARSED_ITEM_CHANCE_UTILS = new ChanceUtils<>(100);
 
     private final ItemStackParser itemStackParser = new ItemStackParser(true,
             true, true, true,
@@ -71,23 +74,23 @@ public class BarrelConfig {
         while (!slotQueue.isEmpty()) {
             int slot = slotQueue.remove();
 
-            for (ItemStackParser.ParsedItem parsedItem : items.keySet()) {
-                int count = items.get(parsedItem);
+            Optional<ItemStackParser.ParsedItem> parsedItemOptional = PARSED_ITEM_CHANCE_UTILS.tryToGetRandomItem();
 
-                if (count <= 0) {
-                    continue;
-                }
-
-                if (!parsedItem.tryToGet()) {
-                    continue;
-                }
-
-                int rand = getRandom(1, count);
-                items.put(parsedItem, count - rand);
-
-                inventory.put(slot, parsedItem.toItemStack(rand).get());
-                break;
+            if (parsedItemOptional.isEmpty()) {
+                continue;
             }
+
+            ItemStackParser.ParsedItem parsedItem = parsedItemOptional.get();
+            int count = items.get(parsedItem);
+
+            if (count <= 0) {
+                continue;
+            }
+
+            int rand = getRandom(1, count);
+            items.put(parsedItem, count - rand);
+
+            inventory.put(slot, parsedItem.toItemStack(rand).get());
         }
 
         return inventory;
