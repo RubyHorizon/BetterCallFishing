@@ -267,6 +267,10 @@ public class ItemStackParser {
             return MessageUtils.parseChatColors(displayName);
         }
 
+        public Optional<ItemStack> toItemStackWithRandomCount() {
+            return toItemStack(getRandomCountOrDefault());
+        }
+
         private float getRandom(float min, float max) {
             return min + RANDOM.nextFloat() * (max - min);
         }
