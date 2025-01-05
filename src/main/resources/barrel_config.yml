@@ -57,12 +57,12 @@ items:
     chance: 7.0
 
   # ItemsAdder item example
-  # - material: "ia:vanguardsword:amethyst_sword"
+  # - material: "ia:namespace:item_id"
   # count: 1
   # chance: 10
 
   # MMOItems item example
-  # - material: "mmo:sword:KATANA"
+  # - material: "mmo:namespace:item_id"
   # count: 1
   # chance: 50
 
