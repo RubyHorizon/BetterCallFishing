@@ -1,6 +1,30 @@
 enable-barrel-catch: true
 barrel-catch-chance: 10.0 # Hook Item Replacement Chance (0.0 - 100.0)
 items:
+  - material: enchantment_book
+    chance: 10
+    enchants:
+      - mending:
+          chance: 10
+      - oxygen:
+          level: 1-5
+          chance: 10
+  - material: enchantment_book
+    chance: 10
+    enchants:
+      - sharpness:
+          level: 1-5
+          chance: 20
+  - material: mace
+    chance: 5
+    name: <aqua>Old Traveler's Mace
+    lore:
+      - <yellow>Most likely belonged to one of the <red>Ruby Horizon<yellow> travelers.
+    cmd: 1
+    enchants:
+      - sharpness:
+          level: 1-3
+          chance: 10
   - material: bone_meal
     count: 1-4
     chance: 25.0
@@ -31,3 +55,14 @@ items:
   - material: glowstone_dust
     count: 11-12
     chance: 7.0
+
+  # ItemsAdder item example
+  # - material: "ia:vanguardsword:amethyst_sword"
+  # count: 1
+  # chance: 10
+
+  # MMOItems item example
+  # - material: "mmo:sword:KATANA"
+  # count: 1
+  # chance: 50
+
