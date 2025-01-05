@@ -1,5 +1,5 @@
 disable-default-catch-items: false
-caught-items:
+items:
   - material: "IA:ruby_sword"
     chance: 0.1
 
