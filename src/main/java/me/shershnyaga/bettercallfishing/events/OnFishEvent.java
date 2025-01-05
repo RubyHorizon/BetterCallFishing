@@ -44,18 +44,16 @@ public class OnFishEvent implements Listener {
         Location hookLoc = event.getHook().getLocation();
         Location change = playerLoc.subtract(hookLoc);
 
-        if (!event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) {
+        if (!event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH) &&
+                !event.getState().equals(PlayerFishEvent.State.CAUGHT_ENTITY)) {
             return;
         }
-
         Entity dolphin = tryToCatchDolphin(hookLoc);
         if (dolphin != null) {
             dolphin.setVelocity(caught.getVelocity().multiply(3));
             caught.remove();
             return;
         }
-
-        Entity fish = getFish(event.getCaught());
 
         if (barrelConfig.testBarrelCatch()) {
             ItemStack barrel = getBarrelItem();
@@ -74,25 +72,19 @@ public class OnFishEvent implements Listener {
             }
         }
 
-        boolean needItem = false;
-        if (fish == null && caughtItemsConfig.isDisableDefaultItemsCatch()) {
-            Objects.requireNonNull(event.getCaught()).remove();
-            needItem = true;
-        }
-
         Optional<ItemStack> item = caughtItemsConfig.tryToGetRandomItem();
 
-        if (needItem && item.isEmpty()) {
+        if (item.isEmpty() && caughtItemsConfig.isDisableDefaultItemsCatch()) {
             item = caughtItemsConfig.getRandomItem();
         }
 
         if (item.isPresent()) {
-
-            if (event.getCaught() instanceof Item itemEntity) {
-                itemEntity.setItemStack(item.get());
-                return;
-            }
+            Item caughtItem = (Item) caught;
+            caughtItem.setItemStack(item.get());
+            return;
         }
+
+        Entity fish = getFish(caught);
 
         if (fish != null) {
             fish.setVelocity(change.toVector().multiply(0.15f));
