@@ -28,7 +28,7 @@ public class ChanceUtils<T extends Chance> {
             return Optional.empty();
         }
 
-        float randomVal = RANDOM.nextFloat(totalChance);
+        float randomVal = RANDOM.nextFloat() * totalChance;
         float cumulativeChance = 0;
 
         for (T item : items) {
@@ -55,7 +55,7 @@ public class ChanceUtils<T extends Chance> {
             return Optional.empty();
         }
 
-        float randomVal = RANDOM.nextFloat(totalAccessChance + totalFailleChance);
+        float randomVal = RANDOM.nextFloat() * (totalAccessChance + totalFailleChance);
         float cumulativeChance = 0;
 
         if (randomVal > totalAccessChance) {
