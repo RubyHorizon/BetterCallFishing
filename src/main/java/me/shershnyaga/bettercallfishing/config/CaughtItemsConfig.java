@@ -21,7 +21,7 @@ public class CaughtItemsConfig {
 
     private final ItemStackParser itemStackParser = new ItemStackParser(true,
             true, true, true,
-            true, true, true);
+            false, false, false);
 
     public CaughtItemsConfig(File configFile) {
         FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);

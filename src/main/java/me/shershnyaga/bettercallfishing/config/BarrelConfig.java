@@ -26,7 +26,7 @@ public class BarrelConfig {
 
     private final ItemStackParser itemStackParser = new ItemStackParser(true,
             true, true, true,
-            true, true, true);
+            false, false, false);
 
     private File configFile;
     private FileConfiguration config;
