@@ -31,6 +31,7 @@ public class ItemsAdderHook implements PluginHook {
         }
 
         String iaId = id.replace("IA:", "");
+        iaId = iaId.replace("ia:", "");
         if (CustomStack.isInRegistry(iaId)) {
 
             ItemStack item = CustomStack.getInstance(iaId).getItemStack().clone();

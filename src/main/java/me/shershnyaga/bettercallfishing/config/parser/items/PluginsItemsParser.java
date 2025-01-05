@@ -25,9 +25,9 @@ public class PluginsItemsParser {
 
         String[] split = string.split(":");
 
-        if (split[0].equals("IA")) {
+        if (split[0].equalsIgnoreCase("ia")) {
             return getIAItem(split[1]);
-        } else if (split[0].equals("MMO")) {
+        } else if (split[0].equalsIgnoreCase("mmo")) {
             return getMMOItem(split[1], split[2]);
         }
 
