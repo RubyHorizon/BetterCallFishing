@@ -38,7 +38,7 @@ public class CaughtItemsConfig {
 
     public Optional<ItemStack> tryToGetRandomItem() {
         Optional<ItemStackParser.ParsedItem> item =
-                CHANCE_UTILS.tryToGetRandomItem((ItemStackParser.ParsedItem[]) parsedItems.toArray());
+                CHANCE_UTILS.tryToGetRandomItem(parsedItems.toArray(new ItemStackParser.ParsedItem[0]));
 
         if (item.isEmpty()) {
             return Optional.empty();
@@ -49,7 +49,7 @@ public class CaughtItemsConfig {
 
     public Optional<ItemStack> getRandomItem() {
         Optional<ItemStackParser.ParsedItem> item =
-                CHANCE_UTILS.getRandomItem((ItemStackParser.ParsedItem[]) parsedItems.toArray());
+                CHANCE_UTILS.getRandomItem(parsedItems.toArray(new ItemStackParser.ParsedItem[0]));
 
         if (item.isEmpty()) {
             return Optional.empty();

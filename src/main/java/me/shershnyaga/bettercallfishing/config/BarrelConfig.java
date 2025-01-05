@@ -74,14 +74,16 @@ public class BarrelConfig {
         while (!slotQueue.isEmpty()) {
             int slot = slotQueue.remove();
 
-            Optional<ItemStackParser.ParsedItem> parsedItemOptional = PARSED_ITEM_CHANCE_UTILS.tryToGetRandomItem();
+            Optional<ItemStackParser.ParsedItem> parsedItemOptional = PARSED_ITEM_CHANCE_UTILS.tryToGetRandomItem(
+                    parsedItems.toArray(new ItemStackParser.ParsedItem[0])
+            );
 
             if (parsedItemOptional.isEmpty()) {
                 continue;
             }
 
             ItemStackParser.ParsedItem parsedItem = parsedItemOptional.get();
-            int count = items.get(parsedItem);
+            int count = items.getOrDefault(parsedItem, 0);
 
             if (count <= 0) {
                 continue;
