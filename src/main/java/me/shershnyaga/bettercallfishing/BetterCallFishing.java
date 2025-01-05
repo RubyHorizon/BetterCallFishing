@@ -51,6 +51,7 @@ public final class BetterCallFishing extends JavaPlugin {
     private BarrelConfig barrelConfig;
     private LangConfig langConfig;
     private MythicMobsConfig mythicMobsConfig;
+    private CaughtItemsConfig caughtItemsConfig;
 
     private boolean isLoaded = false;
 
@@ -60,6 +61,7 @@ public final class BetterCallFishing extends JavaPlugin {
 
     private File barrelConfigFile;
     private File mythicConfigFile;
+    private File caughtItemsConfigFile;
 
     @Override
     public void onEnable() {
@@ -88,6 +90,7 @@ public final class BetterCallFishing extends JavaPlugin {
 
         barrelConfigFile = new File(getDataFolder(), "barrel_config.yml");
         mythicConfigFile = new File(getDataFolder(), "mythic_mobs.yml");
+        caughtItemsConfigFile = new File(getDataFolder(), "caught_items.yml");
 
         if (PluginHooks.MYTHIC_MOBS.isEnabled()) {
             FileConfiguration mythicConfig = YamlConfiguration.loadConfiguration(mythicConfigFile);
@@ -101,9 +104,13 @@ public final class BetterCallFishing extends JavaPlugin {
             saveResource("barrel_config.yml", false);
         }
 
-        FileConfiguration cfg = YamlConfiguration.loadConfiguration(barrelConfigFile);
+        if (Files.notExists(Path.of(getDataFolder().getAbsolutePath() + File.separator + "caught_items.yml"))
+                && !moveBarrelConfig()) {
+            saveResource("caught_items.yml", false);
+        }
 
         barrelConfig = new BarrelConfig(barrelConfigFile);
+        caughtItemsConfig = new CaughtItemsConfig(caughtItemsConfigFile);
     }
 
     @SneakyThrows
@@ -170,7 +177,7 @@ public final class BetterCallFishing extends JavaPlugin {
         }
 
         getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfig, mythicMobsConfig,
-                new FixedMetadataValue(this, true), langConfig), this);
+                new FixedMetadataValue(this, true), langConfig, caughtItemsConfig), this);
         getServer().getPluginManager().registerEvents(new OnJoinEvent(autoUpdate), this);
     }
 
