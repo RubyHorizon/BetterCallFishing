@@ -6,7 +6,7 @@ import me.shershnyaga.bettercallfishing.config.BarrelConfig;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
 import me.shershnyaga.bettercallfishing.config.parser.items.ItemStackParser;
-import me.shershnyaga.bettercallfishing.utils.MiniMessageUtils;
+import me.shershnyaga.bettercallfishing.utils.MessageUtils;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -52,7 +52,7 @@ public class BetterCallFishCmd implements TabExecutor {
                 HashMap<Integer, ItemStack> items = barrelConfig.generateBarrelInventoryMap();
 
                 Inventory inv = Bukkit.createInventory(null, InventoryType.BARREL,
-                        MiniMessageUtils.convertComponentToString(langConfig.getOldBarrelName()));
+                        MessageUtils.convertComponentToString(langConfig.getOldBarrelName()));
                 items.forEach(inv::setItem);
 
                 player.openInventory(inv);

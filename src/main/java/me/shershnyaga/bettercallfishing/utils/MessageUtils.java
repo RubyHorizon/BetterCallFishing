@@ -4,17 +4,24 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.chat.BaseComponent;
+import org.bukkit.ChatColor;
 
-public final class MiniMessageUtils {
+public final class MessageUtils {
 
     public static String convertComponentToString(Component component) {
         BaseComponent[] baseComponent = BungeeComponentSerializer.get().serialize(component);
         return BaseComponent.toLegacyText(baseComponent);
     }
 
-    public static String convertStringtoString(String string) {
+    public static String parseChatColors(String string) {
         MiniMessage miniMessage = MiniMessage.miniMessage();
 
-        return convertComponentToString(miniMessage.deserialize(string));
+        String parsedAlternative = parseAlternativeChatColors(string);
+
+        return convertComponentToString(miniMessage.deserialize(parsedAlternative));
+    }
+
+    public static String parseAlternativeChatColors(String string) {
+        return ChatColor.translateAlternateColorCodes('&', string);
     }
 }

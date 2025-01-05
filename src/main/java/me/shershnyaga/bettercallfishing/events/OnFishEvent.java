@@ -6,7 +6,7 @@ import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
 import me.shershnyaga.bettercallfishing.hooks.PluginHooks;
 import me.shershnyaga.bettercallfishing.utils.Constants;
-import me.shershnyaga.bettercallfishing.utils.MiniMessageUtils;
+import me.shershnyaga.bettercallfishing.utils.MessageUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Barrel;
@@ -95,7 +95,7 @@ public class OnFishEvent implements Listener {
         ItemStack item = new ItemStack(Material.BARREL);
         BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
 
-        meta.setDisplayName(MiniMessageUtils.convertComponentToString(langConfig.getOldBarrelName()));
+        meta.setDisplayName(MessageUtils.convertComponentToString(langConfig.getOldBarrelName()));
         Barrel barrel = (Barrel) meta.getBlockState();
         Inventory inv = barrel.getInventory();
         items.forEach(inv::setItem);

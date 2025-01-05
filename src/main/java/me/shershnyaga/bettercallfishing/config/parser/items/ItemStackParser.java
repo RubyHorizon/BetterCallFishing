@@ -3,7 +3,7 @@ package me.shershnyaga.bettercallfishing.config.parser.items;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import me.shershnyaga.bettercallfishing.utils.MiniMessageUtils;
+import me.shershnyaga.bettercallfishing.utils.MessageUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -255,7 +255,7 @@ public class ItemStackParser {
                 return null;
             }
 
-            return lore.stream().map(MiniMessageUtils::convertStringtoString).toList();
+            return lore.stream().map(MessageUtils::parseChatColors).toList();
         }
 
         public String getDisplayName() {
@@ -264,7 +264,7 @@ public class ItemStackParser {
                 return null;
             }
 
-            return MiniMessageUtils.convertStringtoString(displayName);
+            return MessageUtils.parseChatColors(displayName);
         }
 
         private float getRandom(float min, float max) {

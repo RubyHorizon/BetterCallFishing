@@ -138,7 +138,7 @@ public class AutoUpdate {
 
         List<String> mess = new ArrayList<>();
         for (Component component: messageAsComponent) {
-            mess.add(MiniMessageUtils.convertComponentToString(component));
+            mess.add(MessageUtils.convertComponentToString(component));
         }
 
         return mess;
