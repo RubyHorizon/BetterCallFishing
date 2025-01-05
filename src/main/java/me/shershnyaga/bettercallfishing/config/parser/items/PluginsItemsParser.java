@@ -1,9 +1,9 @@
 package me.shershnyaga.bettercallfishing.config.parser.items;
 
 import lombok.NoArgsConstructor;
-import me.shershnyaga.bettercallfishing.hooks.ItemsAdderHook;
-import me.shershnyaga.bettercallfishing.hooks.MMOItemsHook;
-import me.shershnyaga.bettercallfishing.hooks.PluginHooks;
+import me.shershnyaga.bettercallfishing.utils.hooks.ItemsAdderHook;
+import me.shershnyaga.bettercallfishing.utils.hooks.MMOItemsHook;
+import me.shershnyaga.bettercallfishing.utils.hooks.PluginHooks;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

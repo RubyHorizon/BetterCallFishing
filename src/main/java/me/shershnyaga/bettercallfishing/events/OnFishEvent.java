@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import me.shershnyaga.bettercallfishing.config.BarrelConfig;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
-import me.shershnyaga.bettercallfishing.hooks.PluginHooks;
+import me.shershnyaga.bettercallfishing.utils.hooks.PluginHooks;
 import me.shershnyaga.bettercallfishing.utils.Constants;
 import me.shershnyaga.bettercallfishing.utils.MessageUtils;
 import org.bukkit.Location;

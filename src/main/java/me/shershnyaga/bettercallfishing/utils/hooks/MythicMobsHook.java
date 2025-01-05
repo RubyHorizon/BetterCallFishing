@@ -1,4 +1,4 @@
-package me.shershnyaga.bettercallfishing.hooks;
+package me.shershnyaga.bettercallfishing.utils.hooks;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

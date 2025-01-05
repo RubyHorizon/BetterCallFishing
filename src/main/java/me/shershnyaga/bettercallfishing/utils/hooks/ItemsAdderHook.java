@@ -1,4 +1,4 @@
-package me.shershnyaga.bettercallfishing.hooks;
+package me.shershnyaga.bettercallfishing.utils.hooks;
 
 import dev.lone.itemsadder.api.CustomStack;
 import lombok.AccessLevel;

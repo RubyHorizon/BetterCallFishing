@@ -1,8 +1,8 @@
 package me.shershnyaga.bettercallfishing.config;
 
 import lombok.*;
-import me.shershnyaga.bettercallfishing.hooks.PluginHooks;
-import me.shershnyaga.bettercallfishing.hooks.ItemsAdderHook;
+import me.shershnyaga.bettercallfishing.utils.hooks.PluginHooks;
+import me.shershnyaga.bettercallfishing.utils.hooks.ItemsAdderHook;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
