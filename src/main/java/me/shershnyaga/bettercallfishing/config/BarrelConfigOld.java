@@ -1,6 +1,5 @@
 package me.shershnyaga.bettercallfishing.config;
 
-import dev.lone.itemsadder.api.CustomStack;
 import lombok.*;
 import me.shershnyaga.bettercallfishing.hooks.PluginHooks;
 import me.shershnyaga.bettercallfishing.hooks.ItemsAdderHook;
@@ -12,13 +11,11 @@ import java.util.*;
 
 @Deprecated
 public class BarrelConfigOld {
-    private final Random random;
 
     @Getter
     private final List<ItemSettings> itemSettingsList;
 
     public BarrelConfigOld() {
-        random = new Random();
         itemSettingsList = new ArrayList<>();
 
         // setConfiguration(configuration);
@@ -73,18 +70,6 @@ public class BarrelConfigOld {
 
                 return Optional.empty();
             }
-        }
-
-        public boolean isIAItem() {
-            return id.startsWith("IA:");
-        }
-
-        public boolean isLoadedIAItem() {
-            if (isIAItem()) {
-                return CustomStack.isInRegistry(id.replace("IA:", ""));
-            }
-
-            return false;
         }
     }
 }
