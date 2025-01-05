@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import me.shershnyaga.bettercallfishing.utils.MessageUtils;
+import me.shershnyaga.bettercallfishing.utils.chances.Chance;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -169,7 +170,7 @@ public class ItemStackParser {
     }
 
     @lombok.Builder(access = AccessLevel.PUBLIC)
-    public static class ParsedItem {
+    public static class ParsedItem implements Chance {
 
         @Getter
         private String material;
@@ -189,11 +190,15 @@ public class ItemStackParser {
         @Getter
         private int maxCount;
 
-        @Getter
         private float chance;
 
         @Getter
         private List<PotionDataParser.ParsedPotionData> parsedPotionData;
+
+        @Override
+        public float getChance() {
+            return chance;
+        }
 
         public Optional<ItemStack> toItemStack() {
             return toItemStack(1);
