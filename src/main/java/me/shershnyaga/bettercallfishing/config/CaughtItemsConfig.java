@@ -30,13 +30,12 @@ public class CaughtItemsConfig {
 
     private void loadItems(FileConfiguration config) {
         parsedItems = itemStackParser.parseItems((List<Map<String, Object>>) config.get("items"));
+        parsedItems.sort(Comparator.comparing(ItemStackParser.ParsedItem::getChance));
     }
 
     public Optional<ItemStack> tryToGetRandomItem() {
 
         List<ItemStackParser.ParsedItem> items = new ArrayList<>(parsedItems);
-
-        items.sort(Comparator.comparing(ItemStackParser.ParsedItem::getChance));
 
         for (ItemStackParser.ParsedItem item: items) {
             if (item.tryToGet()) {
@@ -45,5 +44,9 @@ public class CaughtItemsConfig {
         }
 
         return Optional.empty();
+    }
+
+    public ItemStack getRandomItem() {
+        if ()
     }
 }

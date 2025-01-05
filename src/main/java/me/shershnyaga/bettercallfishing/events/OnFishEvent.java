@@ -2,6 +2,7 @@ package me.shershnyaga.bettercallfishing.events;
 
 import lombok.AllArgsConstructor;
 import me.shershnyaga.bettercallfishing.config.BarrelConfig;
+import me.shershnyaga.bettercallfishing.config.CaughtItemsConfig;
 import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
 import me.shershnyaga.bettercallfishing.utils.hooks.PluginHooks;
@@ -32,6 +33,7 @@ public class OnFishEvent implements Listener {
     private final MythicMobsConfig mobsConfig;
     private final FixedMetadataValue metadataValue;
     private final LangConfig langConfig;
+    private final CaughtItemsConfig caughtItemsConfig;
 
     private final Random random = new Random();
 
@@ -70,6 +72,27 @@ public class OnFishEvent implements Listener {
                 Objects.requireNonNull(caught).remove();
                 return;
             }
+        }
+
+        boolean needItem = false;
+        if (fish == null && caughtItemsConfig.isDisableDefaultItemsCatch()) {
+            Objects.requireNonNull(event.getCaught()).remove();
+            needItem = true;
+        }
+
+        Optional<ItemStack> item = caughtItemsConfig.tryToGetRandomItem();
+
+        if (needItem && item.isEmpty()) {
+
+        }
+
+        if (item.isPresent()) {
+
+            if (event.getCaught() instanceof Item itemEntity) {
+                itemEntity.setItemStack(item.get());
+            }
+
+            return;
         }
 
         if (fish != null) {
