@@ -2,6 +2,7 @@ package me.shershnyaga.bettercallfishing.config;
 
 import lombok.Getter;
 import me.shershnyaga.bettercallfishing.config.parser.items.ItemStackParser;
+import me.shershnyaga.bettercallfishing.utils.chances.ChanceUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -10,6 +11,8 @@ import java.io.File;
 import java.util.*;
 
 public class CaughtItemsConfig {
+
+    private static final ChanceUtils<ItemStackParser.ParsedItem> CHANCE_UTILS = new ChanceUtils<>(100);
 
     private List<ItemStackParser.ParsedItem> parsedItems;
 
@@ -34,19 +37,24 @@ public class CaughtItemsConfig {
     }
 
     public Optional<ItemStack> tryToGetRandomItem() {
+        Optional<ItemStackParser.ParsedItem> item =
+                CHANCE_UTILS.tryToGetRandomItem((ItemStackParser.ParsedItem[]) parsedItems.toArray());
 
-        List<ItemStackParser.ParsedItem> items = new ArrayList<>(parsedItems);
-
-        for (ItemStackParser.ParsedItem item: items) {
-            if (item.tryToGet()) {
-                return item.toItemStackWithRandomCount();
-            }
+        if (item.isEmpty()) {
+            return Optional.empty();
         }
 
-        return Optional.empty();
+        return item.get().toItemStackWithRandomCount();
     }
 
-    public ItemStack getRandomItem() {
-        if ()
+    public Optional<ItemStack> getRandomItem() {
+        Optional<ItemStackParser.ParsedItem> item =
+                CHANCE_UTILS.getRandomItem((ItemStackParser.ParsedItem[]) parsedItems.toArray());
+
+        if (item.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return item.get().toItemStackWithRandomCount();
     }
 }

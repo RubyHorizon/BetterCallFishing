@@ -83,16 +83,15 @@ public class OnFishEvent implements Listener {
         Optional<ItemStack> item = caughtItemsConfig.tryToGetRandomItem();
 
         if (needItem && item.isEmpty()) {
-
+            item = caughtItemsConfig.getRandomItem();
         }
 
         if (item.isPresent()) {
 
             if (event.getCaught() instanceof Item itemEntity) {
                 itemEntity.setItemStack(item.get());
+                return;
             }
-
-            return;
         }
 
         if (fish != null) {
