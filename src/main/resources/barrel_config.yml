@@ -1,33 +1,33 @@
 enable-barrel-catch: true
 barrel-catch-chance: 10.0 # Hook Item Replacement Chance (0.0 - 100.0)
 items:
-  - chance: 25.0
-    material: bone_meal
+  - material: bone_meal
     count: 1-4
-  - chance: 13.0
-    material: paper
+    chance: 25.0
+  - material: paper
     count: 1-4
-  - chance: 50.0
-    material: bone
+    chance: 13.0
+  - material: bone
     count: 3-13
-  - chance: 2.0
-    material: red_mushroom
+    chance: 50.0
+  - material: red_mushroom
     count: 15-16
-  - chance: 41.0
-    material: coal
+    chance: 2.0
+  - material: coal
     count: 4-12
-  - chance: 4.0
-    material: gunpowder
+    chance: 41.0
+  - material: gunpowder
     count: 9-20
-  - chance: 7.0
-    material: string
+    chance: 4.0
+  - material: string
     count: 2-11
-  - chance: 1.0
-    material: bowl
+    chance: 7.0
+  - material: bowl
     count: 1-2
-  - chance: 57.0
-    material: potato
+    chance: 1.0
+  - material: potato
     count: 21-53
-  - chance: 7.0
-    material: glowstone_dust
+    chance: 57.0
+  - material: glowstone_dust
     count: 11-12
+    chance: 7.0
