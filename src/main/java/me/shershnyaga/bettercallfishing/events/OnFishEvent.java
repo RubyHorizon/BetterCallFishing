@@ -5,7 +5,6 @@ import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
 import me.shershnyaga.bettercallfishing.utils.Constants;
 import me.shershnyaga.bettercallfishing.utils.integrations.MythicMobsUtil;
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -96,9 +95,7 @@ public class OnFishEvent implements Listener {
         ItemStack item = new ItemStack(Material.BARREL);
         BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
 
-        BaseComponent[] barrelName = BungeeComponentSerializer.get().serialize(langConfig.getOldBarrelName());
-
-        meta.setDisplayName(BaseComponent.toLegacyText(barrelName));
+        meta.displayName(langConfig.getOldBarrelName());
         Barrel barrel = (Barrel) meta.getBlockState();
         Inventory inv = barrel.getInventory();
         items.forEach(inv::setItem);

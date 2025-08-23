@@ -1,8 +1,10 @@
 name: BetterCallFishing
 version: '${version}'
 main: me.shershnyaga.bettercallfishing.BetterCallFishing
-api-version: '1.16'
+api-version: '1.18'
 load: STARTUP
+depend:
+  - RubyHorizonLib
 softdepend:
   - ItemsAdder
   - MythicMobs

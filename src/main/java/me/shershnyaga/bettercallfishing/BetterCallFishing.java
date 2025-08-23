@@ -8,13 +8,10 @@ import me.shershnyaga.bettercallfishing.config.LangConfig;
 import me.shershnyaga.bettercallfishing.config.MythicMobsConfig;
 import me.shershnyaga.bettercallfishing.config.WeightConfig;
 import me.shershnyaga.bettercallfishing.events.OnFishEvent;
-import me.shershnyaga.bettercallfishing.events.OnJoinEvent;
 import me.shershnyaga.bettercallfishing.events.OtherEvents;
-import me.shershnyaga.bettercallfishing.utils.AutoUpdate;
 import me.shershnyaga.bettercallfishing.utils.Metrics;
 import me.shershnyaga.bettercallfishing.utils.integrations.ItemsAdderUtil;
 import me.shershnyaga.bettercallfishing.utils.integrations.MythicMobsUtil;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -58,21 +55,13 @@ public final class BetterCallFishing extends JavaPlugin {
     private MythicMobsConfig mythicMobsConfig;
 
     private boolean isLoaded = false;
-
-    private BukkitAudiences adventure;
-
-    private AutoUpdate autoUpdate;
-
     private File barrelConfigFile;
     private File mythicConfigFile;
 
     @Override
     public void onEnable() {
-        adventure = BukkitAudiences.create(this);
         saveDefaultConfig();
         // reloadConfig();
-
-        Bukkit.getScheduler().runTaskAsynchronously(this, this::update);
 
         reloadManager = new ReloadManager();
 
@@ -165,7 +154,7 @@ public final class BetterCallFishing extends JavaPlugin {
 
     private void reloadCommands() {
         Objects.requireNonNull(getServer().getPluginCommand("bettercallfishing"))
-                .setExecutor(new BetterCallFishCmd(barrelConfig, reloadManager, langConfig, mythicMobsConfig, adventure));
+                .setExecutor(new BetterCallFishCmd(barrelConfig, reloadManager, langConfig, mythicMobsConfig));
     }
 
     private void reloadEvents() {
@@ -176,7 +165,6 @@ public final class BetterCallFishing extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnFishEvent(getConfig(), barrelConfig, mythicMobsConfig,
                 new FixedMetadataValue(this, true), langConfig), this);
         getServer().getPluginManager().registerEvents(new OtherEvents(weightConfig), this);
-        getServer().getPluginManager().registerEvents(new OnJoinEvent(autoUpdate), this);
     }
 
     private void setupMetrics() {
@@ -195,29 +183,6 @@ public final class BetterCallFishing extends JavaPlugin {
             setupMetrics();
             isLoaded = true;
         }
-    }
-
-    private void update() {
-        if (ENABLE_AUTO_UPDATE) {
-
-            String os = System.getProperty("os.name");
-
-            if (os.toLowerCase().contains("windows")) {
-                getLogger().info(ChatColor.YELLOW + "Automatic updates are unavailable in Windows. You can manually download the update " +
-                        "using the following links:");
-                getLogger().info(ChatColor.YELLOW + "https://www.spigotmc.org/resources/bettercallfishing.108426/");
-                getLogger().info(ChatColor.YELLOW + "https://modrinth.com/plugin/bettercallfishing");
-                return;
-            }
-
-            Path dataFolderPath = Paths.get(this.getDataFolder().getAbsolutePath());
-            Path pluginsFolderPath = dataFolderPath.getParent();
-            autoUpdate = new AutoUpdate(langConfig, getDescription().getVersion(), getConfig().getBoolean("auto-update"),
-                    pluginsFolderPath.toAbsolutePath().toString());
-
-            autoUpdate.update();
-        }
-
     }
 
     private boolean moveBarrelConfig() {
@@ -291,14 +256,6 @@ public final class BetterCallFishing extends JavaPlugin {
 
         if (!isNone) {
             BetterCallFishing.log(message);
-        }
-    }
-
-    @Override
-    public void onDisable() {
-        if(this.adventure != null) {
-            this.adventure.close();
-            this.adventure = null;
         }
     }
 
